@@ -8,16 +8,18 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import RxSwift
+import RxCocoa
 
-class LoginViewController: UIViewController {
 
-    lazy var usernameTextField: UITextField = {
+class LoginViewController: UIViewController, UITextFieldDelegate {
+    
+    lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.overrideUserInterfaceStyle = .light
         textField.keyboardType = .emailAddress
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
-        textField.placeholder = "email@example.com"
         textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = CGFloat(10)
         return textField
@@ -26,54 +28,51 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.isSecureTextEntry = true
         textField.overrideUserInterfaceStyle = .light
-        textField.placeholder = "Password"
         textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = CGFloat(10)
         return textField
     }()
     lazy var confirmButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor.link
         button.layer.cornerRadius = CGFloat(10)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
         return button
     }()
+    lazy var orLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
     lazy var alternateButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor.white
         button.layer.cornerRadius = CGFloat(10)
-        button.setTitleColor(.white, for: .normal)
+        button.layer.borderColor = UIColor.link.cgColor
+        button.layer.borderWidth = 1.0
+        button.setTitleColor(UIColor.link, for: .normal)
         button.addTarget(self, action: #selector(alternateAction), for: .touchUpInside)
         return button
     }()
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "Many Hands"
         label.font = UIFont.boldSystemFont(ofSize: 45)
         return label
     }()
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
-        label.text = "Every product has a story to tell!"
         label.font = UIFont.italicSystemFont(ofSize: 16)
         return label
     }()
-
-    private var isLoginUI: Bool = true {
-        didSet {
-            if isLoginUI {
-                confirmButton.setTitle("Sign In", for: .normal)
-                alternateButton.setTitle("Create an account", for: .normal)
-            }
-            else {
-                confirmButton.setTitle("Register", for: .normal)
-                alternateButton.setTitle("I already have an account", for: .normal)
-            }
-        }
-    }
+    
+    private let disposeBag = DisposeBag()
+    private let loginViewModel = LoginViewModel()
+    
     
     // MARK: - View Lifecycle
 
@@ -88,20 +87,40 @@ class LoginViewController: UIViewController {
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        isLoginUI = false
         self.view.backgroundColor = .white
+        
         addViews()
+        setInitialUIProperties()
         setConstraints()
+        setRxSwiftBindings()
+                
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
+    // MARK: Initial Set-up
+        
     private func addViews(){
         self.view.addSubview(titleLabel)
         self.view.addSubview(subtitleLabel)
-        self.view.addSubview(usernameTextField)
+        self.view.addSubview(emailTextField)
         self.view.addSubview(passwordTextField)
         self.view.addSubview(confirmButton)
+        self.view.addSubview(orLabel)
         self.view.addSubview(alternateButton)
     }
+    
+    private func setInitialUIProperties(){
+        emailTextField.placeholder = loginViewModel.emailTextFieldPlaceholderString
+        passwordTextField.placeholder = loginViewModel.passwordTextFieldPlaceholderString
+        titleLabel.text = loginViewModel.titleString
+        subtitleLabel.text = loginViewModel.subtitleString
+        
+        confirmButton.setTitle(loginViewModel.confirmButtonTitle, for: .normal)
+        orLabel.text = loginViewModel.orLabelString
+        alternateButton.setTitle(loginViewModel.alternateButtonTitle, for: .normal)
+    }
+    
     private func setConstraints(){
         
         titleLabel.snp.makeConstraints { make in
@@ -111,10 +130,10 @@ class LoginViewController: UIViewController {
         
         subtitleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self.view)
-            make.bottom.equalTo(usernameTextField.snp.top).offset(-35)
+            make.bottom.equalTo(emailTextField.snp.top).offset(-35)
         }
         
-        usernameTextField.snp.makeConstraints { (make) -> Void in
+        emailTextField.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(50)
             make.width.equalTo(300)
             make.center.equalTo(self.view)
@@ -124,7 +143,7 @@ class LoginViewController: UIViewController {
             make.height.equalTo(50)
             make.width.equalTo(300)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(usernameTextField.snp.bottom).offset(5)
+            make.top.equalTo(emailTextField.snp.bottom).offset(5)
         }
         
         confirmButton.snp.makeConstraints { make in
@@ -133,36 +152,55 @@ class LoginViewController: UIViewController {
             make.centerX.equalTo(self.view)
             make.top.equalTo(passwordTextField.snp.bottom).offset(10)
         }
+        
+        orLabel.snp.makeConstraints { make in
+            make.height.equalTo(20)
+            make.width.equalTo(300)
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(confirmButton.snp.bottom).offset(5)
+        }
 
         alternateButton.snp.makeConstraints { make in
             make.height.equalTo(50)
             make.width.equalTo(300)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(confirmButton.snp.bottom).offset(5)
+            make.top.equalTo(orLabel.snp.bottom).offset(5)
         }
+    }
+    
+    private func setRxSwiftBindings(){
+        emailTextField.rx.text.map { $0 ?? "" }.bind(to: loginViewModel.usernameTextPublishedSubject).disposed(by: disposeBag)
+        passwordTextField.rx.text.map { $0 ?? "" }.bind(to: loginViewModel.passwordTextPublishedSubject).disposed(by: disposeBag)
+
+        loginViewModel.isUserInputValid().bind(to: confirmButton.rx.isEnabled).disposed(by: disposeBag)
+        loginViewModel.isUserInputValid().map({ $0 ? 1.0 : 0.3 }).bind(to: confirmButton.rx.alpha).disposed(by: disposeBag)
+    }
+    
+    // MARK: - TextFields Delegate
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == emailTextField){
+            passwordTextField.becomeFirstResponder()
+        }
+        else if (textField == passwordTextField && confirmButton.isEnabled){
+            confirmAction()
+        }
+        return true
     }
     
     // MARK: - Actions
 
     @objc func alternateAction(){
-        isLoginUI.toggle()
+        loginViewModel.toggleLoginUI { [weak self] confirmButtonTitle, alternateButtonTitle in
+            self?.confirmButton.setTitle(confirmButtonTitle, for: .normal)
+            self?.alternateButton.setTitle(alternateButtonTitle, for: .normal)
+        }
     }
     
     @objc func confirmAction(){
-        let username = self.usernameTextField.text
+        let email = self.emailTextField.text
         let password = self.passwordTextField.text
-        
-        if (isUsernameValid(username: username) == false || isPasswordValid(password: password) == false){
-            print("Username or password are not valid!")
-            return
-        }
-        
-        if isLoginUI {
-            signIn(with: username!, password: password!)
-        }
-        else {
-            register(with: username!, password: password!)
-        }
+        loginViewModel.isLoginUI ? signIn(with: email!, password: password!) : register(with: email!, password: password!)
     }
     
     // MARK: - Field Validation
@@ -177,57 +215,29 @@ class LoginViewController: UIViewController {
     // MARK: - Firebase Authentication
 
     private func register(with username:String, password:String){
-        Auth.auth().createUser(withEmail: username, password: password) { user, error in
+        Auth.auth().createUser(withEmail: username, password: password) { [weak self] user, error in
             if let _error = error {
                 print(_error.localizedDescription)
+                guard let _self = self else { return }
+                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: _self)
             }
             else {
                 print("Registered!")
-                self.dismiss(animated: true)
+                self?.dismiss(animated: true)
             }
         }
     }
     
     private func signIn(with username:String, password:String){
-        Auth.auth().signIn(withEmail: username, password: password) { user, error in
+        Auth.auth().signIn(withEmail: username, password: password) { [weak self] user, error in
             if let _error = error {
                 print(_error.localizedDescription)
-                if let errorCode = AuthErrorCode.Code(rawValue: _error._code) {
-                    switch errorCode {
-                    case .invalidEmail : print("Invalid Email")
-                    /*case .emailAlreadyInUse:
-                        <#code#>
-                    case .wrongPassword:
-                        <#code#>
-                    case .accountExistsWithDifferentCredential:
-                        <#code#>
-                    case .networkError:
-                        <#code#>
-                    case .credentialAlreadyInUse:
-                        <#code#>
-                    case .weakPassword:
-                        <#code#>
-                    case .invalidRecipientEmail:
-                        <#code#>
-                    case .missingEmail:
-                        <#code#>
-                    case .unauthorizedDomain:
-                        <#code#>
-                    
-                    case .rejectedCredential:
-                        <#code#>
-                        
-                    case .unverifiedEmail:
-                        <#code#>
-                        */
-                    @unknown default:
-                        print("An error occured")
-                    }
-                }
+                guard let _self = self else { return }
+                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: _self)
             }
             else {
                 print("Signed In!")
-                self.dismiss(animated: true)
+                self?.dismiss(animated: true)
             }
         }
     }

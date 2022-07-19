@@ -9,4 +9,5 @@ import Foundation
 
 struct DatabaseCollections {
     static let products = "products"
+    static let historyEntries = "historyEntries"
 }

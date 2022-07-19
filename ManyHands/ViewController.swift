@@ -15,7 +15,8 @@ class ViewController: UIViewController {
     lazy var productCodeTextField: UITextField = {
         let textField = UITextField()
         textField.overrideUserInterfaceStyle = .light
-        textField.placeholder = "Product ID (ex: AZ19)"
+        textField.autocapitalizationType = .allCharacters
+        textField.placeholder = "Product ID (ex: AZ123)"
         textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = CGFloat(10)
         return textField
@@ -27,6 +28,7 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = CGFloat(10)
         button.setTitle("Check Product!", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(checkProductAction), for: .touchUpInside)
         return button
     }()
     
@@ -177,6 +179,10 @@ class ViewController: UIViewController {
         let isLoggedIn = (Auth.auth().currentUser != nil)
         if isLoggedIn == false {
             let loginVC = LoginViewController()
+            
+            // Prevents user from dismissing the view by swiping down:
+            loginVC.isModalInPresentation = true
+            
             self.present(loginVC, animated: true)
         }
     }
@@ -193,9 +199,13 @@ class ViewController: UIViewController {
     // MARK: - Actions
 
     @objc func addProductAction(){
-        FirestoreDataHandler.addEntryToFirestore()
+        print("addProductAction")
+        //FirestoreDataHandler.addEntryToFirestore()
     }
     
+    @objc func checkProductAction(){
+        print("checkProductAction")
+    }
     
     
 }

@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		53B6C43E33B4BD6F52F9F3FA /* Pods_ManyHands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */; };
 		B089D77BCFE808F09C58B190 /* Pods_ManyHands_ManyHandsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7293E659027872DD1DB156FB /* Pods_ManyHands_ManyHandsUITests.framework */; };
+		D641657928860A5A00E8943D /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* AlertHelper.swift */; };
+		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
+		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
+		D641658228869D4F00E8943D /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658128869D4F00E8943D /* ProductViewController.swift */; };
+		D641658428869D5900E8943D /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658328869D5900E8943D /* ProductViewModel.swift */; };
+		D641658628869D6700E8943D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658528869D6700E8943D /* LoginViewModel.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* AccountUtilities.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
@@ -53,6 +59,12 @@
 		7E9BE6748D92D16731BC5841 /* Pods-ManyHands.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands.release.xcconfig"; path = "Target Support Files/Pods-ManyHands/Pods-ManyHands.release.xcconfig"; sourceTree = "<group>"; };
 		871463FD613931B07422618C /* Pods-ManyHands-ManyHandsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands-ManyHandsUITests.release.xcconfig"; path = "Target Support Files/Pods-ManyHands-ManyHandsUITests/Pods-ManyHands-ManyHandsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ManyHands.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D641657828860A5A00E8943D /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
+		D641658128869D4F00E8943D /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		D641658328869D5900E8943D /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		D641658528869D6700E8943D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* AccountUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUtilities.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
@@ -114,6 +126,52 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D641657E288698E100E8943D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D641657A288698D200E8943D /* Product.swift */,
+				D641657C288698DC00E8943D /* HistoryEntry.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D641657F288698F700E8943D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D6BDE473288566A000DED4C2 /* AccountUtilities.swift */,
+				D641657828860A5A00E8943D /* AlertHelper.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		D64165802886990F00E8943D /* FirestoreDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				D6E369CF2885A69500296589 /* ShortCode.swift */,
+				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
+				D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */,
+			);
+			path = FirestoreDataStorage;
+			sourceTree = "<group>";
+		};
+		D641658728869D7100E8943D /* LoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				D6AFEF6528855A2600C65063 /* LoginViewController.swift */,
+				D641658528869D6700E8943D /* LoginViewModel.swift */,
+			);
+			path = LoginPage;
+			sourceTree = "<group>";
+		};
+		D641658828869D8000E8943D /* ProductPage */ = {
+			isa = PBXGroup;
+			children = (
+				D641658128869D4F00E8943D /* ProductViewController.swift */,
+				D641658328869D5900E8943D /* ProductViewModel.swift */,
+			);
+			path = ProductPage;
+			sourceTree = "<group>";
+		};
 		D6E9A7CC288474C30097E71C = {
 			isa = PBXGroup;
 			children = (
@@ -141,13 +199,13 @@
 			children = (
 				D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */,
 				D6E9A7D8288474C30097E71C /* AppDelegate.swift */,
-				D6BDE473288566A000DED4C2 /* AccountUtilities.swift */,
 				D6E9A7DA288474C30097E71C /* SceneDelegate.swift */,
-				D6AFEF6528855A2600C65063 /* LoginViewController.swift */,
+				D641657F288698F700E8943D /* Utilities */,
+				D64165802886990F00E8943D /* FirestoreDataStorage */,
+				D641657E288698E100E8943D /* Model */,
+				D641658728869D7100E8943D /* LoginPage */,
 				D6E9A7DC288474C30097E71C /* ViewController.swift */,
-				D6E369CF2885A69500296589 /* ShortCode.swift */,
-				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
-				D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */,
+				D641658828869D8000E8943D /* ProductPage */,
 				D6E9A7DE288474C30097E71C /* Main.storyboard */,
 				D6E9A7E1288474C40097E71C /* Assets.xcassets */,
 				D6E9A7E3288474C40097E71C /* LaunchScreen.storyboard */,
@@ -447,10 +505,16 @@
 			files = (
 				D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */,
 				D6E369D02885A69500296589 /* ShortCode.swift in Sources */,
+				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
 				D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */,
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
+				D641658428869D5900E8943D /* ProductViewModel.swift in Sources */,
+				D641658628869D6700E8943D /* LoginViewModel.swift in Sources */,
 				D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */,
+				D641658228869D4F00E8943D /* ProductViewController.swift in Sources */,
 				D6E9A7DD288474C30097E71C /* ViewController.swift in Sources */,
+				D641657928860A5A00E8943D /* AlertHelper.swift in Sources */,
+				D641657B288698D200E8943D /* Product.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
 			);
