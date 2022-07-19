@@ -17,6 +17,7 @@
 		D641658628869D6700E8943D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658528869D6700E8943D /* LoginViewModel.swift */; };
 		D641658B2886C6E200E8943D /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658A2886C6E200E8943D /* RootViewModel.swift */; };
 		D641658D2886C73300E8943D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658C2886C73300E8943D /* Constants.swift */; };
+		D685C86A2886E74400398567 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685C8692886E74400398567 /* ProductService.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* AccountUtilities.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
@@ -69,6 +70,7 @@
 		D641658528869D6700E8943D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D641658A2886C6E200E8943D /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		D641658C2886C73300E8943D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D685C8692886E74400398567 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* AccountUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUtilities.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				D6E369CF2885A69500296589 /* ShortCode.swift */,
 				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
 				D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */,
+				D685C8692886E74400398567 /* ProductService.swift */,
 			);
 			path = FirestoreDataStorage;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */,
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
 				D641658428869D5900E8943D /* ProductViewModel.swift in Sources */,
+				D685C86A2886E74400398567 /* ProductService.swift in Sources */,
 				D641658628869D6700E8943D /* LoginViewModel.swift in Sources */,
 				D641658D2886C73300E8943D /* Constants.swift in Sources */,
 				D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */,

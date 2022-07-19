@@ -15,6 +15,8 @@ import RxCocoa
 
 class RootViewController: UIViewController {
     
+    // MARK: - Views declaration
+
     var backgroundGradientView = UIView()
     
     lazy var signOutButton: UIButton = {
@@ -77,10 +79,12 @@ class RootViewController: UIViewController {
         return button
     }()
     
-    private let disposeBag = DisposeBag()
-    private let rootViewModel = RootViewModel()
-    var authStateListener:NSObjectProtocol?
+    // MARK: - Other properties
 
+    private let disposeBag = DisposeBag()
+    private var rootViewModel = RootViewModel()
+    private var authStateListener:NSObjectProtocol?
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -243,7 +247,35 @@ class RootViewController: UIViewController {
     
     @objc func checkProductAction(){
         print("checkProductAction")
+        
+        // Example of using RxSwift to bind the result to the button title:
+        /*
+        rootViewModel.fetchProductViewModel(with: testId).map({ productViewModel in
+            productViewModel.title
+        }).bind(to: productCodeEnterButton.rx.title(for: .normal)).disposed(by: disposeBag)
+        */
+        
+        rootViewModel.fetchProductViewModel(with: productCodeTextField.text ?? "").observe(on: MainScheduler.instance).subscribe { [weak self] productViewModel in
+            print("got productVM: \(productViewModel)")
+            self?.displayProductViewController(with: productViewModel)
+        } onError: { [weak self] error in
+            print("got error:\(error.localizedDescription)")
+            if let _self = self {
+                AlertHelper.showErrorAlert(with: error.localizedDescription, on: _self)
+            }
+        } onCompleted: {
+            print("completed")
+        } onDisposed: {
+            print("disposed")
+        }.disposed(by: disposeBag)
     }
     
+    private func displayProductViewController(with productViewModel:ProductViewModel){
+        let navController = UINavigationController()
+        let productViewController = ProductViewController(productViewModel: productViewModel)
+        navController.viewControllers = [productViewController]
+        navController.modalPresentationStyle = .formSheet
+        self.showDetailViewController(navController, sender: self)
+    }
     
 }

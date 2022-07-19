@@ -6,8 +6,9 @@ target 'ManyHands' do
   use_frameworks!
 
   # Pods for ManyHands
+  
   pod 'FirebaseAuth'
-  pod 'FirebaseFirestore'
+  pod 'FirebaseFirestoreSwift'
 
   pod 'SnapKit', '~> 5.6'
   pod 'RxSwift', '6.5.0'
