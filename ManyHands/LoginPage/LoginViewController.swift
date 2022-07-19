@@ -25,6 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.layer.cornerRadius = CGFloat(10)
         return textField
     }()
+    
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.isSecureTextEntry = true
@@ -34,6 +35,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.layer.cornerRadius = CGFloat(10)
         return textField
     }()
+    
     lazy var confirmButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.link
@@ -42,6 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
         return button
     }()
+    
     lazy var orLabel: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
@@ -49,6 +52,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
+    
     lazy var alternateButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.white
@@ -59,12 +63,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.addTarget(self, action: #selector(alternateAction), for: .touchUpInside)
         return button
     }()
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.font = UIFont.boldSystemFont(ofSize: 45)
         return label
     }()
+    
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel

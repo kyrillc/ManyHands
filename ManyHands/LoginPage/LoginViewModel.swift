@@ -14,8 +14,8 @@ class LoginViewModel {
     
     let emailTextFieldPlaceholderString = "email@example.com"
     let passwordTextFieldPlaceholderString = "Password"
-    let titleString = "Many Hands"
-    let subtitleString = "Every product has a story to tell!"
+    let titleString = Constants.appTitle
+    let subtitleString = Constants.appSubtitle
     let signInButtonString = "Sign In"
     let orLabelString = "- OR -"
     let registerButtonString = "Register"

@@ -9,45 +9,26 @@ import UIKit
 import SnapKit
 import FirebaseAuth
 import FirebaseFirestore
+import RxSwift
+import RxCocoa
+
 
 class RootViewController: UIViewController {
-
-    lazy var productCodeTextField: UITextField = {
-        let textField = UITextField()
-        textField.overrideUserInterfaceStyle = .light
-        textField.autocapitalizationType = .allCharacters
-        textField.placeholder = "Product ID (ex: AZ123)"
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = CGFloat(10)
-        return textField
-    }()
-    
-    lazy var productCodeEnterButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.purple
-        button.layer.cornerRadius = CGFloat(10)
-        button.setTitle("Check Product!", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(checkProductAction), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var addProductButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.blue
-        button.layer.cornerRadius = CGFloat(10)
-        button.setTitle("Add a new product", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(addProductAction), for: .touchUpInside)
-        return button
-    }()
     
     var backgroundGradientView = UIView()
+    
+    lazy var signOutButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.red
+        button.layer.cornerRadius = CGFloat(10)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(signOutAction), for: .touchUpInside)
+        return button
+    }()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "Many Hands"
         label.font = UIFont.boldSystemFont(ofSize: 45)
         return label
     }()
@@ -55,21 +36,49 @@ class RootViewController: UIViewController {
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "Every product has a story to tell!"
         label.font = UIFont.italicSystemFont(ofSize: 16)
         return label
     }()
     
-    lazy var signOutButton: UIButton = {
+    lazy var productCodeTextField: UITextField = {
+        let textField = UITextField()
+        textField.overrideUserInterfaceStyle = .light
+        textField.autocapitalizationType = .allCharacters
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = CGFloat(10)
+        return textField
+    }()
+    
+    lazy var productCodeEnterButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.red
+        button.backgroundColor = UIColor.link
         button.layer.cornerRadius = CGFloat(10)
-        button.setTitle("Sign Out", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(signOutAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(checkProductAction), for: .touchUpInside)
         return button
     }()
     
+    lazy var orLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    
+    lazy var addProductButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.white
+        button.layer.cornerRadius = CGFloat(10)
+        button.layer.borderColor = UIColor.link.cgColor
+        button.layer.borderWidth = 1.0
+        button.setTitleColor(UIColor.link, for: .normal)
+        button.addTarget(self, action: #selector(addProductAction), for: .touchUpInside)
+        return button
+    }()
+    
+    private let disposeBag = DisposeBag()
+    private let rootViewModel = RootViewModel()
     var authStateListener:NSObjectProtocol?
 
     // MARK: - View Lifecycle
@@ -78,10 +87,12 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
 
         addViews()
-        setConstraints()
         setBackgroundGradient()
+        setInitialUIProperties()
+        setConstraints()
+        setRxSwiftBindings()
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -107,15 +118,19 @@ class RootViewController: UIViewController {
         }
     }
     
+    // MARK: Initial Set-up
+
     private func addViews(){
         self.view.addSubview(backgroundGradientView)
+        self.view.addSubview(signOutButton)
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(subtitleLabel)
         self.view.addSubview(productCodeTextField)
         self.view.addSubview(productCodeEnterButton)
+        self.view.addSubview(orLabel)
         self.view.addSubview(addProductButton)
-        self.view.addSubview(subtitleLabel)
-        self.view.addSubview(titleLabel)
-        self.view.addSubview(signOutButton)
     }
+    
     private func setBackgroundGradient(){
         // Create a gradient layer.
         let gradientLayer = CAGradientLayer()
@@ -128,6 +143,16 @@ class RootViewController: UIViewController {
         gradientLayer.shouldRasterize = true
         // Apply the gradient to the backgroundGradientView.
         backgroundGradientView.layer.addSublayer(gradientLayer)
+    }
+    
+    private func setInitialUIProperties(){
+        signOutButton.setTitle(rootViewModel.signOutButtonString, for: .normal)
+        titleLabel.text = rootViewModel.titleString
+        subtitleLabel.text = rootViewModel.subtitleString
+        productCodeTextField.placeholder = rootViewModel.productCodeTextFieldPlaceHolderString
+        productCodeEnterButton.setTitle(rootViewModel.productCodeEnterButtonString, for: .normal)
+        orLabel.text = rootViewModel.orLabelString
+        addProductButton.setTitle(rootViewModel.addProductButtonString, for: .normal)
     }
     
     private func setConstraints(){
@@ -153,24 +178,37 @@ class RootViewController: UIViewController {
         
         productCodeTextField.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(50)
-            make.width.equalTo(200)
+            make.width.equalTo(250)
             make.center.equalTo(self.view)
         }
 
         productCodeEnterButton.snp.makeConstraints { make in
             make.height.equalTo(50)
-            make.width.equalTo(200)
+            make.width.equalTo(250)
             make.centerX.equalTo(self.view)
             make.top.equalTo(productCodeTextField.snp.bottom).offset(5)
         }
         
-        addProductButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.width.equalTo(200)
+        orLabel.snp.makeConstraints { make in
+            make.height.equalTo(20)
+            make.width.equalTo(250)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(productCodeEnterButton.snp.bottom).offset(15)
+            make.top.equalTo(productCodeEnterButton.snp.bottom).offset(5)
         }
         
+        addProductButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.width.equalTo(250)
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(orLabel.snp.bottom).offset(5)
+        }
+    }
+    
+    private func setRxSwiftBindings(){
+        productCodeTextField.rx.text.map { $0 ?? "" }.bind(to: rootViewModel.productCodeTextPublishedSubject).disposed(by: disposeBag)
+
+        rootViewModel.isUserInputValid().bind(to: productCodeEnterButton.rx.isEnabled).disposed(by: disposeBag)
+        rootViewModel.isUserInputValid().map({ $0 ? 1.0 : 0.5 }).bind(to: productCodeEnterButton.rx.alpha).disposed(by: disposeBag)
     }
     
     // MARK: - SignIn - SignOut
