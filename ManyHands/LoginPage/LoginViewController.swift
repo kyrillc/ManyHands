@@ -20,6 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.keyboardType = .emailAddress
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
+        textField.returnKeyType = .next
         textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = CGFloat(10)
         return textField
@@ -27,6 +28,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.isSecureTextEntry = true
+        textField.returnKeyType = .done
         textField.overrideUserInterfaceStyle = .light
         textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = CGFloat(10)

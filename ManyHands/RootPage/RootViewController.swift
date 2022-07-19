@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RootViewController.swift
 //  ManyHands
 //
 //  Created by Kyrill Cousson on 17/07/2022.
@@ -10,7 +10,7 @@ import SnapKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class ViewController: UIViewController {
+class RootViewController: UIViewController {
 
     lazy var productCodeTextField: UITextField = {
         let textField = UITextField()
