@@ -22,38 +22,41 @@ class ProductService: ProductServiceProtocol {
             let db = Firestore.firestore()
             db.collection(DatabaseCollections.products)
                 .whereField("humanReadableId", isEqualTo: humanReadableId)
-                .getDocuments { snapshot, error in
-                    
-                    if let error = error {
-                        print("get products failed with error:\(error.localizedDescription)")
-                        observer.onError(error)
-                    }
-                    else {
-                        print("get products succeedeed")
-                        guard let snapshot = snapshot else {
-                            observer.onError(NSError.init(domain: "", code: -1))
-                            return
-                        }
-                        guard let documentData = snapshot.documents.first else {
-                            observer.onError(NSError.init(domain: "", code: -1))
-                            return
-                        }
-                        if documentData.exists == false {
-                            observer.onError(NSError.init(domain: "", code: -1))
-                            return
-                        }
-                        do {
-                            let product = try documentData.data(as: Product.self)
-                            // A 'Product' value was successfully initialized from the DocumentSnapshot.
-                            print("Product: \(product)")
-                            observer.onNext(product)
-                        }
-                        catch {
-                            observer.onError(error)
-                        }
-                    }
+                .getDocuments { [weak self] snapshot, error in
+                    self?.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error)
                 }
             return Disposables.create {}
+        }
+    }
+    
+    private func handleFetchProductResponse(observer: AnyObserver<Product>, snapshot:QuerySnapshot?, error:Error?){
+        if let error = error {
+            print("get products failed with error:\(error.localizedDescription)")
+            observer.onError(error)
+        }
+        else {
+            print("get products succeedeed")
+            guard let snapshot = snapshot else {
+                observer.onError(NSError.init(domain: "", code: -1))
+                return
+            }
+            guard let documentData = snapshot.documents.first else {
+                observer.onError(NSError.init(domain: "", code: -1))
+                return
+            }
+            if documentData.exists == false {
+                observer.onError(NSError.init(domain: "", code: -1))
+                return
+            }
+            do {
+                let product = try documentData.data(as: Product.self)
+                // A 'Product' value was successfully initialized from the DocumentSnapshot.
+                print("Product: \(product)")
+                observer.onNext(product)
+            }
+            catch {
+                observer.onError(error)
+            }
         }
     }
 }

@@ -25,6 +25,6 @@ class ProductViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = productViewModel.title
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
     }
 }
