@@ -23,17 +23,18 @@ class LoginViewModel {
     private let switchToLoginButtonString = "I already have an account"
 
     
-    let usernameTextPublishedSubject = PublishSubject<String>()
-    let passwordTextPublishedSubject = PublishSubject<String>()
-    
+    private let disposeBag = DisposeBag()
+    let usernameTextPublishedSubject = PublishRelay<String>()
+    let passwordTextPublishedSubject = PublishRelay<String>()
     let confirmButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
     let alternateButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
-
     let isLoginUIBehaviorRelay = BehaviorRelay<Bool>(value: true)
     
-    private let disposeBag = DisposeBag()
+    private let userService: UserServiceProtocol
 
-    init() {
+    init(userService: UserServiceProtocol = UserService()) {
+        
+        self.userService = userService
         
         // Set confirmButtonTitle depending on value of isLoginUI:
         isLoginUIBehaviorRelay.map({ [weak self] isLoginUI in
@@ -56,5 +57,13 @@ class LoginViewModel {
             return username.isValidEmail() && password.isValidPassword()
         }.startWith(false)
     }
-
+    
+    func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void){
+        userService.signIn(with: username, password: password, completion: completion)
+    }
+    
+    func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void){
+        userService.register(with: username, password: password, completion: completion)
+    }
+    
 }

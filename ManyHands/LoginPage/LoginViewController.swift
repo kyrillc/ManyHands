@@ -94,7 +94,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
         
         addViews()
         setInitialUIProperties()
@@ -211,42 +211,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let email = self.emailTextField.text
         let password = self.passwordTextField.text
         if (loginViewModel.isLoginUIBehaviorRelay.value == true) {
-            signIn(with: email!, password: password!)
+            loginViewModel.signIn(with: email!, password: password!) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .failure(let error):
+                    AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
+                case .success():
+                    self.dismiss(animated: true)
+                }
+            }
         }
         else {
-            register(with: email!, password: password!)
+            loginViewModel.register(with: email!, password: password!) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .failure(let error):
+                    AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
+                case .success():
+                    self.dismiss(animated: true)
+                }
+            }
         }
     }
         
-    // MARK: - Firebase Authentication
-
-    private func register(with username:String, password:String){
-        Auth.auth().createUser(withEmail: username, password: password) { [weak self] user, error in
-            if let _error = error {
-                print(_error.localizedDescription)
-                guard let self = self else { return }
-                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: self)
-            }
-            else {
-                print("Registered!")
-                self?.dismiss(animated: true)
-            }
-        }
-    }
-    
-    private func signIn(with username:String, password:String){
-        Auth.auth().signIn(withEmail: username, password: password) { [weak self] user, error in
-            if let _error = error {
-                print(_error.localizedDescription)
-                guard let self = self else { return }
-                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: self)
-            }
-            else {
-                print("Signed In!")
-                self?.dismiss(animated: true)
-            }
-        }
-    }
 
     // MARK: - Keyboard Events
     

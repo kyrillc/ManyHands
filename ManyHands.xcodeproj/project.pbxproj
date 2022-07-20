@@ -17,6 +17,7 @@
 		D641658628869D6700E8943D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658528869D6700E8943D /* LoginViewModel.swift */; };
 		D641658B2886C6E200E8943D /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658A2886C6E200E8943D /* RootViewModel.swift */; };
 		D641658D2886C73300E8943D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658C2886C73300E8943D /* Constants.swift */; };
+		D6502491288873FB001AC13F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6502490288873FB001AC13F /* UserService.swift */; };
 		D685C86A2886E74400398567 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685C8692886E74400398567 /* ProductService.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* AccountUtilities.swift */; };
@@ -70,6 +71,7 @@
 		D641658528869D6700E8943D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D641658A2886C6E200E8943D /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		D641658C2886C73300E8943D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D6502490288873FB001AC13F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		D685C8692886E74400398567 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* AccountUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUtilities.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
 				D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */,
 				D685C8692886E74400398567 /* ProductService.swift */,
+				D6502490288873FB001AC13F /* UserService.swift */,
 			);
 			path = FirestoreDataStorage;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 			files = (
 				D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */,
 				D6E369D02885A69500296589 /* ShortCode.swift in Sources */,
+				D6502491288873FB001AC13F /* UserService.swift in Sources */,
 				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
 				D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */,
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
