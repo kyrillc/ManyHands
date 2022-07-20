@@ -9,8 +9,8 @@ import Foundation
 import FirebaseAuth
 
 protocol UserServiceProtocol {
-    func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
+    func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
 }
 
 final class UserService:UserServiceProtocol {

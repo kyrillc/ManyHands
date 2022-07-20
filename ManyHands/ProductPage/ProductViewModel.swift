@@ -11,8 +11,8 @@ struct ProductViewModel {
     
     private let product:Product
     
-    var title:String {
-        return product.name ?? product.humanReadableId!
+    var title:String? {
+        return product.name ?? product.humanReadableId
     }
     
     init(product:Product) {
