@@ -19,8 +19,10 @@ class ProductService: ProductServiceProtocol {
     func fetchProduct(with humanReadableId:String) -> Observable<Product> {
         
         return Observable.create { [weak self] observer -> Disposable in
-            self?.firestoreFetchProduct(with: humanReadableId) { [weak self] snapshot, error in
-                self?.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error)
+            guard let self = self else { return Disposables.create {} }
+            self.firestoreFetchProduct(with: humanReadableId) { [weak self] snapshot, error in
+                guard let self = self else { return }
+                self.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error)
             }
             return Disposables.create {}
         }

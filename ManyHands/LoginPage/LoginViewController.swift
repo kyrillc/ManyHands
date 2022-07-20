@@ -224,8 +224,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().createUser(withEmail: username, password: password) { [weak self] user, error in
             if let _error = error {
                 print(_error.localizedDescription)
-                guard let _self = self else { return }
-                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: _self)
+                guard let self = self else { return }
+                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: self)
             }
             else {
                 print("Registered!")
@@ -238,8 +238,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().signIn(withEmail: username, password: password) { [weak self] user, error in
             if let _error = error {
                 print(_error.localizedDescription)
-                guard let _self = self else { return }
-                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: _self)
+                guard let self = self else { return }
+                AlertHelper.showErrorAlert(with: _error.localizedDescription, on: self)
             }
             else {
                 print("Signed In!")

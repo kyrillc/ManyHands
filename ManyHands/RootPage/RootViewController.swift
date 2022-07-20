@@ -110,7 +110,8 @@ class RootViewController: UIViewController {
             }
             else {
                 print("We don't have a user")
-                self?.showLoginViewControllerIfNecessary()
+                guard let self = self else { return }
+                self.showLoginViewControllerIfNecessary()
             }
         }
     }
@@ -247,22 +248,15 @@ class RootViewController: UIViewController {
     
     @objc func checkProductAction(){
         print("checkProductAction")
-        
-        // Example of using RxSwift to bind the result to the button title:
-        /*
-        rootViewModel.fetchProductViewModel(with: testId).map({ productViewModel in
-            productViewModel.title
-        }).bind(to: productCodeEnterButton.rx.title(for: .normal)).disposed(by: disposeBag)
-        */
-        
+                
         rootViewModel.fetchProductViewModel(with: productCodeTextField.text ?? "").observe(on: MainScheduler.instance).subscribe { [weak self] productViewModel in
             print("got productVM: \(productViewModel)")
-            self?.displayProductViewController(with: productViewModel)
+            guard let self = self else { return }
+            self.displayProductViewController(with: productViewModel)
         } onError: { [weak self] error in
             print("got error:\(error.localizedDescription)")
-            if let _self = self {
-                AlertHelper.showErrorAlert(with: error.localizedDescription, on: _self)
-            }
+            guard let self = self else { return }
+            AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
         } onCompleted: {
             print("completed")
         } onDisposed: {
