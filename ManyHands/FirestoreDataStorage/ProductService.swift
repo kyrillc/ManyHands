@@ -18,15 +18,21 @@ class ProductService: ProductServiceProtocol {
     
     func fetchProduct(with humanReadableId:String) -> Observable<Product> {
         
-        return Observable.create { observer -> Disposable in
-            let db = Firestore.firestore()
-            db.collection(DatabaseCollections.products)
-                .whereField("humanReadableId", isEqualTo: humanReadableId)
-                .getDocuments { [weak self] snapshot, error in
-                    self?.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error)
-                }
+        return Observable.create { [weak self] observer -> Disposable in
+            self?.firestoreFetchProduct(with: humanReadableId) { [weak self] snapshot, error in
+                self?.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error)
+            }
             return Disposables.create {}
         }
+    }
+    
+    private func firestoreFetchProduct(with humanReadableId:String, completionHandler:@escaping (_ snapshot:QuerySnapshot?, _ error:Error?) -> (Void)) {
+        let db = Firestore.firestore()
+        db.collection(DatabaseCollections.products)
+            .whereField("humanReadableId", isEqualTo: humanReadableId)
+            .getDocuments{ snapshot, error in
+                completionHandler(snapshot, error)
+            }
     }
     
     private func handleFetchProductResponse(observer: AnyObserver<Product>, snapshot:QuerySnapshot?, error:Error?){
