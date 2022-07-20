@@ -60,7 +60,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.layer.borderColor = UIColor.link.cgColor
         button.layer.borderWidth = 1.0
         button.setTitleColor(UIColor.link, for: .normal)
-        button.addTarget(self, action: #selector(alternateAction), for: .touchUpInside)
         return button
     }()
     
@@ -123,10 +122,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.placeholder = loginViewModel.passwordTextFieldPlaceholderString
         titleLabel.text = loginViewModel.titleString
         subtitleLabel.text = loginViewModel.subtitleString
-        
-        confirmButton.setTitle(loginViewModel.confirmButtonTitle, for: .normal)
         orLabel.text = loginViewModel.orLabelString
-        alternateButton.setTitle(loginViewModel.alternateButtonTitle, for: .normal)
     }
     
     private func setConstraints(){
@@ -177,11 +173,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func setRxSwiftBindings(){
-        emailTextField.rx.text.map { $0 ?? "" }.bind(to: loginViewModel.usernameTextPublishedSubject).disposed(by: disposeBag)
-        passwordTextField.rx.text.map { $0 ?? "" }.bind(to: loginViewModel.passwordTextPublishedSubject).disposed(by: disposeBag)
-
+        // Bind textfields to loginViewModel's usernameTextPublishedSubject and passwordTextPublishedSubject
+        emailTextField.rx.text.orEmpty.bind(to: loginViewModel.usernameTextPublishedSubject).disposed(by: disposeBag)
+        passwordTextField.rx.text.orEmpty.bind(to: loginViewModel.passwordTextPublishedSubject).disposed(by: disposeBag)
+        
+        // Bind loginViewModel's isUserInputValid to confirmButton
         loginViewModel.isUserInputValid().bind(to: confirmButton.rx.isEnabled).disposed(by: disposeBag)
         loginViewModel.isUserInputValid().map({ $0 ? 1.0 : 0.3 }).bind(to: confirmButton.rx.alpha).disposed(by: disposeBag)
+
+        // Bind loginViewModel's confirmButtonTitlePublishedSubject and alternateButtonTitlePublishedSubject to button titles
+        loginViewModel.confirmButtonTitleBehaviorSubject.bind(to: confirmButton.rx.title(for: .normal)).disposed(by: disposeBag)
+        loginViewModel.alternateButtonTitleBehaviorSubject.bind(to: alternateButton.rx.title(for: .normal)).disposed(by: disposeBag)
+                
+        // Bind alternateButton tap to toggle loginViewModel's isLoginUI
+        alternateButton.rx.tap.bind { [weak self] () in
+            guard let self = self else { return }
+            let isLoginUI = self.loginViewModel.isLoginUIBehaviorRelay.value
+            self.loginViewModel.isLoginUIBehaviorRelay.accept(!isLoginUI)
+        }.disposed(by: disposeBag)
     }
     
     // MARK: - TextFields Delegate
@@ -197,29 +206,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Actions
-
-    @objc func alternateAction(){
-        loginViewModel.toggleLoginUI { [weak self] confirmButtonTitle, alternateButtonTitle in
-            self?.confirmButton.setTitle(confirmButtonTitle, for: .normal)
-            self?.alternateButton.setTitle(alternateButtonTitle, for: .normal)
-        }
-    }
     
     @objc func confirmAction(){
         let email = self.emailTextField.text
         let password = self.passwordTextField.text
-        loginViewModel.isLoginUI ? signIn(with: email!, password: password!) : register(with: email!, password: password!)
+        if (loginViewModel.isLoginUIBehaviorRelay.value == true) {
+            signIn(with: email!, password: password!)
+        }
+        else {
+            register(with: email!, password: password!)
+        }
     }
-    
-    // MARK: - Field Validation
-
-    private func isUsernameValid(username:String?) -> Bool {
-        return username?.isValidEmail() ?? false
-    }
-    private func isPasswordValid(password:String?) -> Bool {
-        return password?.isValidPassword() ?? false
-    }
-    
+        
     // MARK: - Firebase Authentication
 
     private func register(with username:String, password:String){

@@ -16,15 +16,38 @@ class LoginViewModel {
     let passwordTextFieldPlaceholderString = "Password"
     let titleString = Constants.appTitle
     let subtitleString = Constants.appSubtitle
-    let signInButtonString = "Sign In"
+    private let signInButtonString = "Sign In"
+    private let registerButtonString = "Register"
     let orLabelString = "- OR -"
-    let registerButtonString = "Register"
-    let switchToRegisterButtonString = "Create an account"
-    let switchToLoginButtonString = "I already have an account"
+    private let switchToRegisterButtonString = "Create an account"
+    private let switchToLoginButtonString = "I already have an account"
 
     
     let usernameTextPublishedSubject = PublishSubject<String>()
     let passwordTextPublishedSubject = PublishSubject<String>()
+    
+    let confirmButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
+    let alternateButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
+
+    let isLoginUIBehaviorRelay = BehaviorRelay<Bool>(value: true)
+    
+    private let disposeBag = DisposeBag()
+
+    init() {
+        
+        // Set confirmButtonTitle depending on value of isLoginUI:
+        isLoginUIBehaviorRelay.map({ [weak self] isLoginUI in
+            guard let self = self else { return "" }
+            return isLoginUI ? self.signInButtonString : self.registerButtonString
+        }).bind(to: confirmButtonTitleBehaviorSubject).disposed(by: disposeBag)
+        
+        // Set alternateButtonTitle depending on value of isLoginUI:
+        isLoginUIBehaviorRelay.map({ [weak self] isLoginUI in
+            guard let self = self else { return "" }
+            return isLoginUI ? self.switchToRegisterButtonString : self.switchToLoginButtonString
+        }).bind(to: alternateButtonTitleBehaviorSubject).disposed(by: disposeBag)
+        
+    }
     
     func isUserInputValid() -> Observable<Bool> {
         return Observable.combineLatest(usernameTextPublishedSubject.asObservable().startWith(""),
@@ -33,45 +56,5 @@ class LoginViewModel {
             return username.isValidEmail() && password.isValidPassword()
         }.startWith(false)
     }
-    
-    private(set) var isLoginUI: Bool = true
-    
-    var confirmButtonTitle: String {
-        if isLoginUI {
-            return signInButtonString
-        }
-        else {
-            return registerButtonString
-        }
-    }
-    
-    var alternateButtonTitle: String {
-        if isLoginUI {
-            return switchToRegisterButtonString
-        }
-        else {
-            return switchToLoginButtonString
-        }
-    }
-    
-    func toggleLoginUI(handler: @escaping (_ confirmButtonTitle: String, _ alternateButtonTitle: String) -> Void) {
-        isLoginUI.toggle()
-        handler(self.confirmButtonTitle, self.alternateButtonTitle)
-    }
-    
-    // Previous implementation when isLoginUI was in LoginViewController:
-    
-    //    private var isLoginUI: Bool = true {
-    //        didSet {
-    //            if isLoginUI {
-    //                confirmButton.setTitle(signInButtonString, for: .normal)
-    //                alternateButton.setTitle(switchToRegisterButtonString, for: .normal)
-    //            }
-    //            else {
-    //                confirmButton.setTitle(registerButtonString, for: .normal)
-    //                alternateButton.setTitle(switchToLoginButtonString, for: .normal)
-    //            }
-    //        }
-    //    }
 
 }
