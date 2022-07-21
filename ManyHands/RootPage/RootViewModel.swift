@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import FirebaseAuth
 
 final class RootViewModel {
     
@@ -22,6 +23,7 @@ final class RootViewModel {
 
     private let productService:ProductServiceProtocol
     private let userService:UserServiceProtocol
+    private var authStateListener:AuthStateDidChangeListenerHandle?
 
     let productCodeTextPublishedSubject = PublishSubject<String>()
     
@@ -55,6 +57,14 @@ final class RootViewModel {
             .map { productCode in
                 return (productCode.count == 5)
             }.startWith(false)
+    }
+    
+    func setAuthStateListener(completion: @escaping(User?) -> Void) {
+        authStateListener = userService.authStateListener(completion: completion)
+    }
+    
+    func removeAuthStateListener() {
+        userService.removeStateDidChangeListener(authStateListener)
     }
 
 }

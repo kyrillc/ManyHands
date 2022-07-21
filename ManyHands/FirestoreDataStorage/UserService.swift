@@ -9,12 +9,26 @@ import Foundation
 import FirebaseAuth
 
 protocol UserServiceProtocol {
+    func authStateListener(completion: @escaping(User?) -> Void) -> AuthStateDidChangeListenerHandle
+    func removeStateDidChangeListener(_ authStateListener:AuthStateDidChangeListenerHandle?)
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
     func signOut() throws
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
 }
 
 final class UserService:UserServiceProtocol {
+    
+    func authStateListener(completion: @escaping(User?) -> Void) -> AuthStateDidChangeListenerHandle {
+        return Auth.auth().addStateDidChangeListener { auth, user in
+            completion(user)
+        }
+    }
+    
+    func removeStateDidChangeListener(_ authStateListener:AuthStateDidChangeListenerHandle?){
+        if let authStateListener = authStateListener {
+            Auth.auth().removeStateDidChangeListener(authStateListener)
+        }
+    }
     
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void) {
         Auth.auth().signIn(withEmail: username, password: password) { user, error in

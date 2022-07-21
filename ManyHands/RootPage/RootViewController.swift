@@ -83,7 +83,6 @@ class RootViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
     private var rootViewModel = RootViewModel()
-    private var authStateListener:NSObjectProtocol?
     
     // MARK: - View Lifecycle
     
@@ -100,28 +99,18 @@ class RootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //TODO: This should be in UserService and it should be mockable
-        self.authStateListener = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
-            if let _ = user {
-                print("We have a user")
-                // The user's ID, unique to the Firebase project.
-                // Do NOT use this value to authenticate with your backend server,
-                // if you have one. Use getTokenWithCompletion:completion: instead.
-                // let uid = user.uid
-            }
-            else {
+        rootViewModel.setAuthStateListener(completion: { [weak self] user in
+            if user == nil {
                 print("We don't have a user")
                 guard let self = self else { return }
                 self.showLoginViewControllerIfNecessary()
             }
-        }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if (self.authStateListener != nil){
-            Auth.auth().removeStateDidChangeListener(self.authStateListener!)
-        }
+        rootViewModel.removeAuthStateListener()
     }
     
     // MARK: Initial Set-up
