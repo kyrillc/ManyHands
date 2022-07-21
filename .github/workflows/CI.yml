@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "ci-config" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "ci-config" ]
 
 jobs:
   run_tests:
@@ -20,12 +20,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_$.app && /usr/bin/xcodebuild -version
+
     - name: install-cocoapods-action
       uses: NiftyStack/install-cocoapods-action@1.0.0
     - run: pod install
-
-    - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_$.app && /usr/bin/xcodebuild -version
 
     - name: Run unit tests
       run: xcodebuild test -scheme ManyHands -workspace ManyHands.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 12,OS=$' | xcpretty && exit ${PIPESTATUS[0]}
