@@ -39,36 +39,47 @@ class LoginViewModelTests: XCTestCase {
     func test_isUserInputValid() throws {
         let sut = LoginViewModel()
         
-        let spy = BoolValueSpy(sut.isUserInputValid())
-                
-        XCTAssertEqual(spy.values, [false, false])
+        let isUserInputValidSpy = ValueSpy<Bool>(sut.isUserInputValid())
+        let usernameSpy = ValueSpy<String>(sut.usernameTextPublishedSubject.asObservable())
+        let passwordSpy = ValueSpy<String>(sut.passwordTextPublishedSubject.asObservable())
+
+        XCTAssertEqual(usernameSpy.values, [])
+        XCTAssertEqual(passwordSpy.values, [])
+
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false])
         
         sut.usernameTextPublishedSubject.accept("test@test.com")
-        XCTAssertEqual(spy.values, [false, false, false])
+        XCTAssertEqual(usernameSpy.values, ["test@test.com"])
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false, false])
         
         sut.passwordTextPublishedSubject.accept("Passw0rd")
-        XCTAssertEqual(spy.values, [false, false, false, true])
+        XCTAssertEqual(passwordSpy.values, ["Passw0rd"])
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true])
         
         sut.passwordTextPublishedSubject.accept("Passw0")
-        XCTAssertEqual(spy.values, [false, false, false, true, false])
+        XCTAssertEqual(passwordSpy.values, ["Passw0rd", "Passw0"])
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false])
         
         sut.passwordTextPublishedSubject.accept("Passw0rd")
-        XCTAssertEqual(spy.values, [false, false, false, true, false, true])
+        XCTAssertEqual(passwordSpy.values, ["Passw0rd", "Passw0", "Passw0rd"])
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true])
         
         sut.usernameTextPublishedSubject.accept("test@test")
-        XCTAssertEqual(spy.values, [false, false, false, true, false, true, false])
+        XCTAssertEqual(usernameSpy.values, ["test@test.com", "test@test"])
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true, false])
         
         sut.usernameTextPublishedSubject.accept("test@test.com")
-        XCTAssertEqual(spy.values, [false, false, false, true, false, true, false, true])
+        XCTAssertEqual(usernameSpy.values, ["test@test.com", "test@test", "test@test.com"])
+        XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true, false, true])
     }
     
     
-    private class BoolValueSpy {
+    private class ValueSpy<T> {
         
-        var values = [Bool]()
+        var values = [T]()
         let disposeBag = DisposeBag()
         
-        init(_ observable:Observable<Bool>) {
+        init(_ observable:Observable<T>) {
             observable.subscribe { [weak self] newBoolValue in
                 print("ValueSpy.newValue:\(newBoolValue)")
                 self?.values.append(newBoolValue)
