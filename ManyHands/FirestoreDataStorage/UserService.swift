@@ -14,6 +14,7 @@ protocol UserServiceProtocol {
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
     func signOut() throws
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
+    func currentUser() -> User?
 }
 
 final class UserService:UserServiceProtocol {
@@ -62,6 +63,10 @@ final class UserService:UserServiceProtocol {
                 completion(.success(()))
             }
         }
+    }
+    
+    func currentUser() -> User? {
+        return Auth.auth().currentUser
     }
 
 }

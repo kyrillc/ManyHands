@@ -66,5 +66,13 @@ final class RootViewModel {
     func removeAuthStateListener() {
         userService.removeStateDidChangeListener(authStateListener)
     }
+    
+    func currentUser() -> User? {
+        return userService.currentUser()
+    }
+    
+    func isLoggedIn() -> Bool {
+        return (currentUser() != nil)
+    }
 
 }

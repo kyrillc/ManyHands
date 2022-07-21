@@ -7,8 +7,6 @@
 
 import UIKit
 import SnapKit
-import FirebaseAuth
-import FirebaseFirestore
 import RxSwift
 import RxCocoa
 
@@ -213,8 +211,7 @@ class RootViewController: UIViewController {
     // MARK: - SignIn - SignOut
     
     func showLoginViewControllerIfNecessary(){
-        let isLoggedIn = (Auth.auth().currentUser != nil)
-        if isLoggedIn == false {
+        if rootViewModel.isLoggedIn() == false {
             let loginVC = LoginViewController()
             
             // Prevents user from dismissing the view by swiping down:
