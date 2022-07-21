@@ -73,25 +73,4 @@ class LoginViewModelTests: XCTestCase {
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true, false, true])
     }
     
-    
-    private class ValueSpy<T> {
-        
-        var values = [T]()
-        let disposeBag = DisposeBag()
-        
-        init(_ observable:Observable<T>) {
-            observable.subscribe { [weak self] newBoolValue in
-                print("ValueSpy.newValue:\(newBoolValue)")
-                self?.values.append(newBoolValue)
-            } onError: { error in
-                //
-            } onCompleted: {
-                //
-            } onDisposed: {
-                //
-            }.disposed(by: disposeBag)
-
-        }
-        
-    }
 }
