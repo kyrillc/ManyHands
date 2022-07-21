@@ -28,4 +28,4 @@ jobs:
     - run: pod install
 
     - name: Run unit tests
-      run: xcodebuild test -scheme ManyHands -workspace ManyHands.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 12,OS={{ matrix.ios }}' | xcpretty && exit ${PIPESTATUS[0]}
+      run: xcodebuild test -scheme ManyHands -workspace ManyHands.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 12,OS=${{ matrix.ios }}' | xcpretty && exit ${PIPESTATUS[0]}
