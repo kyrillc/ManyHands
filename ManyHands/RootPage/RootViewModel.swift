@@ -45,9 +45,11 @@ final class RootViewModel {
     }
     
     func isUserInputValid() -> Observable<Bool> {
-        return productCodeTextPublishedSubject.asObservable().startWith("").map { productCode in
-            return (productCode.count == 5)
-        }.startWith(false)
+        return productCodeTextPublishedSubject.asObservable()
+            .startWith("")
+            .map { productCode in
+                return (productCode.count == 5)
+            }.startWith(false)
     }
 
 }

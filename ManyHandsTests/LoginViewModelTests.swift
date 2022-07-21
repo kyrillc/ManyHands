@@ -48,27 +48,27 @@ class LoginViewModelTests: XCTestCase {
 
         XCTAssertEqual(isUserInputValidSpy.values, [false, false])
         
-        sut.usernameTextPublishedSubject.accept("test@test.com")
+        sut.usernameTextPublishedSubject.onNext("test@test.com")
         XCTAssertEqual(usernameSpy.values, ["test@test.com"])
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false])
         
-        sut.passwordTextPublishedSubject.accept("Passw0rd")
+        sut.passwordTextPublishedSubject.onNext("Passw0rd")
         XCTAssertEqual(passwordSpy.values, ["Passw0rd"])
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true])
         
-        sut.passwordTextPublishedSubject.accept("Passw0")
+        sut.passwordTextPublishedSubject.onNext("Passw0")
         XCTAssertEqual(passwordSpy.values, ["Passw0rd", "Passw0"])
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false])
         
-        sut.passwordTextPublishedSubject.accept("Passw0rd")
+        sut.passwordTextPublishedSubject.onNext("Passw0rd")
         XCTAssertEqual(passwordSpy.values, ["Passw0rd", "Passw0", "Passw0rd"])
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true])
         
-        sut.usernameTextPublishedSubject.accept("test@test")
+        sut.usernameTextPublishedSubject.onNext("test@test")
         XCTAssertEqual(usernameSpy.values, ["test@test.com", "test@test"])
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true, false])
         
-        sut.usernameTextPublishedSubject.accept("test@test.com")
+        sut.usernameTextPublishedSubject.onNext("test@test.com")
         XCTAssertEqual(usernameSpy.values, ["test@test.com", "test@test", "test@test.com"])
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true, false, true])
     }

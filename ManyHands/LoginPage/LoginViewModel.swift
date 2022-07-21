@@ -24,10 +24,12 @@ class LoginViewModel {
 
     
     private let disposeBag = DisposeBag()
-    let usernameTextPublishedSubject = PublishRelay<String>()
-    let passwordTextPublishedSubject = PublishRelay<String>()
+    let usernameTextPublishedSubject = PublishSubject<String>()
+    let passwordTextPublishedSubject = PublishSubject<String>()
     let confirmButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
     let alternateButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
+    
+    // Here we use a Relay so we can easily access the last value
     let isLoginUIBehaviorRelay = BehaviorRelay<Bool>(value: true)
     
     private let userService: UserServiceProtocol

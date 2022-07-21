@@ -249,19 +249,21 @@ class RootViewController: UIViewController {
     @objc func checkProductAction(){
         print("checkProductAction")
                 
-        rootViewModel.fetchProductViewModel(with: productCodeTextField.text ?? "").observe(on: MainScheduler.instance).subscribe { [weak self] productViewModel in
-            print("got productVM: \(productViewModel)")
-            guard let self = self else { return }
-            self.displayProductViewController(with: productViewModel)
-        } onError: { [weak self] error in
-            print("got error:\(error.localizedDescription)")
-            guard let self = self else { return }
-            AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
-        } onCompleted: {
-            print("completed")
-        } onDisposed: {
-            print("disposed")
-        }.disposed(by: disposeBag)
+        rootViewModel.fetchProductViewModel(with: productCodeTextField.text ?? "")
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] productViewModel in
+                print("got productVM: \(productViewModel)")
+                guard let self = self else { return }
+                self.displayProductViewController(with: productViewModel)
+            } onError: { [weak self] error in
+                print("got error:\(error.localizedDescription)")
+                guard let self = self else { return }
+                AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
+            } onCompleted: {
+                print("completed")
+            } onDisposed: {
+                print("disposed")
+            }.disposed(by: disposeBag)
     }
     
     private func displayProductViewController(with productViewModel:ProductViewModel){
