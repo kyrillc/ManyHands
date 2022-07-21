@@ -211,8 +211,12 @@ class RootViewController: UIViewController {
     }
     
     private func setRxSwiftBindings(){
+        // productCodeTextField => updates productCodeTextPublishedSubject
+        // productCodeTextPublishedSubject => updates productCodeTextField
+        // This allows input validation + reset of textfield when productCodeTextPublishedSubject value is reset
         productCodeTextField.rx.text.map { $0 ?? "" }.bind(to: rootViewModel.productCodeTextPublishedSubject).disposed(by: disposeBag)
-
+        rootViewModel.productCodeTextPublishedSubject.bind(to: productCodeTextField.rx.text).disposed(by: disposeBag)
+        
         rootViewModel.isUserInputValid().bind(to: productCodeEnterButton.rx.isEnabled).disposed(by: disposeBag)
         rootViewModel.isUserInputValid().map({ $0 ? 1.0 : 0.5 }).bind(to: productCodeEnterButton.rx.alpha).disposed(by: disposeBag)
     }

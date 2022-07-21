@@ -39,9 +39,14 @@ final class RootViewModel {
     func signOut() throws {
         do {
             try userService.signOut()
+            clearUserInput()
         } catch let error {
             print("signOut.error:\(error.localizedDescription)")
         }
+    }
+    
+    private func clearUserInput(){
+        productCodeTextPublishedSubject.onNext("")
     }
     
     func isUserInputValid() -> Observable<Bool> {
