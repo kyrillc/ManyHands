@@ -210,30 +210,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @objc func confirmAction(){
         let email = self.emailTextField.text
         let password = self.passwordTextField.text
-        if (loginViewModel.isLoginUIBehaviorRelay.value == true) {
-            loginViewModel.signIn(with: email!, password: password!) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .failure(let error):
-                    AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
-                case .success():
-                    self.dismiss(animated: true)
-                }
-            }
-        }
-        else {
-            loginViewModel.register(with: email!, password: password!) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .failure(let error):
-                    AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
-                case .success():
-                    self.dismiss(animated: true)
-                }
+        loginViewModel.confirmAction(with: email, password: password) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .failure(let error):
+                self.showErrorAlert(with: error.localizedDescription)
+            case .success():
+                self.dismiss(animated: true)
             }
         }
     }
-        
 
     // MARK: - Keyboard Events
     

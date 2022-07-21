@@ -100,6 +100,7 @@ class RootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //TODO: This should be in UserService and it should be mockable
         self.authStateListener = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
             if let _ = user {
                 print("We have a user")
@@ -226,7 +227,7 @@ class RootViewController: UIViewController {
             // Prevents user from dismissing the view by swiping down:
             loginVC.isModalInPresentation = true
             
-            self.present(loginVC, animated: true)
+            showDetailViewController(loginVC, sender: self)
         }
     }
     
@@ -258,7 +259,7 @@ class RootViewController: UIViewController {
             } onError: { [weak self] error in
                 print("got error:\(error.localizedDescription)")
                 guard let self = self else { return }
-                AlertHelper.showErrorAlert(with: error.localizedDescription, on: self)
+                self.showErrorAlert(with: error.localizedDescription)
             } onCompleted: {
                 print("completed")
             } onDisposed: {
@@ -271,7 +272,7 @@ class RootViewController: UIViewController {
         let productViewController = ProductViewController(productViewModel: productViewModel)
         navController.viewControllers = [productViewController]
         navController.modalPresentationStyle = .formSheet
-        self.showDetailViewController(navController, sender: self)
+        showDetailViewController(navController, sender: self)
     }
     
 }

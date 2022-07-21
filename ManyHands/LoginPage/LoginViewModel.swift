@@ -60,11 +60,20 @@ class LoginViewModel {
         }.startWith(false)
     }
     
-    func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void){
+    func confirmAction(with email:String?, password:String?, completion: @escaping(Result<Void, Error>) -> Void){
+        if (isLoginUIBehaviorRelay.value == true) {
+            signIn(with: email!, password: password!, completion: completion)
+        }
+        else {
+            register(with: email!, password: password!, completion: completion)
+        }
+    }
+    
+    private func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void){
         userService.signIn(with: username, password: password, completion: completion)
     }
     
-    func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void){
+    private func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void){
         userService.register(with: username, password: password, completion: completion)
     }
     

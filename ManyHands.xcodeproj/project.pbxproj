@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		53B6C43E33B4BD6F52F9F3FA /* Pods_ManyHands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */; };
 		B089D77BCFE808F09C58B190 /* Pods_ManyHands_ManyHandsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7293E659027872DD1DB156FB /* Pods_ManyHands_ManyHandsUITests.framework */; };
-		D641657928860A5A00E8943D /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* AlertHelper.swift */; };
+		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
 		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
 		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
 		D641658228869D4F00E8943D /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658128869D4F00E8943D /* ProductViewController.swift */; };
@@ -66,7 +66,7 @@
 		7E9BE6748D92D16731BC5841 /* Pods-ManyHands.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands.release.xcconfig"; path = "Target Support Files/Pods-ManyHands/Pods-ManyHands.release.xcconfig"; sourceTree = "<group>"; };
 		871463FD613931B07422618C /* Pods-ManyHands-ManyHandsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands-ManyHandsUITests.release.xcconfig"; path = "Target Support Files/Pods-ManyHands-ManyHandsUITests/Pods-ManyHands-ManyHandsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ManyHands.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D641657828860A5A00E8943D /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
 		D641658128869D4F00E8943D /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				D6BDE473288566A000DED4C2 /* AccountUtilities.swift */,
-				D641657828860A5A00E8943D /* AlertHelper.swift */,
+				D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */,
 				D641658C2886C73300E8943D /* Constants.swift */,
 			);
 			path = Utilities;
@@ -546,7 +546,7 @@
 				D641658228869D4F00E8943D /* ProductViewController.swift in Sources */,
 				D6E9A7DD288474C30097E71C /* RootViewController.swift in Sources */,
 				D641658B2886C6E200E8943D /* RootViewModel.swift in Sources */,
-				D641657928860A5A00E8943D /* AlertHelper.swift in Sources */,
+				D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */,
 				D641657B288698D200E8943D /* Product.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
