@@ -230,12 +230,12 @@ class RootViewController: UIViewController {
         }
     }
     
-    @objc func signOutAction() throws{
+    @objc func signOutAction() throws {
         print("signOutAction")
         do {
-            try Auth.auth().signOut()
-        } catch {
-            
+            try rootViewModel.signOut()
+        } catch let error {
+            print("signOutAction.error:\(error.localizedDescription)")
         }
     }
     

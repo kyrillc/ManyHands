@@ -6,6 +6,8 @@
 //
 
 import XCTest
+import RxSwift
+
 @testable import ManyHands
 
 class LoginViewModelTests: XCTestCase {
@@ -34,4 +36,51 @@ class LoginViewModelTests: XCTestCase {
         XCTAssertEqual(try sut.alternateButtonTitleBehaviorSubject.value(), "Create an account")
     }
     
+    func test_isUserInputValid() throws {
+        let sut = LoginViewModel()
+        
+        let spy = BoolValueSpy(sut.isUserInputValid())
+                
+        XCTAssertEqual(spy.values, [false, false])
+        
+        sut.usernameTextPublishedSubject.accept("test@test.com")
+        XCTAssertEqual(spy.values, [false, false, false])
+        
+        sut.passwordTextPublishedSubject.accept("Passw0rd")
+        XCTAssertEqual(spy.values, [false, false, false, true])
+        
+        sut.passwordTextPublishedSubject.accept("Passw0")
+        XCTAssertEqual(spy.values, [false, false, false, true, false])
+        
+        sut.passwordTextPublishedSubject.accept("Passw0rd")
+        XCTAssertEqual(spy.values, [false, false, false, true, false, true])
+        
+        sut.usernameTextPublishedSubject.accept("test@test")
+        XCTAssertEqual(spy.values, [false, false, false, true, false, true, false])
+        
+        sut.usernameTextPublishedSubject.accept("test@test.com")
+        XCTAssertEqual(spy.values, [false, false, false, true, false, true, false, true])
+    }
+    
+    
+    private class BoolValueSpy {
+        
+        var values = [Bool]()
+        let disposeBag = DisposeBag()
+        
+        init(_ observable:Observable<Bool>) {
+            observable.subscribe { [weak self] newBoolValue in
+                print("ValueSpy.newValue:\(newBoolValue)")
+                self?.values.append(newBoolValue)
+            } onError: { error in
+                //
+            } onCompleted: {
+                //
+            } onDisposed: {
+                //
+            }.disposed(by: disposeBag)
+
+        }
+        
+    }
 }

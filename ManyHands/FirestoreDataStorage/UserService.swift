@@ -10,6 +10,7 @@ import FirebaseAuth
 
 protocol UserServiceProtocol {
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
+    func signOut() throws
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
 }
 
@@ -25,6 +26,14 @@ final class UserService:UserServiceProtocol {
                 print("Signed In!")
                 completion(.success(()))
             }
+        }
+    }
+    
+    func signOut() throws {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            throw error
         }
     }
     

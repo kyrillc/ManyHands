@@ -21,16 +21,26 @@ final class RootViewModel {
     let addProductButtonString = "Add a new product"
 
     private let productService:ProductServiceProtocol
-    
+    private let userService:UserServiceProtocol
+
     let productCodeTextPublishedSubject = PublishSubject<String>()
     
-    init(productService:ProductServiceProtocol=ProductService()) {
+    init(productService:ProductServiceProtocol = ProductService(), userService:UserServiceProtocol = UserService()) {
         self.productService = productService
+        self.userService = userService
     }
     
     func fetchProductViewModel(with productId:String) -> Observable<ProductViewModel> {
         productService.fetchProduct(with: productId).map {
             ProductViewModel(product: $0)
+        }
+    }
+    
+    func signOut() throws {
+        do {
+            try userService.signOut()
+        } catch let error {
+            print("signOut.error:\(error.localizedDescription)")
         }
     }
     
