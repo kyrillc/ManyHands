@@ -22,6 +22,7 @@
 		D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6502496288887A1001AC13F /* LoginViewControllerTests.swift */; };
 		D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65024982888922F001AC13F /* ProductViewControllerTests.swift */; };
 		D685C86A2886E74400398567 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685C8692886E74400398567 /* ProductService.swift */; };
+		D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A028AE2889F52B00E49499 /* MockUserService.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* AccountUtilities.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
@@ -81,6 +82,7 @@
 		D6502496288887A1001AC13F /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
 		D65024982888922F001AC13F /* ProductViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewControllerTests.swift; sourceTree = "<group>"; };
 		D685C8692886E74400398567 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		D6A028AE2889F52B00E49499 /* MockUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* AccountUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUtilities.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				D6F7BEFA2889A678000026D2 /* Helpers.swift */,
+				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
 				D6E9A7EF288474C50097E71C /* ManyHandsTests.swift */,
 				D65024922888814B001AC13F /* LoginViewModelTests.swift */,
 				D6502496288887A1001AC13F /* LoginViewControllerTests.swift */,
@@ -567,6 +570,7 @@
 				D6F7BEFB2889A678000026D2 /* Helpers.swift in Sources */,
 				D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
+				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
 				D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */,
 				D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */,
 			);

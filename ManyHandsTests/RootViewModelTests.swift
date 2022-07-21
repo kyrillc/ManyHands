@@ -11,6 +11,26 @@ import XCTest
 class RootViewModelTests: XCTestCase {
 
     
+    func test_IsLoggedIn_False_If_UserService_Has_No_User() throws {
+
+        let mockUserService = MockUserService()
+        mockUserService.currentUserResult = nil
+
+        let sut = RootViewModel(productService: ProductService(), userService: mockUserService)
+        
+        XCTAssertFalse(sut.isLoggedIn())
+    }
+    
+    func test_CurrentUser_Nil_If_UserService_Has_No_User() throws {
+
+        let mockUserService = MockUserService()
+        mockUserService.currentUserResult = nil
+
+        let sut = RootViewModel(productService: ProductService(), userService: mockUserService)
+        
+        XCTAssertNil(sut.currentUser())
+    }
+    
     func test_ProductCode_Text_Is_Cleared_When_User_Signs_Out() throws {
 
         let sut = RootViewModel()
