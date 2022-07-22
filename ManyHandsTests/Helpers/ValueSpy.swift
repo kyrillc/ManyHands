@@ -10,8 +10,8 @@ import RxSwift
 
 public class ValueSpy<T> {
     
-    var values = [T]()
-    let disposeBag = DisposeBag()
+    private(set) var values = [T]()
+    private let disposeBag = DisposeBag()
     
     init(_ observable:Observable<T>) {
         observable.subscribe { [weak self] newBoolValue in
