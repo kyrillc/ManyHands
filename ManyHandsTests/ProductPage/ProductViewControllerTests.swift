@@ -12,7 +12,7 @@ class ProductViewControllerTests: XCTestCase {
 
     func test_ViewController_Does_Not_Render_Title_When_Product_Is_Incomplete() throws {
         
-        let product = Product(humanReadableId: nil, name:nil, entryDate: Date())
+        let product = Product(humanReadableId: nil, isPublic: true, name:nil, entryDate: Date())
         let productViewModel = ProductViewModel(product:product)
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -23,7 +23,7 @@ class ProductViewControllerTests: XCTestCase {
     
     func test_ViewController_Renders_Title_As_HumanReadableId_When_Product_Has_No_Name() throws {
         
-        let product = Product(humanReadableId: "expectedTitleFromHumanReadableId", name:nil, entryDate: Date())
+        let product = Product(humanReadableId: "expectedTitleFromHumanReadableId", isPublic: true, name:nil, entryDate: Date())
         let productViewModel = ProductViewModel(product:product)
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -35,7 +35,7 @@ class ProductViewControllerTests: XCTestCase {
     
     func test_ViewController_Renders_Title_As_Product_Name_When_Product_Has_A_Name() throws {
         
-        let product = Product(humanReadableId: "humanReadableId", name: "expectedTitleFromName", entryDate: Date())
+        let product = Product(humanReadableId: "humanReadableId", isPublic: true, name: "expectedTitleFromName", entryDate: Date())
         let productViewModel = ProductViewModel(product:product)
         let sut = ProductViewController(productViewModel: productViewModel)
 
