@@ -73,4 +73,52 @@ class LoginViewModelTests: XCTestCase {
         XCTAssertEqual(isUserInputValidSpy.values, [false, false, false, true, false, true, false, true])
     }
     
+    func test_SignIn_Success() throws{
+        let mockUserService = MockUserService()
+        mockUserService.signInResult = .success(())
+        mockUserService.registerResult = .failure(NSError(domain: "", code: -1))
+        let sut = LoginViewModel(userService: mockUserService)
+        
+        let exp = expectation(description: "expect success")
+        
+        sut.confirmAction(with: "", password: "") { result in
+            switch result {
+            case .success(()):
+                //expect success
+                print("success")
+                exp.fulfill()
+            case .failure(_):
+                //failure
+                print("failure")
+                XCTFail("Expected Success completion")
+            }
+        }
+        
+        wait(for: [exp], timeout: 0.1)
+    }
+    
+    func test_SignIn_Failure() throws{
+        let mockUserService = MockUserService()
+        mockUserService.signInResult = .failure(NSError(domain: "", code: -1))
+        mockUserService.registerResult = .success(())
+        let sut = LoginViewModel(userService: mockUserService)
+        
+        let exp = expectation(description: "expect failure")
+        
+        sut.confirmAction(with: "", password: "") { result in
+            switch result {
+            case .success(()):
+                //expect success
+                print("success")
+                XCTFail("Expected Success completion")
+            case .failure(_):
+                //failure
+                print("failure")
+                exp.fulfill()
+            }
+        }
+        
+        wait(for: [exp], timeout: 0.1)
+    }
+    
 }
