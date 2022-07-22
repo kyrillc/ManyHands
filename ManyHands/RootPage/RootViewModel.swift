@@ -32,21 +32,16 @@ final class RootViewModel {
         self.userService = userService
     }
     
+    // MARK: - Fetch Product
+
     func fetchProductViewModel(with productId:String) -> Observable<ProductViewModel> {
         productService.fetchProduct(with: productId).map {
             ProductViewModel(product: $0)
         }
     }
     
-    func signOut() throws {
-        do {
-            try userService.signOut()
-            clearUserInput()
-        } catch let error {
-            print("signOut.error:\(error.localizedDescription)")
-        }
-    }
-    
+    // MARK: - User Input
+
     private func clearUserInput(){
         productCodeTextPublishedSubject.onNext("")
     }
@@ -59,6 +54,8 @@ final class RootViewModel {
             }.startWith(false)
     }
     
+    // MARK: - User session state
+
     func setAuthStateListener(completion: @escaping(User?) -> Void) {
         authStateListener = userService.authStateListener(completion: completion)
     }
@@ -73,6 +70,15 @@ final class RootViewModel {
     
     func isLoggedIn() -> Bool {
         return (currentUser() != nil)
+    }
+    
+    func signOut() throws {
+        do {
+            try userService.signOut()
+            clearUserInput()
+        } catch let error {
+            print("signOut.error:\(error.localizedDescription)")
+        }
     }
 
 }
