@@ -11,6 +11,7 @@ struct Product:Codable, CustomStringConvertible {
     var description: String { "Product(humanReadableId:\(humanReadableId ?? "nil"), name:\(name ?? "nil"))" }
     
     let humanReadableId:String?
+    let isPublic:Bool?
     var name:String?
     var productDescription:String?
     var imageUrl:String?
@@ -18,8 +19,11 @@ struct Product:Codable, CustomStringConvertible {
     var year:Int?
     var ownerUserId:String? // Could be unused if we refer to product.owners.where(owningFromDate < Date() && owningUntilDate == nil)
     
+    var historyEntries : [HistoryEntry]?
+    
     enum CodingKeys: String, CodingKey {
         case humanReadableId
+        case isPublic
         case name
         case productDescription = "description"
         case imageUrl = "image"
