@@ -1,5 +1,5 @@
 //
-//  AccountUtilities.swift
+//  StringValidationExtensions.swift
 //  ManyHands
 //
 //  Created by Kyrill Cousson on 18/07/2022.

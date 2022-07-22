@@ -24,7 +24,7 @@
 		D685C86A2886E74400398567 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685C8692886E74400398567 /* ProductService.swift */; };
 		D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A028AE2889F52B00E49499 /* MockUserService.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
-		D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* AccountUtilities.swift */; };
+		D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
 		D6E369D02885A69500296589 /* ShortCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369CF2885A69500296589 /* ShortCode.swift */; };
 		D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */; };
@@ -39,7 +39,7 @@
 		D6E9A7FC288474C50097E71C /* ManyHandsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7FB288474C50097E71C /* ManyHandsUITestsLaunchTests.swift */; };
 		D6E9A8092884B85E0097E71C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E9A8082884B85E0097E71C /* GoogleService-Info.plist */; };
 		D6F7BEF92889A596000026D2 /* RootViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F7BEF82889A596000026D2 /* RootViewModelTests.swift */; };
-		D6F7BEFB2889A678000026D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F7BEFA2889A678000026D2 /* Helpers.swift */; };
+		D6F7BEFB2889A678000026D2 /* ValueSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F7BEFA2889A678000026D2 /* ValueSpy.swift */; };
 		E015BA6EF66D69516CE21F29 /* Pods_ManyHandsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1F3B2BD9BF190C0AA4EBB2 /* Pods_ManyHandsTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,7 +84,7 @@
 		D685C8692886E74400398567 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		D6A028AE2889F52B00E49499 /* MockUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		D6BDE473288566A000DED4C2 /* AccountUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUtilities.swift; sourceTree = "<group>"; };
+		D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidationExtensions.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
 		D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConstants.swift; sourceTree = "<group>"; };
 		D6E369CF2885A69500296589 /* ShortCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCode.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		D6E9A7FB288474C50097E71C /* ManyHandsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyHandsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D6E9A8082884B85E0097E71C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D6F7BEF82889A596000026D2 /* RootViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModelTests.swift; sourceTree = "<group>"; };
-		D6F7BEFA2889A678000026D2 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		D6F7BEFA2889A678000026D2 /* ValueSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueSpy.swift; sourceTree = "<group>"; };
 		F8B0B4285490DB7A9A1577E3 /* Pods-ManyHandsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHandsTests.release.xcconfig"; path = "Target Support Files/Pods-ManyHandsTests/Pods-ManyHandsTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,7 +158,7 @@
 		D641657F288698F700E8943D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				D6BDE473288566A000DED4C2 /* AccountUtilities.swift */,
+				D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */,
 				D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */,
 				D641658C2886C73300E8943D /* Constants.swift */,
 			);
@@ -171,8 +171,6 @@
 				D6E369CF2885A69500296589 /* ShortCode.swift */,
 				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
 				D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */,
-				D685C8692886E74400398567 /* ProductService.swift */,
-				D6502490288873FB001AC13F /* UserService.swift */,
 			);
 			path = FirestoreDataStorage;
 			sourceTree = "<group>";
@@ -202,6 +200,49 @@
 				D6E9A7DC288474C30097E71C /* RootViewController.swift */,
 			);
 			path = RootPage;
+			sourceTree = "<group>";
+		};
+		D6A028B0288A9B5A00E49499 /* LoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				D65024922888814B001AC13F /* LoginViewModelTests.swift */,
+				D6502496288887A1001AC13F /* LoginViewControllerTests.swift */,
+			);
+			path = LoginPage;
+			sourceTree = "<group>";
+		};
+		D6A028B1288A9B6A00E49499 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D6F7BEFA2889A678000026D2 /* ValueSpy.swift */,
+				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D6A028B2288A9B8800E49499 /* ProductPage */ = {
+			isa = PBXGroup;
+			children = (
+				D65024982888922F001AC13F /* ProductViewControllerTests.swift */,
+			);
+			path = ProductPage;
+			sourceTree = "<group>";
+		};
+		D6A028B3288A9B9600E49499 /* RootPage */ = {
+			isa = PBXGroup;
+			children = (
+				D6F7BEF82889A596000026D2 /* RootViewModelTests.swift */,
+			);
+			path = RootPage;
+			sourceTree = "<group>";
+		};
+		D6A028B4288A9BFC00E49499 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D685C8692886E74400398567 /* ProductService.swift */,
+				D6502490288873FB001AC13F /* UserService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		D6E9A7CC288474C30097E71C = {
@@ -235,6 +276,7 @@
 				D641657F288698F700E8943D /* Utilities */,
 				D64165802886990F00E8943D /* FirestoreDataStorage */,
 				D641657E288698E100E8943D /* Model */,
+				D6A028B4288A9BFC00E49499 /* Services */,
 				D641658728869D7100E8943D /* LoginPage */,
 				D64165892886C34600E8943D /* RootPage */,
 				D641658828869D8000E8943D /* ProductPage */,
@@ -250,13 +292,11 @@
 		D6E9A7EE288474C50097E71C /* ManyHandsTests */ = {
 			isa = PBXGroup;
 			children = (
-				D6F7BEFA2889A678000026D2 /* Helpers.swift */,
-				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
 				D6E9A7EF288474C50097E71C /* ManyHandsTests.swift */,
-				D65024922888814B001AC13F /* LoginViewModelTests.swift */,
-				D6502496288887A1001AC13F /* LoginViewControllerTests.swift */,
-				D65024982888922F001AC13F /* ProductViewControllerTests.swift */,
-				D6F7BEF82889A596000026D2 /* RootViewModelTests.swift */,
+				D6A028B1288A9B6A00E49499 /* Helpers */,
+				D6A028B0288A9B5A00E49499 /* LoginPage */,
+				D6A028B3288A9B9600E49499 /* RootPage */,
+				D6A028B2288A9B8800E49499 /* ProductPage */,
 			);
 			path = ManyHandsTests;
 			sourceTree = "<group>";
@@ -545,7 +585,7 @@
 				D6E369D02885A69500296589 /* ShortCode.swift in Sources */,
 				D6502491288873FB001AC13F /* UserService.swift in Sources */,
 				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
-				D6BDE474288566A000DED4C2 /* AccountUtilities.swift in Sources */,
+				D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */,
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
 				D641658428869D5900E8943D /* ProductViewModel.swift in Sources */,
 				D685C86A2886E74400398567 /* ProductService.swift in Sources */,
@@ -567,7 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6F7BEF92889A596000026D2 /* RootViewModelTests.swift in Sources */,
-				D6F7BEFB2889A678000026D2 /* Helpers.swift in Sources */,
+				D6F7BEFB2889A678000026D2 /* ValueSpy.swift in Sources */,
 				D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
