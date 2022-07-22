@@ -20,7 +20,7 @@ final class MockUserService : UserServiceProtocol {
 
     func authStateListener(completion: @escaping (User?) -> Void) -> AuthStateDidChangeListenerHandle {
         completion(currentUserResult)
-        return authStateListener!
+        return NSObject() as AuthStateDidChangeListenerHandle
     }
     
     func removeStateDidChangeListener(_ authStateListener: AuthStateDidChangeListenerHandle?) {

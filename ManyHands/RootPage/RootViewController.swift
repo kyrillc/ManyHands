@@ -10,6 +10,33 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+protocol RootViewControllerCollaboratorProtocol {
+    func showLoginViewControllerIfNecessary(from vc:RootViewController, rootViewModel:RootViewModel)
+    func displayProductViewController(with productViewModel:ProductViewModel, from vc:RootViewController)
+}
+
+class RootViewControllerCollaborator:RootViewControllerCollaboratorProtocol {
+    
+    func showLoginViewControllerIfNecessary(from vc:RootViewController, rootViewModel:RootViewModel){
+        if rootViewModel.isLoggedIn() == false {
+            let loginVC = LoginViewController()
+            
+            // Prevents user from dismissing the view by swiping down:
+            loginVC.isModalInPresentation = true
+            
+            vc.showDetailViewController(loginVC, sender: self)
+        }
+    }
+    
+    func displayProductViewController(with productViewModel:ProductViewModel, from vc:RootViewController){
+        let navController = UINavigationController()
+        let productViewController = ProductViewController(productViewModel: productViewModel)
+        navController.viewControllers = [productViewController]
+        navController.modalPresentationStyle = .formSheet
+        vc.showDetailViewController(navController, sender: self)
+    }
+    
+}
 
 class RootViewController: UIViewController {
     
@@ -80,7 +107,8 @@ class RootViewController: UIViewController {
     // MARK: - Other properties
 
     private let disposeBag = DisposeBag()
-    private var rootViewModel = RootViewModel()
+    var rootViewModel = RootViewModel()
+    var collaborator:RootViewControllerCollaboratorProtocol = RootViewControllerCollaborator()
     
     // MARK: - View Lifecycle
     
@@ -101,7 +129,7 @@ class RootViewController: UIViewController {
             if user == nil {
                 print("We don't have a user")
                 guard let self = self else { return }
-                self.showLoginViewControllerIfNecessary()
+                self.collaborator.showLoginViewControllerIfNecessary(from: self, rootViewModel: self.rootViewModel)
             }
         })
     }
@@ -208,18 +236,7 @@ class RootViewController: UIViewController {
         rootViewModel.isUserInputValid().map({ $0 ? 1.0 : 0.5 }).bind(to: productCodeEnterButton.rx.alpha).disposed(by: disposeBag)
     }
     
-    // MARK: - SignIn - SignOut
-    
-    func showLoginViewControllerIfNecessary(){
-        if rootViewModel.isLoggedIn() == false {
-            let loginVC = LoginViewController()
-            
-            // Prevents user from dismissing the view by swiping down:
-            loginVC.isModalInPresentation = true
-            
-            showDetailViewController(loginVC, sender: self)
-        }
-    }
+    // MARK: - SignOut
     
     @objc func signOutAction() throws {
         print("signOutAction")
@@ -245,7 +262,7 @@ class RootViewController: UIViewController {
             .subscribe { [weak self] productViewModel in
                 print("got productVM: \(productViewModel)")
                 guard let self = self else { return }
-                self.displayProductViewController(with: productViewModel)
+                self.collaborator.displayProductViewController(with: productViewModel, from: self)
             } onError: { [weak self] error in
                 print("got error:\(error.localizedDescription)")
                 guard let self = self else { return }
@@ -255,14 +272,6 @@ class RootViewController: UIViewController {
             } onDisposed: {
                 print("disposed")
             }.disposed(by: disposeBag)
-    }
-    
-    private func displayProductViewController(with productViewModel:ProductViewModel){
-        let navController = UINavigationController()
-        let productViewController = ProductViewController(productViewModel: productViewModel)
-        navController.viewControllers = [productViewController]
-        navController.modalPresentationStyle = .formSheet
-        showDetailViewController(navController, sender: self)
     }
     
 }

@@ -26,6 +26,8 @@
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
+		D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */; };
+		D6CF1BA8288AB63000EE6683 /* MockProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF1BA7288AB63000EE6683 /* MockProductService.swift */; };
 		D6E369D02885A69500296589 /* ShortCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369CF2885A69500296589 /* ShortCode.swift */; };
 		D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */; };
 		D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7D8288474C30097E71C /* AppDelegate.swift */; };
@@ -87,6 +89,8 @@
 		D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidationExtensions.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
 		D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConstants.swift; sourceTree = "<group>"; };
+		D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerTests.swift; sourceTree = "<group>"; };
+		D6CF1BA7288AB63000EE6683 /* MockProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductService.swift; sourceTree = "<group>"; };
 		D6E369CF2885A69500296589 /* ShortCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCode.swift; sourceTree = "<group>"; };
 		D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDataHandler.swift; sourceTree = "<group>"; };
 		D6E9A7D5288474C30097E71C /* ManyHands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManyHands.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +220,7 @@
 			children = (
 				D6F7BEFA2889A678000026D2 /* ValueSpy.swift */,
 				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
+				D6CF1BA7288AB63000EE6683 /* MockProductService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				D6F7BEF82889A596000026D2 /* RootViewModelTests.swift */,
+				D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */,
 			);
 			path = RootPage;
 			sourceTree = "<group>";
@@ -607,11 +613,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6F7BEF92889A596000026D2 /* RootViewModelTests.swift in Sources */,
+				D6CF1BA8288AB63000EE6683 /* MockProductService.swift in Sources */,
 				D6F7BEFB2889A678000026D2 /* ValueSpy.swift in Sources */,
 				D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
 				D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */,
+				D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */,
 				D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
