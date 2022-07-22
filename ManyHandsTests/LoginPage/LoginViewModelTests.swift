@@ -16,22 +16,23 @@ class LoginViewModelTests: XCTestCase {
     func test_Initial_State_Is_Login_UI() throws {
         let sut = LoginViewModel()
         
-        XCTAssertTrue(sut.isLoginUIBehaviorRelay.value)
+        XCTAssertTrue(sut.isLoginUI)
     }
     
     func test_IsLoginUIBehaviorRelay_Changes_Confirm_And_Alternate_Button_Titles() throws {
         let sut = LoginViewModel()
 
+        XCTAssertTrue(sut.isLoginUI)
         XCTAssertEqual(try sut.confirmButtonTitleBehaviorSubject.value(), "Sign In")
         XCTAssertEqual(try sut.alternateButtonTitleBehaviorSubject.value(), "Create an account")
         
-        sut.isLoginUIBehaviorRelay.accept(false)
+        sut.toggleLoginUI()
         
         XCTAssertEqual(try sut.confirmButtonTitleBehaviorSubject.value(), "Register")
         XCTAssertEqual(try sut.alternateButtonTitleBehaviorSubject.value(), "I already have an account")
         
-        sut.isLoginUIBehaviorRelay.accept(true)
-        
+        sut.toggleLoginUI()
+
         XCTAssertEqual(try sut.confirmButtonTitleBehaviorSubject.value(), "Sign In")
         XCTAssertEqual(try sut.alternateButtonTitleBehaviorSubject.value(), "Create an account")
     }

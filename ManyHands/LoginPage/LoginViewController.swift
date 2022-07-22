@@ -188,9 +188,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Bind alternateButton tap to toggle loginViewModel's isLoginUI
         alternateButton.rx.tap.bind { [weak self] () in
             guard let self = self else { return }
-            let isLoginUI = self.loginViewModel.isLoginUIBehaviorRelay.value
-            self.loginViewModel.isLoginUIBehaviorRelay.accept(!isLoginUI)
+            self.loginViewModel.toggleLoginUI()
         }.disposed(by: disposeBag)
+
     }
     
     // MARK: - TextFields Delegate

@@ -30,7 +30,7 @@ class LoginViewModel {
     let alternateButtonTitleBehaviorSubject = BehaviorSubject<String>(value: "")
     
     // Here we use a Relay so we can easily access the last value
-    let isLoginUIBehaviorRelay = BehaviorRelay<Bool>(value: true)
+    private let isLoginUIBehaviorRelay = BehaviorRelay<Bool>(value: true)
     
     private let userService: UserServiceProtocol
 
@@ -50,6 +50,16 @@ class LoginViewModel {
             return isLoginUI ? self.switchToRegisterButtonString : self.switchToLoginButtonString
         }).bind(to: alternateButtonTitleBehaviorSubject).disposed(by: disposeBag)
         
+    }
+    
+    var isLoginUI:Bool {
+        get {
+            return isLoginUIBehaviorRelay.value
+        }
+    }
+    
+    func toggleLoginUI(){
+        isLoginUIBehaviorRelay.accept(!isLoginUIBehaviorRelay.value)
     }
     
     func isUserInputValid() -> Observable<Bool> {
