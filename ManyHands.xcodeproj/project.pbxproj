@@ -17,6 +17,7 @@
 		D641658628869D6700E8943D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658528869D6700E8943D /* LoginViewModel.swift */; };
 		D641658B2886C6E200E8943D /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658A2886C6E200E8943D /* RootViewModel.swift */; };
 		D641658D2886C73300E8943D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658C2886C73300E8943D /* Constants.swift */; };
+		D64F2534288AFABA00D6F94B /* ProductViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64F2533288AFABA00D6F94B /* ProductViewModelTests.swift */; };
 		D6502491288873FB001AC13F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6502490288873FB001AC13F /* UserService.swift */; };
 		D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65024922888814B001AC13F /* LoginViewModelTests.swift */; };
 		D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6502496288887A1001AC13F /* LoginViewControllerTests.swift */; };
@@ -79,6 +80,7 @@
 		D641658528869D6700E8943D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D641658A2886C6E200E8943D /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		D641658C2886C73300E8943D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D64F2533288AFABA00D6F94B /* ProductViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModelTests.swift; sourceTree = "<group>"; };
 		D6502490288873FB001AC13F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		D65024922888814B001AC13F /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 		D6502496288887A1001AC13F /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				D65024982888922F001AC13F /* ProductViewControllerTests.swift */,
+				D64F2533288AFABA00D6F94B /* ProductViewModelTests.swift */,
 			);
 			path = ProductPage;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
+				D64F2534288AFABA00D6F94B /* ProductViewModelTests.swift in Sources */,
 				D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */,
 				D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */,
 				D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */,

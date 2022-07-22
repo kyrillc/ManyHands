@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 class ProductViewController: UIViewController {
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: CGRect.init(), style: .insetGrouped)
         return tableView
     }()
     
@@ -82,15 +83,25 @@ class ProductViewController: UIViewController {
 extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return productViewModel.productHistoryEntriesViewModels.count > 0 ? 2 : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (section == 1) {
+            return productViewModel.productHistoryEntriesViewModels.count
+        }
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return ProductDescriptionCell(cellViewModel: productViewModel, style: .default, reuseIdentifier: "ProductDescriptionCellIdentifier")
+        if (indexPath.section == 1) {
+            return HistoryEntryCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row],
+                                    style: .subtitle,
+                                    reuseIdentifier: "HistoryEntryCellIdentifier")
+        }
+        return ProductDescriptionCell(cellViewModel: productViewModel.productDescriptionViewModel,
+                                      style: .subtitle,
+                                      reuseIdentifier: "ProductDescriptionCellIdentifier")
     }
     
     
@@ -98,12 +109,13 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
 
 class ProductDescriptionCell : UITableViewCell {
     
-    private var cellViewModel:ProductViewModel!
+    private var cellViewModel:ProductDescriptionViewModel!
     
-    init(cellViewModel:ProductViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    init(cellViewModel:ProductDescriptionViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.cellViewModel = cellViewModel
-        self.textLabel?.text = cellViewModel.descriptionString
+        self.textLabel?.text = cellViewModel.productDescription
+        self.detailTextLabel?.text = cellViewModel.currentOwner
     }
     
     
@@ -112,3 +124,25 @@ class ProductDescriptionCell : UITableViewCell {
     }
 }
 
+class HistoryEntryCell : UITableViewCell {
+    
+    private var cellViewModel:ProductHistoryEntryViewModel!
+    private var disposeBag = DisposeBag()
+
+    init(cellViewModel:ProductHistoryEntryViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.cellViewModel = cellViewModel
+        self.textLabel?.text = cellViewModel.entryText
+//        self.detailTextLabel?.text = cellViewModel.entryAuthor + " / " + cellViewModel.entryDateString
+        if let detailTextLabel = detailTextLabel {
+            self.cellViewModel.entryAuthorPublishedSubject.map({ author in
+                "\(author) - \(cellViewModel.entryDateString)"
+            }).bind(to: detailTextLabel.rx.text).disposed(by: disposeBag)
+        }
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
