@@ -15,6 +15,10 @@ struct ProductViewModel {
         return product.name ?? product.humanReadableId
     }
     
+    var descriptionString:String? {
+        return product.productDescription ?? ""
+    }
+    
     init(product:Product) {
         self.product = product
     }

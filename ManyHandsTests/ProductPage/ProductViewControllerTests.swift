@@ -16,7 +16,7 @@ class ProductViewControllerTests: XCTestCase {
         let productViewModel = ProductViewModel(product:product)
         let sut = ProductViewController(productViewModel: productViewModel)
 
-        sut.viewDidLoad()
+        sut.loadViewIfNeeded()
 
         XCTAssertNil(sut.title)
     }
@@ -27,7 +27,7 @@ class ProductViewControllerTests: XCTestCase {
         let productViewModel = ProductViewModel(product:product)
         let sut = ProductViewController(productViewModel: productViewModel)
 
-        sut.viewDidLoad()
+        sut.loadViewIfNeeded()
 
         XCTAssertNotNil(sut.title)
         XCTAssertEqual(sut.title, "expectedTitleFromHumanReadableId")
@@ -39,11 +39,26 @@ class ProductViewControllerTests: XCTestCase {
         let productViewModel = ProductViewModel(product:product)
         let sut = ProductViewController(productViewModel: productViewModel)
 
-        sut.viewDidLoad()
+        sut.loadViewIfNeeded()
 
         XCTAssertNotNil(sut.title)
         XCTAssertEqual(sut.title, "expectedTitleFromName")
         XCTAssertNotEqual(sut.title, "humanReadableId")
+    }
+    
+    func test_First_TableViewCell_Displays_Product_Description() throws {
+        let product = Product(humanReadableId: "expectedTitleFromHumanReadableId", isPublic: true, name:nil, productDescription:"the product description", entryDate: Date())
+        let productViewModel = ProductViewModel(product:product)
+        let sut = ProductViewController(productViewModel: productViewModel)
+
+        sut.loadViewIfNeeded()
+
+        XCTAssertNotNil(sut.tableView)
+        
+        let firstCell = sut.tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+        XCTAssertNotNil(firstCell, "TableView doesn't have a cell")
+        
+        XCTAssertEqual(firstCell?.textLabel?.text, product.productDescription)
     }
 
 }

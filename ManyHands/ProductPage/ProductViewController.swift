@@ -34,11 +34,11 @@ class ProductViewController: UIViewController {
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissView))
-        tableView.contentInsetAdjustmentBehavior = .never
         
         addViews()
         setInitialUIProperties()
         setConstraints()
+        setupTableView()
         setRxSwiftBindings()
     }
     
@@ -49,14 +49,23 @@ class ProductViewController: UIViewController {
         self.view.addSubview(tableView)
     }
     
+    private func setupTableView(){
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+    }
+    
     private func setInitialUIProperties(){
     }
     
     private func setConstraints(){
         tableView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(self.view)
+            make.top.equalTo(view.safeAreaLayoutGuide)
         }
-        
+        tableView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalTo(self.view)
+        }
     }
     
     private func setRxSwiftBindings(){
@@ -69,3 +78,37 @@ class ProductViewController: UIViewController {
         self.dismiss(animated: true)
     }
 }
+
+extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return ProductDescriptionCell(cellViewModel: productViewModel, style: .default, reuseIdentifier: "ProductDescriptionCellIdentifier")
+    }
+    
+    
+}
+
+class ProductDescriptionCell : UITableViewCell {
+    
+    private var cellViewModel:ProductViewModel!
+    
+    init(cellViewModel:ProductViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.cellViewModel = cellViewModel
+        self.textLabel?.text = cellViewModel.descriptionString
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
