@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct Product:Codable, CustomStringConvertible {
-    var description: String { "Product(humanReadableId:\(humanReadableId ?? "nil"), name:\(name ?? "nil"))" }
+struct Product:Codable {
     
     let humanReadableId:String?
     let isPublic:Bool?
@@ -30,5 +29,6 @@ struct Product:Codable, CustomStringConvertible {
         case entryDate
         case year
         case ownerUserId
+        case historyEntries
     }
 }

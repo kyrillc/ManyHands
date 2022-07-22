@@ -35,7 +35,7 @@ final class RootViewModel {
     // MARK: - Fetch Product
 
     func fetchProductViewModel(with productId:String) -> Observable<ProductViewModel> {
-        productService.fetchProduct(with: productId).map {
+        productService.fetchProductWithHistoryEntries(with: productId).map {
             ProductViewModel(product: $0)
         }
     }
