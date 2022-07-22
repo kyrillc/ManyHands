@@ -38,7 +38,7 @@ class RootViewControllerCollaborator:RootViewControllerCollaboratorProtocol {
     
 }
 
-class RootViewController: UIViewController {
+class RootViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Views declaration
 
@@ -120,6 +120,8 @@ class RootViewController: UIViewController {
         setInitialUIProperties()
         setConstraints()
         setRxSwiftBindings()
+        
+        productCodeTextField.delegate = self
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -234,6 +236,15 @@ class RootViewController: UIViewController {
         
         rootViewModel.isUserInputValid().bind(to: productCodeEnterButton.rx.isEnabled).disposed(by: disposeBag)
         rootViewModel.isUserInputValid().map({ $0 ? 1.0 : 0.5 }).bind(to: productCodeEnterButton.rx.alpha).disposed(by: disposeBag)
+    }
+    
+    // MARK: - TextFields Delegate
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == productCodeTextField && productCodeEnterButton.isEnabled){
+            checkProductAction()
+        }
+        return true
     }
     
     // MARK: - SignOut
