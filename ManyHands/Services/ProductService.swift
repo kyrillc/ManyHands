@@ -69,15 +69,15 @@ class ProductService: ProductServiceProtocol {
         else {
             print("get products succeedeed")
             guard let snapshot = snapshot else {
-                observer.onError(NSError.init(domain: "", code: -1))
+                observer.onError(NSError.init(domain: "handleFetchProductResponse.snapshot is nil", code: -1))
                 return
             }
             guard let productDocumentData = snapshot.documents.first else {
-                observer.onError(NSError.init(domain: "", code: -1))
+                observer.onError(NSError.init(domain: "handleFetchProductResponse.productDocumentData is nil", code: -1))
                 return
             }
             if productDocumentData.exists == false {
-                observer.onError(NSError.init(domain: "", code: -1))
+                observer.onError(NSError.init(domain: "handleFetchProductResponse.productDocumentData.exists is false", code: -1))
                 return
             }
             if (completeWithHistoryEntries){

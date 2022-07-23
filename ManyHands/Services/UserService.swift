@@ -111,7 +111,7 @@ final class UserService:UserServiceProtocol {
         
         return Observable.create { observer -> Disposable in
             guard let userId = userId else {
-                observer.onError(NSError.init(domain: "", code: -1))
+                observer.onError(NSError.init(domain: "fetchUsername.userId is nil", code: -1))
                 return Disposables.create {}
             }
             let db = Firestore.firestore()
@@ -119,26 +119,30 @@ final class UserService:UserServiceProtocol {
             docRef.getDocument { (document, error) in
                 if let error = error {
                     print("get user failed with error:\(error.localizedDescription)")
+                    observer.onError(error)
                 }
                 else {
                     print("get user succeedeed")
                     guard let document = document else {
-                        observer.onError(NSError.init(domain: "", code: -1))
+                        observer.onError(NSError.init(domain: "fetchUsername.document is nil", code: -1))
                         return
                     }
-                    
-                    if (document.exists) {
-                        if let userData = document.data() {
-                            print("userData:\(String(describing: userData))")
-                            if let username = userData["name"] as? String {
-                                print("username:\(username)")
-                                observer.onNext(username)
-                                return
-                            }
-                        }
+                    if document.exists == false {
+                        observer.onError(NSError.init(domain: "fetchUsername.document.exists is false", code: -1))
+                        return
                     }
+                    guard let userData = document.data() else {
+                        observer.onError(NSError.init(domain: "fetchUsername.document.data() is nil", code: -1))
+                        return
+                    }
+                    print("userData:\(String(describing: userData))")
+                    guard let username = userData["name"] as? String else {
+                        observer.onError(NSError.init(domain: "fetchUsername.document.data().name is nil", code: -1))
+                        return
+                    }
+                    print("username:\(username)")
+                    observer.onNext(username)
                 }
-                observer.onError(NSError.init(domain: "", code: -1))
                 
             }
             return Disposables.create {}
