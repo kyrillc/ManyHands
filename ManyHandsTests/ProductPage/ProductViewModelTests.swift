@@ -36,17 +36,12 @@ class ProductViewModelTests: XCTestCase {
                                                                       currentOwner: product.ownerUserId ?? "")
 
         let sut = ProductViewModel(product: product, getUserService: {MockUserService()})
-        
-        // In this test, all ProductHistoryEntryViewModel have their own MockUserService, but ProductViewModel will propagate the same MockUserService to its children objects
-        
+                
         XCTAssertEqual(sut.productHistoryEntriesViewModels, [historyEntryViewModelA, historyEntryViewModelB])
         XCTAssertEqual(sut.productDescriptionViewModel, productDescriptionViewModel)
         
         XCTAssertEqual(sut.productDescriptionViewModel.productDescription, test_Product_Description)
         XCTAssertEqual(sut.title, test_Product_Name)
-        
-        
-
     }
 
     
