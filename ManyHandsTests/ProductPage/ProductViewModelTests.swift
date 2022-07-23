@@ -30,12 +30,14 @@ class ProductViewModelTests: XCTestCase {
                               entryDate: Date().addingTimeInterval(-60.0*60.0),
                               historyEntries: historyEntries)
         
-        let historyEntryViewModelA = ProductHistoryEntryViewModel(historyEntry:historyEntryA, userService:MockUserService())
-        let historyEntryViewModelB = ProductHistoryEntryViewModel(historyEntry:historyEntryB, userService:MockUserService())
+        let historyEntryViewModelA = ProductHistoryEntryViewModel(historyEntry:historyEntryA, getUserService:{MockUserService()})
+        let historyEntryViewModelB = ProductHistoryEntryViewModel(historyEntry:historyEntryB, getUserService:{MockUserService()})
         let productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
                                                                       currentOwner: product.ownerUserId ?? "")
 
-        let sut = ProductViewModel(product: product, userService: MockUserService())
+        let sut = ProductViewModel(product: product, getUserService: {MockUserService()})
+        
+        // In this test, all ProductHistoryEntryViewModel have their own MockUserService, but ProductViewModel will propagate the same MockUserService to its children objects
         
         XCTAssertEqual(sut.productHistoryEntriesViewModels, [historyEntryViewModelA, historyEntryViewModelB])
         XCTAssertEqual(sut.productDescriptionViewModel, productDescriptionViewModel)

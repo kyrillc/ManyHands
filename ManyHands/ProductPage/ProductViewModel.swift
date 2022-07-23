@@ -23,13 +23,14 @@ struct ProductViewModel {
         return product.productDescription ?? ""
     }
 
-    init(product:Product, userService:UserServiceProtocol = UserService()) {
+    // UserService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a UserService directly.
+    init(product:Product, getUserService:(() -> UserServiceProtocol) = { UserService() }) {
         self.product = product
         
         productHistoryEntriesViewModels = [ProductHistoryEntryViewModel]()
         if let historyEntries = product.historyEntries {
             productHistoryEntriesViewModels = historyEntries.map({ entry in
-                ProductHistoryEntryViewModel(historyEntry:entry, userService: userService)
+                ProductHistoryEntryViewModel(historyEntry:entry, getUserService: getUserService)
             })
         }
         
@@ -78,9 +79,9 @@ struct ProductHistoryEntryViewModel:Equatable {
         }
     }
     
-    init(historyEntry:HistoryEntry, userService:UserServiceProtocol = UserService()) {
+    init(historyEntry:HistoryEntry, getUserService:(() -> UserServiceProtocol) = { UserService() }) {
         self.historyEntry = historyEntry
-        self.userService = userService
+        self.userService = getUserService()
         
         fetchEntryAuthor().bind(to: entryAuthorPublishedSubject).disposed(by: disposeBag)
     }
