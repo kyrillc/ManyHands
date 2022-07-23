@@ -11,36 +11,17 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 protocol ProductServiceProtocol {
-    func fetchProduct(with humanReadableId:String) -> Observable<Product>
-    func fetchProductWithHistoryEntries(with humanReadableId:String) -> Observable<Product>
+    func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<Product>
 }
 
-class ProductService: ProductServiceProtocol {
-    
-    func fetchProductWithHistoryEntries(with humanReadableId:String) -> Observable<Product>{
-        return Observable.create { [weak self] observer -> Disposable in
-            guard let self = self else { return Disposables.create {} }
-            self.firestoreFetchProduct(with: humanReadableId) { [weak self] snapshot, error in
-                guard let self = self else { return }
-                self.handleFetchProductDataResponse(observer:observer, snapshot: snapshot, error: error)
-            }
-            return Disposables.create {}
-        }
-    }
-    
-    func fetchProduct(with humanReadableId:String) -> Observable<Product> {
-        
-        return Observable.create { [weak self] observer -> Disposable in
-            guard let self = self else { return Disposables.create {} }
-            self.firestoreFetchProduct(with: humanReadableId) { [weak self] snapshot, error in
-                guard let self = self else { return }
-                self.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error)
-            }
-            return Disposables.create {}
-        }
-    }
-    
-    private func firestoreFetchProduct(with humanReadableId:String, completionHandler:@escaping (_ snapshot:QuerySnapshot?, _ error:Error?) -> (Void)) {
+protocol FirestoreFetchingServiceProtocol {
+    func fetchProduct(with humanReadableId:String, completionHandler:@escaping (_ snapshot:QuerySnapshot?, _ error:Error?) -> (Void))
+    func fetchHistoryEntries(with productDocumentData:QueryDocumentSnapshot,
+                                              completionHandler:@escaping (_ productDocumentData:QueryDocumentSnapshot, _ snapshot:QuerySnapshot?, _ error:Error?) -> (Void))
+}
+
+class FirestoreFetchingService:FirestoreFetchingServiceProtocol{
+    func fetchProduct(with humanReadableId:String, completionHandler:@escaping (_ snapshot:QuerySnapshot?, _ error:Error?) -> (Void)) {
         let db = Firestore.firestore()
         db.collection(DatabaseCollections.products)
             .whereField("humanReadableId", isEqualTo: humanReadableId)
@@ -49,39 +30,38 @@ class ProductService: ProductServiceProtocol {
             }
     }
     
-    private func handleFetchProductResponse(observer: AnyObserver<Product>, snapshot:QuerySnapshot?, error:Error?){
-        if let error = error {
-            print("get products failed with error:\(error.localizedDescription)")
-            observer.onError(error)
-        }
-        else {
-            print("get products succeedeed")
-            guard let snapshot = snapshot else {
-                observer.onError(NSError.init(domain: "", code: -1))
-                return
+    func fetchHistoryEntries(with productDocumentData:QueryDocumentSnapshot,
+                                      completionHandler:@escaping (_ productDocumentData:QueryDocumentSnapshot, _ snapshot:QuerySnapshot?, _ error:Error?) -> (Void)) {
+        let db = Firestore.firestore()
+        db.collection(DatabaseCollections.products).document(productDocumentData.documentID)
+            .collection(DatabaseCollections.historyEntries)
+            .getDocuments{ snapshot, error in
+                completionHandler(productDocumentData, snapshot, error)
             }
-            guard let documentData = snapshot.documents.first else {
-                observer.onError(NSError.init(domain: "", code: -1))
-                return
+    }
+}
+
+class ProductService: ProductServiceProtocol {
+    
+    private let firestoreFetchingService:FirestoreFetchingServiceProtocol
+    
+    init(firestoreFetchingService:FirestoreFetchingServiceProtocol = FirestoreFetchingService()) {
+        self.firestoreFetchingService = firestoreFetchingService
+    }
+        
+    func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<Product>{
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let self = self else { return Disposables.create {} }
+            
+            self.firestoreFetchingService.fetchProduct(with: humanReadableId) { [weak self] snapshot, error in
+                guard let self = self else { return }
+                self.handleFetchProductResponse(observer:observer, snapshot: snapshot, error: error, completeWithHistoryEntries: withHistoryEntries)
             }
-            if documentData.exists == false {
-                observer.onError(NSError.init(domain: "", code: -1))
-                return
-            }
-            do {
-                let product = try documentData.data(as: Product.self)
-                // A 'Product' value was successfully initialized from the DocumentSnapshot.
-                print("Product: \(product)")
-                observer.onNext(product)
-            }
-            catch {
-                observer.onError(error)
-            }
+            return Disposables.create {}
         }
     }
     
-    
-    private func handleFetchProductDataResponse(observer: AnyObserver<Product>, snapshot:QuerySnapshot?, error:Error?){
+    private func handleFetchProductResponse(observer: AnyObserver<Product>, snapshot:QuerySnapshot?, error:Error?, completeWithHistoryEntries:Bool){
         if let error = error {
             print("get products failed with error:\(error.localizedDescription)")
             observer.onError(error)
@@ -100,22 +80,24 @@ class ProductService: ProductServiceProtocol {
                 observer.onError(NSError.init(domain: "", code: -1))
                 return
             }
-            self.firestoreFetchHistoryEntries(with: productDocumentData) { [weak self] _productDocumentData, snapshot, error in
-                guard let self = self else { return }
-                self.handleFetchHistoryEntriesResponse(observer:observer, productDocumentData:_productDocumentData, snapshot: snapshot, error: error)
+            if (completeWithHistoryEntries){
+                self.firestoreFetchingService.fetchHistoryEntries(with: productDocumentData) { [weak self] _productDocumentData, snapshot, error in
+                    guard let self = self else { return }
+                    self.handleFetchHistoryEntriesResponse(observer:observer, productDocumentData:_productDocumentData, snapshot: snapshot, error: error)
+                }
+            }
+            else {
+                do {
+                    let product = try productDocumentData.data(as: Product.self)
+                    // A 'Product' value was successfully initialized from the DocumentSnapshot.
+                    print("Product: \(product)")
+                    observer.onNext(product)
+                }
+                catch {
+                    observer.onError(error)
+                }
             }
         }
-    }
-    
-    
-    private func firestoreFetchHistoryEntries(with productDocumentData:QueryDocumentSnapshot,
-                                              completionHandler:@escaping (_ productDocumentData:QueryDocumentSnapshot, _ snapshot:QuerySnapshot?, _ error:Error?) -> (Void)) {
-        let db = Firestore.firestore()
-        db.collection(DatabaseCollections.products).document(productDocumentData.documentID)
-            .collection(DatabaseCollections.historyEntries)
-            .getDocuments{ snapshot, error in
-                completionHandler(productDocumentData, snapshot, error)
-            }
     }
     
     private func handleFetchHistoryEntriesResponse(observer: AnyObserver<Product>, productDocumentData:QueryDocumentSnapshot, snapshot:QuerySnapshot?, error:Error?){
@@ -157,7 +139,6 @@ class ProductService: ProductServiceProtocol {
                 }
             }
             
-            
             product.historyEntries = historyEntries
             print("Product with historyEntries: \(product)")
             observer.onNext(product)
@@ -166,6 +147,5 @@ class ProductService: ProductServiceProtocol {
         catch {
             observer.onError(error)
         }
-        
     }
 }
