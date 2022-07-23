@@ -106,6 +106,8 @@ class ProductService: ProductServiceProtocol {
             // A 'Product' value was successfully initialized from the DocumentSnapshot.
             var historyEntries = [HistoryEntry]()
             
+            //TODO: Should I use observer.onError(error) ?
+            // Product should be returned regarledd of historyEntries response, but handling errors can still be useful.
             if let error = error {
                 print("get HistoryEntries failed with error:\(error.localizedDescription)")
                 //observer.onError(error)

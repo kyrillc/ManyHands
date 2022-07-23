@@ -30,10 +30,13 @@ class ProductViewModelTests: XCTestCase {
                               entryDate: Date().addingTimeInterval(-60.0*60.0),
                               historyEntries: historyEntries)
         
-        let historyEntryViewModelA = ProductHistoryEntryViewModel(historyEntry:historyEntryA, getUserService:{MockUserService()})
-        let historyEntryViewModelB = ProductHistoryEntryViewModel(historyEntry:historyEntryB, getUserService:{MockUserService()})
+        let historyEntryViewModelA = ProductHistoryEntryViewModel(historyEntry:historyEntryA,
+                                                                  getUserService:{MockUserService()})
+        let historyEntryViewModelB = ProductHistoryEntryViewModel(historyEntry:historyEntryB,
+                                                                  getUserService:{MockUserService()})
         let productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
-                                                                      currentOwner: product.ownerUserId ?? "")
+                                                                      ownerUserId: product.ownerUserId ?? "",
+                                                                      getUserService: {MockUserService()})
 
         let sut = ProductViewModel(product: product, getUserService: {MockUserService()})
                 

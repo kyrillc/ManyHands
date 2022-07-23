@@ -23,6 +23,8 @@ struct ProductViewModel {
         return product.productDescription ?? ""
     }
 
+    private let userService:UserServiceProtocol
+
     // UserService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a UserService directly.
     init(product:Product, getUserService:(() -> UserServiceProtocol) = { UserService() }) {
         self.product = product
@@ -35,15 +37,39 @@ struct ProductViewModel {
         }
         
         productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
-                                                                  currentOwner: product.ownerUserId ?? "")
+                                                                  ownerUserId:product.ownerUserId,
+                                                                  getUserService: getUserService)
+        
+        self.userService = getUserService()
     }
+    
+    
     
 }
 
 struct ProductDescriptionViewModel:Equatable {
+    static func == (lhs: ProductDescriptionViewModel, rhs: ProductDescriptionViewModel) -> Bool {
+        lhs.productDescription == rhs.productDescription
+    }
+    
     // let image:UIImage
     let productDescription:String
-    let currentOwner:String
+    private let userService:UserServiceProtocol
+    private var disposeBag = DisposeBag()
+    private var ownerUserId:String?
+    let productOwnerPublishedSubject = PublishSubject<String>()
+
+    init(productDescription:String, ownerUserId:String?, getUserService:(() -> UserServiceProtocol) = { UserService() }) {
+        self.productDescription = productDescription
+        self.ownerUserId = ownerUserId
+        self.userService = getUserService()
+        fetchProductOwner().bind(to: productOwnerPublishedSubject).disposed(by: disposeBag)
+    }
+    func fetchProductOwner() -> Observable<String> {
+        userService.fetchUsername(for: ownerUserId).map { owner in
+            "Owner: \(owner)"
+        }
+    }
 }
 
 struct ProductHistoryEntryViewModel:Equatable {

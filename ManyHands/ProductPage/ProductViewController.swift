@@ -110,12 +110,16 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
 class ProductDescriptionCell : UITableViewCell {
     
     private var cellViewModel:ProductDescriptionViewModel!
-    
+    private var disposeBag = DisposeBag()
+
     init(cellViewModel:ProductDescriptionViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.cellViewModel = cellViewModel
         self.textLabel?.text = cellViewModel.productDescription
-        self.detailTextLabel?.text = cellViewModel.currentOwner
+        if let detailTextLabel = detailTextLabel {
+            self.cellViewModel.productOwnerPublishedSubject
+                .bind(to: detailTextLabel.rx.text).disposed(by: disposeBag)
+        }
     }
     
     
@@ -133,7 +137,6 @@ class HistoryEntryCell : UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.cellViewModel = cellViewModel
         self.textLabel?.text = cellViewModel.entryText
-//        self.detailTextLabel?.text = cellViewModel.entryAuthor + " / " + cellViewModel.entryDateString
         if let detailTextLabel = detailTextLabel {
             self.cellViewModel.entryAuthorPublishedSubject.map({ author in
                 "\(author) - \(cellViewModel.entryDateString)"
