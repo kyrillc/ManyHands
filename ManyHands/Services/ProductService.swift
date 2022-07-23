@@ -124,11 +124,8 @@ class ProductService: ProductServiceProtocol {
                 }
                 else {
                     for documentData in snapshot.documents {
-                        print("\(documentData.documentID) -> \(documentData.data())")
-                        let userId = documentData.data()["userId"] as! DocumentReference
                         do {
-                            var historyEntry = try documentData.data(as: HistoryEntry.self)
-                            historyEntry.userPath = userId.path
+                            let historyEntry = try documentData.data(as: HistoryEntry.self)
                             // A 'HistoryEntry' value was successfully initialized from the DocumentSnapshot.
                             print("HistoryEntry: \(historyEntry)")
                             historyEntries.append(historyEntry)

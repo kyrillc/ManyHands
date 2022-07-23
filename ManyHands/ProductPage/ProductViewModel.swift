@@ -50,8 +50,7 @@ struct ProductHistoryEntryViewModel:Equatable {
     static func == (lhs: ProductHistoryEntryViewModel, rhs: ProductHistoryEntryViewModel) -> Bool {
         return (lhs.historyEntry == rhs.historyEntry
                 && lhs.entryText == rhs.entryText
-                && lhs.entryDateString == rhs.entryDateString
-                && lhs.entryAuthor == rhs.entryAuthor)
+                && lhs.entryDateString == rhs.entryDateString)
     }
     
     
@@ -73,11 +72,6 @@ struct ProductHistoryEntryViewModel:Equatable {
             return historyEntry.entryDate.formatted()
         }
     }
-    var entryAuthor:String {
-        get {
-            return historyEntry.userPath ?? ""
-        }
-    }
     
     init(historyEntry:HistoryEntry, getUserService:(() -> UserServiceProtocol) = { UserService() }) {
         self.historyEntry = historyEntry
@@ -87,6 +81,6 @@ struct ProductHistoryEntryViewModel:Equatable {
     }
     
     func fetchEntryAuthor() -> Observable<String> {
-        userService.fetchUsername(for: historyEntry.userPath)
+        userService.fetchUsername(for: historyEntry.userId)
     }
 }

@@ -17,7 +17,7 @@ protocol UserServiceProtocol {
     func signOut() throws
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
     func currentUser() -> User?
-    func fetchUsername(for userPath:String?) -> Observable<String>
+    func fetchUsername(for userId:String?) -> Observable<String>
 }
 
 final class UserService:UserServiceProtocol {
@@ -107,15 +107,16 @@ final class UserService:UserServiceProtocol {
         return Auth.auth().currentUser
     }
     
-    func fetchUsername(for userPath:String?) -> Observable<String> {
+    func fetchUsername(for userId:String?) -> Observable<String> {
         
         return Observable.create { observer -> Disposable in
-            guard let userPath = userPath else {
+            guard let userId = userId else {
                 observer.onError(NSError.init(domain: "", code: -1))
                 return Disposables.create {}
             }
             let db = Firestore.firestore()
-            db.document(userPath).getDocument { document, error in
+            let docRef = db.collection(DatabaseCollections.users).document(userId)
+            docRef.getDocument { (document, error) in
                 if let error = error {
                     print("get user failed with error:\(error.localizedDescription)")
                 }

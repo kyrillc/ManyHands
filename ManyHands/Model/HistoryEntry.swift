@@ -9,13 +9,14 @@ import Foundation
 
 struct HistoryEntry:Codable, Equatable {
     
-    var userPath:String?
+    // We could also use a DocumentReference in Firestore for userId, but this would require HistoryEntry to depend on the Firestore framework.
+    var userId:String?
     var entryText:String?
     var imageUrl:String?
     var entryDate:Date
     
     enum CodingKeys: String, CodingKey {
-        case userPath
+        case userId
         case entryText
         case imageUrl = "image"
         case entryDate

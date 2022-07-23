@@ -46,7 +46,7 @@ final class MockUserService : UserServiceProtocol {
         completion(registerResult)
     }
     
-    func fetchUsername(for userPath: String?) -> Observable<String> {
+    func fetchUsername(for userId: String?) -> Observable<String> {
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self else {
                 return Disposables.create {}

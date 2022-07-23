@@ -16,10 +16,10 @@ class ProductViewModelTests: XCTestCase {
         let test_Product_Description = "Test Product Description"
         let test_Product_Name = "Test Product Name"
 
-        let historyEntryA = HistoryEntry(userPath: "ABCD",
+        let historyEntryA = HistoryEntry(userId: "ABCD",
                                          entryDate: Date().addingTimeInterval(-30.0*60.0))
         
-        let historyEntryB = HistoryEntry(userPath: "EFGH",
+        let historyEntryB = HistoryEntry(userId: "EFGH",
                                          entryDate: Date().addingTimeInterval(-10.0*60.0))
         
         let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
