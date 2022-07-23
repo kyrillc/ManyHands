@@ -8,6 +8,7 @@
 import Foundation
 
 struct DatabaseCollections {
+    static let users = "users"
     static let products = "products"
     static let historyEntries = "historyEntries"
 }

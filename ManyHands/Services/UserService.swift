@@ -35,14 +35,39 @@ final class UserService:UserServiceProtocol {
     }
     
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void) {
-        Auth.auth().signIn(withEmail: username, password: password) { user, error in
+        Auth.auth().signIn(withEmail: username, password: password) { [weak self] user, error in
             if let error = error {
                 print(error.localizedDescription)
                 completion(.failure(error))
             }
             else {
-                print("Signed In!")
-                completion(.success(()))
+                guard let self = self else { return }
+                if let user = user {
+                    print("Signed In user:\(user.user.uid)")
+                }
+
+                self.userExistsOnFirestore { [weak self] exists in
+                    guard let self = self else {
+                        return
+                        
+                    }
+                    if exists {
+                        completion(.success(()))
+                    }
+                    if !exists {
+                        print("User is not in database")
+                        self.addUserToFirestore(user?.user, completion: { result in
+                            switch result {
+                            case .success(let userId):
+                                print("Added user \(userId) to Firestore")
+                                completion(.success(()))
+                            case .failure(let error):
+                                print("ERROR: Could not add user to Firestore")
+                                completion(.failure(error))
+                            }
+                        })
+                    }
+                }
             }
         }
     }
@@ -56,14 +81,24 @@ final class UserService:UserServiceProtocol {
     }
     
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void) {
-        Auth.auth().createUser(withEmail: username, password: password) { user, error in
+        Auth.auth().createUser(withEmail: username, password: password) { [weak self] user, error in
             if let error = error {
                 print(error.localizedDescription)
                 completion(.failure(error))
             }
             else {
                 print("Registered!")
-                completion(.success(()))
+                guard let self = self else { return }
+                self.addUserToFirestore(user?.user, completion: { result in
+                    switch result {
+                    case .success(let userId):
+                        print("Added user \(userId) to Firestore")
+                        completion(.success(()))
+                    case .failure(let error):
+                        print("ERROR: Could not add user to Firestore")
+                        completion(.failure(error))
+                    }
+                })
             }
         }
     }
@@ -109,5 +144,42 @@ final class UserService:UserServiceProtocol {
         }
     }
     
+    func userExistsOnFirestore(completion:@escaping(Bool) -> Void) {
+        guard let user = currentUser() else { return }
+        let userId = user.uid
 
+        let db = Firestore.firestore()
+        let docRef = db.collection(DatabaseCollections.users).document(userId)
+
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                print("Document data: \(dataDescription)")
+                completion(true)
+            } else {
+                print("Document does not exist")
+                completion(false)
+            }
+        }
+    }
+    
+    func addUserToFirestore(_ user:User?, completion: @escaping(Result<String, Error>) -> Void) {
+        guard let user = user else { return }
+        guard let userEmail = user.email else { return }
+        let userData = ["name":userEmail] as [String : Any]
+        let userId = user.uid
+
+        let db = Firestore.firestore()
+        db.collection(DatabaseCollections.users).document(userId).setData(userData, merge: true) { error in
+            if let error = error {
+                print("add user failed with error:\(error.localizedDescription)")
+                completion(.failure(NSError(domain: "", code: -1)))
+            }
+            else {
+                print("add user succeedeed")
+                completion(.success(userId))
+            }
+        }
+                
+    }
 }
