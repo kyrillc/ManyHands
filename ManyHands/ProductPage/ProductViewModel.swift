@@ -55,12 +55,18 @@ struct ProductDescriptionViewModel:Equatable {
     private var disposeBag = DisposeBag()
     private var ownerUserId:String?
     let productOwnerPublishedSubject = PublishSubject<String>()
-
+    
     init(productDescription:String, ownerUserId:String?, getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() }) {
         self.productDescription = productDescription
         self.ownerUserId = ownerUserId
         self.usernameService = getUsernameService()
-        fetchProductOwner().bind(to: productOwnerPublishedSubject).disposed(by: disposeBag)
+        fetchProductOwner().subscribe { [self] value in
+            self.productOwnerPublishedSubject.onNext(value)
+        } onError: { [self] error in
+            print("fetchProductOwner error:\(error.localizedDescription)")
+            self.productOwnerPublishedSubject.onNext("")
+        }.disposed(by: disposeBag)
+
     }
     private func fetchProductOwner() -> Observable<String> {
         usernameService.fetchUsername(for: ownerUserId)
@@ -101,7 +107,12 @@ struct ProductHistoryEntryViewModel:Equatable {
         self.historyEntry = historyEntry
         self.usernameService = getUsernameService()
         
-        fetchEntryAuthor().bind(to: entryAuthorPublishedSubject).disposed(by: disposeBag)
+        fetchEntryAuthor().subscribe { [self] value in
+            self.entryAuthorPublishedSubject.onNext(value)
+        } onError: { [self] error in
+            print("fetchEntryAuthor error:\(error.localizedDescription)")
+            self.entryAuthorPublishedSubject.onNext("")
+        }.disposed(by: disposeBag)
     }
     
     func fetchEntryAuthor() -> Observable<String> {
