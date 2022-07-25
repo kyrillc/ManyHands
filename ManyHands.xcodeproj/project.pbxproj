@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		53B6C43E33B4BD6F52F9F3FA /* Pods_ManyHands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */; };
 		B089D77BCFE808F09C58B190 /* Pods_ManyHands_ManyHandsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7293E659027872DD1DB156FB /* Pods_ManyHands_ManyHandsUITests.framework */; };
+		D6279CD7288D7C5400BE072F /* FirestoreUserFetchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CD6288D7C5400BE072F /* FirestoreUserFetchingService.swift */; };
+		D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */; };
+		D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */; };
 		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
 		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
 		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
@@ -72,6 +75,9 @@
 		7E9BE6748D92D16731BC5841 /* Pods-ManyHands.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands.release.xcconfig"; path = "Target Support Files/Pods-ManyHands/Pods-ManyHands.release.xcconfig"; sourceTree = "<group>"; };
 		871463FD613931B07422618C /* Pods-ManyHands-ManyHandsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands-ManyHandsUITests.release.xcconfig"; path = "Target Support Files/Pods-ManyHands-ManyHandsUITests/Pods-ManyHands-ManyHandsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ManyHands.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6279CD6288D7C5400BE072F /* FirestoreUserFetchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUserFetchingService.swift; sourceTree = "<group>"; };
+		D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUsernameService.swift; sourceTree = "<group>"; };
+		D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserFetchingService.swift; sourceTree = "<group>"; };
 		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 		D6A028B1288A9B6A00E49499 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */,
 				D6F7BEFA2889A678000026D2 /* ValueSpy.swift */,
 				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
 				D6CF1BA7288AB63000EE6683 /* MockProductService.swift */,
@@ -250,6 +257,8 @@
 			children = (
 				D685C8692886E74400398567 /* ProductService.swift */,
 				D6502490288873FB001AC13F /* UserService.swift */,
+				D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */,
+				D6279CD6288D7C5400BE072F /* FirestoreUserFetchingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -600,11 +609,13 @@
 				D685C86A2886E74400398567 /* ProductService.swift in Sources */,
 				D641658628869D6700E8943D /* LoginViewModel.swift in Sources */,
 				D641658D2886C73300E8943D /* Constants.swift in Sources */,
+				D6279CD7288D7C5400BE072F /* FirestoreUserFetchingService.swift in Sources */,
 				D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */,
 				D641658228869D4F00E8943D /* ProductViewController.swift in Sources */,
 				D6E9A7DD288474C30097E71C /* RootViewController.swift in Sources */,
 				D641658B2886C6E200E8943D /* RootViewModel.swift in Sources */,
 				D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */,
+				D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */,
 				D641657B288698D200E8943D /* Product.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
@@ -619,6 +630,7 @@
 				D6CF1BA8288AB63000EE6683 /* MockProductService.swift in Sources */,
 				D6F7BEFB2889A678000026D2 /* ValueSpy.swift in Sources */,
 				D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */,
+				D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
 				D64F2534288AFABA00D6F94B /* ProductViewModelTests.swift in Sources */,

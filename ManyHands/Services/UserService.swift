@@ -17,7 +17,6 @@ protocol UserServiceProtocol {
     func signOut() throws
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
     func currentUser() -> User?
-    func fetchUsername(for userId:String?) -> Observable<String>
 }
 
 final class UserService:UserServiceProtocol {
@@ -105,48 +104,6 @@ final class UserService:UserServiceProtocol {
     
     func currentUser() -> User? {
         return Auth.auth().currentUser
-    }
-    
-    func fetchUsername(for userId:String?) -> Observable<String> {
-        
-        return Observable.create { observer -> Disposable in
-            guard let userId = userId else {
-                observer.onError(NSError.init(domain: "fetchUsername.userId is nil", code: -1))
-                return Disposables.create {}
-            }
-            let db = Firestore.firestore()
-            let docRef = db.collection(DatabaseCollections.users).document(userId)
-            docRef.getDocument { (document, error) in
-                if let error = error {
-                    print("get user failed with error:\(error.localizedDescription)")
-                    observer.onError(error)
-                }
-                else {
-                    print("get user succeedeed")
-                    guard let document = document else {
-                        observer.onError(NSError.init(domain: "fetchUsername.document is nil", code: -1))
-                        return
-                    }
-                    if document.exists == false {
-                        observer.onError(NSError.init(domain: "fetchUsername.document.exists is false", code: -1))
-                        return
-                    }
-                    guard let userData = document.data() else {
-                        observer.onError(NSError.init(domain: "fetchUsername.document.data() is nil", code: -1))
-                        return
-                    }
-                    print("userData:\(String(describing: userData))")
-                    guard let username = userData["name"] as? String else {
-                        observer.onError(NSError.init(domain: "fetchUsername.document.data().name is nil", code: -1))
-                        return
-                    }
-                    print("username:\(username)")
-                    observer.onNext(username)
-                }
-                
-            }
-            return Disposables.create {}
-        }
     }
     
     func userExistsOnFirestore(completion:@escaping(Bool) -> Void) {

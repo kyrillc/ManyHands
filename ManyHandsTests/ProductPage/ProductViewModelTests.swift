@@ -31,14 +31,14 @@ class ProductViewModelTests: XCTestCase {
                               historyEntries: historyEntries)
         
         let historyEntryViewModelA = ProductHistoryEntryViewModel(historyEntry:historyEntryA,
-                                                                  getUserService:{MockUserService()})
+                                                                  getUsernameService:{FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
         let historyEntryViewModelB = ProductHistoryEntryViewModel(historyEntry:historyEntryB,
-                                                                  getUserService:{MockUserService()})
+                                                                  getUsernameService:{FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
         let productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
                                                                       ownerUserId: product.ownerUserId ?? "",
-                                                                      getUserService: {MockUserService()})
+                                                                      getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
 
-        let sut = ProductViewModel(product: product, getUserService: {MockUserService()})
+        let sut = ProductViewModel(product: product, getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
                 
         XCTAssertEqual(sut.productHistoryEntriesViewModels, [historyEntryViewModelA, historyEntryViewModelB])
         XCTAssertEqual(sut.productDescriptionViewModel, productDescriptionViewModel)
@@ -46,7 +46,5 @@ class ProductViewModelTests: XCTestCase {
         XCTAssertEqual(sut.productDescriptionViewModel.productDescription, test_Product_Description)
         XCTAssertEqual(sut.title, test_Product_Name)
     }
-
-    
 
 }
