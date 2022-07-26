@@ -16,6 +16,8 @@
 		D6279CE02890128000BE072F /* HistoryEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDF2890128000BE072F /* HistoryEntryCell.swift */; };
 		D6279CE5289068C400BE072F /* NewEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CE4289068C400BE072F /* NewEntryViewController.swift */; };
 		D6279CE728907C8200BE072F /* NewProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CE628907C8200BE072F /* NewProductViewController.swift */; };
+		D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CEA2890804400BE072F /* ProductDescriptionViewModel.swift */; };
+		D6279CED2890806E00BE072F /* ProductHistoryEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CEC2890806E00BE072F /* ProductHistoryEntryViewModel.swift */; };
 		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
 		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
 		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
@@ -86,6 +88,8 @@
 		D6279CDF2890128000BE072F /* HistoryEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntryCell.swift; sourceTree = "<group>"; };
 		D6279CE4289068C400BE072F /* NewEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryViewController.swift; sourceTree = "<group>"; };
 		D6279CE628907C8200BE072F /* NewProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductViewController.swift; sourceTree = "<group>"; };
+		D6279CEA2890804400BE072F /* ProductDescriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDescriptionViewModel.swift; sourceTree = "<group>"; };
+		D6279CEC2890806E00BE072F /* ProductHistoryEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHistoryEntryViewModel.swift; sourceTree = "<group>"; };
 		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
@@ -169,8 +173,8 @@
 		D6279CDC288FF77E00BE072F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */,
-				D6279CDF2890128000BE072F /* HistoryEntryCell.swift */,
+				D6279CEE289080A300BE072F /* ProductDescription */,
+				D6279CEF289080B300BE072F /* HistoryEntry */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -201,6 +205,24 @@
 				D6279CE32890688200BE072F /* NewEntryPage */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D6279CEE289080A300BE072F /* ProductDescription */ = {
+			isa = PBXGroup;
+			children = (
+				D6279CEA2890804400BE072F /* ProductDescriptionViewModel.swift */,
+				D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */,
+			);
+			path = ProductDescription;
+			sourceTree = "<group>";
+		};
+		D6279CEF289080B300BE072F /* HistoryEntry */ = {
+			isa = PBXGroup;
+			children = (
+				D6279CEC2890806E00BE072F /* ProductHistoryEntryViewModel.swift */,
+				D6279CDF2890128000BE072F /* HistoryEntryCell.swift */,
+			);
+			path = HistoryEntry;
 			sourceTree = "<group>";
 		};
 		D641657E288698E100E8943D /* Model */ = {
@@ -643,6 +665,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6279CED2890806E00BE072F /* ProductHistoryEntryViewModel.swift in Sources */,
 				D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */,
 				D6E369D02885A69500296589 /* ShortCode.swift in Sources */,
 				D6502491288873FB001AC13F /* UserService.swift in Sources */,
@@ -664,6 +687,7 @@
 				D641658B2886C6E200E8943D /* RootViewModel.swift in Sources */,
 				D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */,
 				D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */,
+				D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */,
 				D641657B288698D200E8943D /* Product.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
