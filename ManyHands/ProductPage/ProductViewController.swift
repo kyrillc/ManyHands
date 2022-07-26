@@ -9,6 +9,22 @@ import UIKit
 import SnapKit
 import RxSwift
 
+protocol ProductViewControllerCollaboratorProtocol {
+    func displayNewEntryViewController(with productViewModel:ProductViewModel, from vc:ProductViewController)
+}
+
+class ProductViewControllerCollaborator:ProductViewControllerCollaboratorProtocol {
+    
+    func displayNewEntryViewController(with productViewModel:ProductViewModel, from vc:ProductViewController){
+        let navController = UINavigationController()
+        let newEntryViewController = NewEntryViewController(productViewModel: productViewModel)
+        navController.viewControllers = [newEntryViewController]
+        navController.modalPresentationStyle = .popover
+        vc.showDetailViewController(navController, sender: self)
+    }
+    
+}
+
 class ProductViewController: UIViewController {
     
     lazy var tableView: UITableView = {
@@ -22,9 +38,11 @@ class ProductViewController: UIViewController {
     }()
     
     private var productViewModel:ProductViewModel!
-    
-    init(productViewModel:ProductViewModel) {
+    private var collaborator:ProductViewControllerCollaboratorProtocol!
+
+    init(productViewModel:ProductViewModel, collaborator:ProductViewControllerCollaboratorProtocol = ProductViewControllerCollaborator()) {
         self.productViewModel = productViewModel
+        self.collaborator = collaborator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,8 +84,6 @@ class ProductViewController: UIViewController {
     private func setConstraints(){
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(0)
-        }
-        tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalTo(self.view)
         }
     }
@@ -129,7 +145,7 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
             switch productViewModel.actionRows()[indexPath.row] {
             case .AddNewEntry:
                 print("AddNewEntry")
-                productViewModel.addNewEntry()
+                collaborator.displayNewEntryViewController(with: productViewModel, from: self)
             case .SetNewOwner:
                 print("SetNewOwner")
             }

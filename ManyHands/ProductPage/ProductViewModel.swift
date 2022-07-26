@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 struct ProductViewModel {
     
@@ -105,9 +106,9 @@ struct ProductViewModel {
         return actionTitle(for: actionRows()[index])
     }
     
-    func addNewEntry(){
-        let historyEntry = HistoryEntry(userId: UserService().currentUser()?.uid, entryText: "New entry", imageUrl: nil, entryDate: Date())
-        productService.addHistoryEntry(historyEntry: historyEntry, to: product)
+    func addNewEntry(entryText:String, completion:@escaping(Error?)->Void){
+        let historyEntry = HistoryEntry(userId: UserService().currentUser()?.uid, entryText: entryText, imageUrl: nil, entryDate: Date())
+        productService.addHistoryEntry(historyEntry: historyEntry, to: product, completion: completion)
     }
 }
 

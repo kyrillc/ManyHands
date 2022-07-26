@@ -14,6 +14,7 @@
 		D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */; };
 		D6279CDE288FF79600BE072F /* ProductDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */; };
 		D6279CE02890128000BE072F /* HistoryEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDF2890128000BE072F /* HistoryEntryCell.swift */; };
+		D6279CE5289068C400BE072F /* NewEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CE4289068C400BE072F /* NewEntryViewController.swift */; };
 		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
 		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
 		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
@@ -82,6 +83,7 @@
 		D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserFetchingService.swift; sourceTree = "<group>"; };
 		D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDescriptionCell.swift; sourceTree = "<group>"; };
 		D6279CDF2890128000BE072F /* HistoryEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntryCell.swift; sourceTree = "<group>"; };
+		D6279CE4289068C400BE072F /* NewEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryViewController.swift; sourceTree = "<group>"; };
 		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
@@ -169,6 +171,14 @@
 				D6279CDF2890128000BE072F /* HistoryEntryCell.swift */,
 			);
 			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		D6279CE32890688200BE072F /* NewEntryPage */ = {
+			isa = PBXGroup;
+			children = (
+				D6279CE4289068C400BE072F /* NewEntryViewController.swift */,
+			);
+			path = NewEntryPage;
 			sourceTree = "<group>";
 		};
 		D641657E288698E100E8943D /* Model */ = {
@@ -312,6 +322,7 @@
 				D641658728869D7100E8943D /* LoginPage */,
 				D64165892886C34600E8943D /* RootPage */,
 				D641658828869D8000E8943D /* ProductPage */,
+				D6279CE32890688200BE072F /* NewEntryPage */,
 				D6E9A7DE288474C30097E71C /* Main.storyboard */,
 				D6E9A7E1288474C40097E71C /* Assets.xcassets */,
 				D6E9A7E3288474C40097E71C /* LaunchScreen.storyboard */,
@@ -616,6 +627,7 @@
 				D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */,
 				D6E369D02885A69500296589 /* ShortCode.swift in Sources */,
 				D6502491288873FB001AC13F /* UserService.swift in Sources */,
+				D6279CE5289068C400BE072F /* NewEntryViewController.swift in Sources */,
 				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
 				D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */,
 				D6279CDE288FF79600BE072F /* ProductDescriptionCell.swift in Sources */,

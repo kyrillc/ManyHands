@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 protocol ProductServiceProtocol {
     func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<Product>
-    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product)
+    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product, completion:@escaping(Error?)->Void)
 }
 
 protocol FirestoreFetchingServiceProtocol {
@@ -64,13 +64,18 @@ class ProductService: ProductServiceProtocol {
         self.firestoreFetchingService = firestoreFetchingService
     }
     
-    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product){
+    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product, completion:@escaping(Error?)->Void){
         guard let documentId = product.documentId else {
+            completion(NSError(domain: "ProductService.addHistoryEntry.error: Product has no documentId", code: -1))
             return
         }
         self.firestoreFetchingService.addHistoryEntry(historyEntry: historyEntry, with: documentId) { error in
             if let error = error {
                 print(error.localizedDescription)
+                completion(error)
+            }
+            else {
+                completion(nil)
             }
         }
         
