@@ -15,6 +15,7 @@ class ProductViewController: UIViewController {
         let tableView = UITableView(frame: CGRect.init(), style: .insetGrouped)
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(ProductDescriptionCell.self, forCellReuseIdentifier: ProductDescriptionCell.identifier)
+        tableView.register(HistoryEntryCell.self, forCellReuseIdentifier: HistoryEntryCell.identifier)
         tableView.allowsSelection = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -102,9 +103,11 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         else if (productViewModel.sections()[indexPath.section] == .HistoryEntries) {
-            return HistoryEntryCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row],
-                                    style: .subtitle,
-                                    reuseIdentifier: "HistoryEntryCellIdentifier")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HistoryEntryCell.identifier, for: indexPath) as? HistoryEntryCell else {
+                return UITableViewCell()
+            }
+            cell.configureCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row])
+            return cell
         }
         else {
             let cell = UITableViewCell(style: .default, reuseIdentifier: "ActionCell")
@@ -119,26 +122,4 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
         return productViewModel.heightForRow(in: indexPath.section)
     }
     
-}
-
-class HistoryEntryCell : UITableViewCell {
-    
-    private var cellViewModel:ProductHistoryEntryViewModel!
-    private var disposeBag = DisposeBag()
-
-    init(cellViewModel:ProductHistoryEntryViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.cellViewModel = cellViewModel
-        self.textLabel?.text = cellViewModel.entryText
-        if let detailTextLabel = detailTextLabel {
-            self.cellViewModel.entryAuthorPublishedSubject.map({ author in
-                "\(author) - \(cellViewModel.entryDateString)"
-            }).bind(to: detailTextLabel.rx.text).disposed(by: disposeBag)
-        }
-    }
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

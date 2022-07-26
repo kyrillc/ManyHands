@@ -30,6 +30,7 @@ class ProductDescriptionCell : UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .secondaryLabel
         return label
     }()
     

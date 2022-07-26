@@ -13,6 +13,7 @@
 		D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */; };
 		D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */; };
 		D6279CDE288FF79600BE072F /* ProductDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */; };
+		D6279CE02890128000BE072F /* HistoryEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDF2890128000BE072F /* HistoryEntryCell.swift */; };
 		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
 		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
 		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
@@ -80,6 +81,7 @@
 		D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUsernameService.swift; sourceTree = "<group>"; };
 		D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserFetchingService.swift; sourceTree = "<group>"; };
 		D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDescriptionCell.swift; sourceTree = "<group>"; };
+		D6279CDF2890128000BE072F /* HistoryEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntryCell.swift; sourceTree = "<group>"; };
 		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				D6279CDD288FF79600BE072F /* ProductDescriptionCell.swift */,
+				D6279CDF2890128000BE072F /* HistoryEntryCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
 				D641658428869D5900E8943D /* ProductViewModel.swift in Sources */,
 				D685C86A2886E74400398567 /* ProductService.swift in Sources */,
+				D6279CE02890128000BE072F /* HistoryEntryCell.swift in Sources */,
 				D641658628869D6700E8943D /* LoginViewModel.swift in Sources */,
 				D641658D2886C73300E8943D /* Constants.swift in Sources */,
 				D6279CD7288D7C5400BE072F /* FirestoreUserFetchingService.swift in Sources */,
