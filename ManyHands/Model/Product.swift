@@ -9,6 +9,7 @@ import Foundation
 
 struct Product:Codable {
     
+    var documentId:String?
     let humanReadableId:String?
     let isPublic:Bool?
     var name:String?

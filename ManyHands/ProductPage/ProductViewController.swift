@@ -65,7 +65,7 @@ class ProductViewController: UIViewController {
     
     private func setConstraints(){
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(0)
         }
         tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalTo(self.view)
@@ -124,6 +124,18 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        switch productViewModel.sections()[indexPath.section] {
+        case .Actions:
+            switch productViewModel.actionRows()[indexPath.row] {
+            case .AddNewEntry:
+                print("AddNewEntry")
+                productViewModel.addNewEntry()
+            case .SetNewOwner:
+                print("SetNewOwner")
+            }
+        default:
+            print("default")
+        }
     }
     
 }

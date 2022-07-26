@@ -21,7 +21,8 @@ struct ProductViewModel {
     }
     
     private let product:Product
-    
+    private let productService:ProductServiceProtocol
+
     var productDescriptionViewModel : ProductDescriptionViewModel
     var productHistoryEntriesViewModels: [ProductHistoryEntryViewModel]
     
@@ -35,11 +36,16 @@ struct ProductViewModel {
 
 
     // FetchUsernameService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a FetchUsernameService directly.
-    init(product:Product, getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() }) {
+    init(product:Product,
+         getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() },
+         productService:ProductServiceProtocol = ProductService()) {
+        
         self.product = product
+        self.productService = productService
         
         productHistoryEntriesViewModels = [ProductHistoryEntryViewModel]()
-        if let historyEntries = product.historyEntries {
+
+        if let historyEntries = product.historyEntries?.sorted(by: { $0.entryDate.compare($1.entryDate) == .orderedAscending }) {
             productHistoryEntriesViewModels = historyEntries.map({ entry in
                 ProductHistoryEntryViewModel(historyEntry:entry, getUsernameService: getUsernameService)
             })
@@ -97,6 +103,11 @@ struct ProductViewModel {
     
     func actionTitleForAction(at index:Int) -> String {
         return actionTitle(for: actionRows()[index])
+    }
+    
+    func addNewEntry(){
+        let historyEntry = HistoryEntry(userId: UserService().currentUser()?.uid, entryText: "New entry", imageUrl: nil, entryDate: Date())
+        productService.addHistoryEntry(historyEntry: historyEntry, to: product)
     }
 }
 

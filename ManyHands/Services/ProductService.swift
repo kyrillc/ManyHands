@@ -12,12 +12,14 @@ import FirebaseFirestoreSwift
 
 protocol ProductServiceProtocol {
     func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<Product>
+    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product)
 }
 
 protocol FirestoreFetchingServiceProtocol {
     func fetchProduct(with humanReadableId:String, completionHandler:@escaping (_ snapshot:QuerySnapshot?, _ error:Error?) -> (Void))
     func fetchHistoryEntries(with productDocumentData:QueryDocumentSnapshot,
                                               completionHandler:@escaping (_ productDocumentData:QueryDocumentSnapshot, _ snapshot:QuerySnapshot?, _ error:Error?) -> (Void))
+    func addHistoryEntry(historyEntry:HistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void)
 }
 
 class FirestoreFetchingService:FirestoreFetchingServiceProtocol{
@@ -39,6 +41,19 @@ class FirestoreFetchingService:FirestoreFetchingServiceProtocol{
                 completionHandler(productDocumentData, snapshot, error)
             }
     }
+    
+    func addHistoryEntry(historyEntry:HistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void){
+        let db = Firestore.firestore()
+        do {
+            let _ = try db.collection(DatabaseCollections.products).document(productDocumentId)
+                .collection(DatabaseCollections.historyEntries)
+                .addDocument(from: historyEntry, completion: { error in
+                    completion(error)
+                })
+        } catch let error {
+            completion(error)
+        }
+    }
 }
 
 class ProductService: ProductServiceProtocol {
@@ -47,6 +62,18 @@ class ProductService: ProductServiceProtocol {
     
     init(firestoreFetchingService:FirestoreFetchingServiceProtocol = FirestoreFetchingService()) {
         self.firestoreFetchingService = firestoreFetchingService
+    }
+    
+    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product){
+        guard let documentId = product.documentId else {
+            return
+        }
+        self.firestoreFetchingService.addHistoryEntry(historyEntry: historyEntry, with: documentId) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        
     }
         
     func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<Product>{
@@ -103,6 +130,7 @@ class ProductService: ProductServiceProtocol {
     private func handleFetchHistoryEntriesResponse(observer: AnyObserver<Product>, productDocumentData:QueryDocumentSnapshot, snapshot:QuerySnapshot?, error:Error?){
         do {
             var product = try productDocumentData.data(as: Product.self)
+            product.documentId = productDocumentData.documentID
             // A 'Product' value was successfully initialized from the DocumentSnapshot.
             var historyEntries = [HistoryEntry]()
             
