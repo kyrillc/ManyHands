@@ -122,17 +122,17 @@ struct ProductDescriptionViewModel:Equatable {
     private let usernameService:FetchUsernameService
     private var disposeBag = DisposeBag()
     private var ownerUserId:String?
-    let productOwnerPublishedSubject = PublishSubject<String>()
+    let productOwnerPublishedSubject = BehaviorRelay<String>(value: "")
     
     init(productDescription:String, ownerUserId:String?, getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() }) {
         self.productDescription = productDescription
         self.ownerUserId = ownerUserId
         self.usernameService = getUsernameService()
         fetchProductOwner().subscribe { [self] value in
-            self.productOwnerPublishedSubject.onNext(value)
+            self.productOwnerPublishedSubject.accept(value)
         } onError: { [self] error in
             print("fetchProductOwner error:\(error.localizedDescription)")
-            self.productOwnerPublishedSubject.onNext("")
+            self.productOwnerPublishedSubject.accept("")
         }.disposed(by: disposeBag)
 
     }
@@ -156,7 +156,7 @@ struct ProductHistoryEntryViewModel:Equatable {
     private let usernameService:FetchUsernameService
 
     private var disposeBag = DisposeBag()
-    let entryAuthorPublishedSubject = PublishSubject<String>()
+    let entryAuthorPublishedSubject = BehaviorRelay<String>(value: "")
 
     // let entryImage:UIImage
 
@@ -176,10 +176,10 @@ struct ProductHistoryEntryViewModel:Equatable {
         self.usernameService = getUsernameService()
         
         fetchEntryAuthor().subscribe { [self] value in
-            self.entryAuthorPublishedSubject.onNext(value)
+            self.entryAuthorPublishedSubject.accept(value)
         } onError: { [self] error in
             print("fetchEntryAuthor error:\(error.localizedDescription)")
-            self.entryAuthorPublishedSubject.onNext("")
+            self.entryAuthorPublishedSubject.accept("")
         }.disposed(by: disposeBag)
     }
     
