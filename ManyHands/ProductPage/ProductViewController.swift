@@ -16,7 +16,6 @@ class ProductViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(ProductDescriptionCell.self, forCellReuseIdentifier: ProductDescriptionCell.identifier)
         tableView.register(HistoryEntryCell.self, forCellReuseIdentifier: HistoryEntryCell.identifier)
-        tableView.allowsSelection = false
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -95,24 +94,25 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (productViewModel.sections()[indexPath.section] == .Description) {
+        switch productViewModel.sections()[indexPath.section] {
+        case .Description:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDescriptionCell.identifier, for: indexPath) as? ProductDescriptionCell else {
                 return UITableViewCell()
             }
             cell.configureCell(cellViewModel: productViewModel.productDescriptionViewModel)
             return cell
-        }
-        else if (productViewModel.sections()[indexPath.section] == .HistoryEntries) {
+        case .HistoryEntries:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: HistoryEntryCell.identifier, for: indexPath) as? HistoryEntryCell else {
                 return UITableViewCell()
             }
             cell.configureCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row])
             return cell
-        }
-        else {
+        case .Actions:
             let cell = UITableViewCell(style: .default, reuseIdentifier: "ActionCell")
-            cell.textLabel?.text = "Add an entry"
+            cell.textLabel?.text = productViewModel.actionTitleForAction(at: indexPath.row)
+            cell.selectionStyle = .default
             cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = .link
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             return cell
         }
@@ -120,6 +120,10 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return productViewModel.heightForRow(in: indexPath.section)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

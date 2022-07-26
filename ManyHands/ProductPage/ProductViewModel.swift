@@ -15,6 +15,11 @@ struct ProductViewModel {
         case HistoryEntries
         case Actions
     }
+    enum ProductAction {
+        case AddNewEntry
+        case SetNewOwner
+    }
+    
     private let product:Product
     
     var productDescriptionViewModel : ProductDescriptionViewModel
@@ -74,9 +79,25 @@ struct ProductViewModel {
         else if sections()[section] == .HistoryEntries {
             return product.historyEntries?.count ?? 0
         }
-        return 1
+        return actionRows().count
     }
     
+    func actionRows() -> [ProductAction] {
+        return [.AddNewEntry, .SetNewOwner]
+    }
+    
+    private func actionTitle(for action:ProductAction) -> String {
+        switch action {
+        case .AddNewEntry:
+            return "Add a comment"
+        case .SetNewOwner:
+            return "Set a new owner"
+        }
+    }
+    
+    func actionTitleForAction(at index:Int) -> String {
+        return actionTitle(for: actionRows()[index])
+    }
 }
 
 struct ProductDescriptionViewModel:Equatable {
