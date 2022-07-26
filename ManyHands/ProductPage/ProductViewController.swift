@@ -13,6 +13,11 @@ class ProductViewController: UIViewController {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect.init(), style: .insetGrouped)
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.register(ProductDescriptionCell.self, forCellReuseIdentifier: ProductDescriptionCell.identifier)
+        tableView.allowsSelection = false
+        tableView.delegate = self
+        tableView.dataSource = self
         return tableView
     }()
     
@@ -51,18 +56,16 @@ class ProductViewController: UIViewController {
     }
     
     private func setupTableView(){
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.reloadData()
     }
     
     private func setInitialUIProperties(){
+        self.view.backgroundColor = .systemGroupedBackground
     }
     
     private func setConstraints(){
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
         tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalTo(self.view)
@@ -83,49 +86,39 @@ class ProductViewController: UIViewController {
 extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return productViewModel.productHistoryEntriesViewModels.count > 0 ? 2 : 1
+        return productViewModel.sections().count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 1) {
-            return productViewModel.productHistoryEntriesViewModels.count
-        }
-        return 1
+        return productViewModel.rowCount(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.section == 1) {
+        if (productViewModel.sections()[indexPath.section] == .Description) {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDescriptionCell.identifier, for: indexPath) as? ProductDescriptionCell else {
+                return UITableViewCell()
+            }
+            cell.configureCell(cellViewModel: productViewModel.productDescriptionViewModel)
+            return cell
+        }
+        else if (productViewModel.sections()[indexPath.section] == .HistoryEntries) {
             return HistoryEntryCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row],
                                     style: .subtitle,
                                     reuseIdentifier: "HistoryEntryCellIdentifier")
         }
-        return ProductDescriptionCell(cellViewModel: productViewModel.productDescriptionViewModel,
-                                      style: .subtitle,
-                                      reuseIdentifier: "ProductDescriptionCellIdentifier")
-    }
-    
-    
-}
-
-class ProductDescriptionCell : UITableViewCell {
-    
-    private var cellViewModel:ProductDescriptionViewModel!
-    private var disposeBag = DisposeBag()
-
-    init(cellViewModel:ProductDescriptionViewModel, style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.cellViewModel = cellViewModel
-        self.textLabel?.text = cellViewModel.productDescription
-        if let detailTextLabel = detailTextLabel {
-            self.cellViewModel.productOwnerPublishedSubject
-                .bind(to: detailTextLabel.rx.text).disposed(by: disposeBag)
+        else {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "ActionCell")
+            cell.textLabel?.text = "Add an entry"
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+            return cell
         }
     }
     
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return productViewModel.heightForRow(in: indexPath.section)
     }
+    
 }
 
 class HistoryEntryCell : UITableViewCell {

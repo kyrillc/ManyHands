@@ -10,6 +10,11 @@ import RxSwift
 
 struct ProductViewModel {
     
+    enum TableViewSection {
+        case Description
+        case HistoryEntries
+        case Actions
+    }
     private let product:Product
     
     var productDescriptionViewModel : ProductDescriptionViewModel
@@ -41,6 +46,36 @@ struct ProductViewModel {
     }
     
     
+    func sections() -> [TableViewSection]{
+        var sections = [TableViewSection.Description]
+        if product.historyEntries?.count ?? 0 > 0 {
+            sections.append(.HistoryEntries)
+        }
+        if product.ownerUserId == UserService().currentUser()?.uid {
+            sections.append(.Actions)
+        }
+        return sections
+    }
+    
+    func heightForRow(in section:Int) -> CGFloat {
+        if sections()[section] == .Description {
+            return 150
+        }
+        else if sections()[section] == .HistoryEntries {
+            return 100
+        }
+        return 40
+    }
+    
+    func rowCount(in section:Int) -> Int {
+        if sections()[section] == .Description {
+            return 1
+        }
+        else if sections()[section] == .HistoryEntries {
+            return product.historyEntries?.count ?? 0
+        }
+        return 1
+    }
     
 }
 
