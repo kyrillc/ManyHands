@@ -34,7 +34,6 @@ class FetchUsernameService {
                     observer.onError(NSError.init(domain: "fetchUsername.document.data().name is nil", code: -1))
                     return
                 }
-                print("username:\(username)")
                 observer.onNext(username)
             }
             return Disposables.create {}

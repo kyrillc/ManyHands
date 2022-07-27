@@ -34,7 +34,6 @@ class FirestoreUserFetchingService{
                     observer.onError(NSError.init(domain: "fetchUsername.document.data() is nil", code: -1))
                     return
                 }
-                print("userData:\(String(describing: userData))")
                 completion(observer, userData["name"] as? String)
             }
         }
