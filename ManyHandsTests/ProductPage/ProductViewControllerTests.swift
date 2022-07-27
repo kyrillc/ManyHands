@@ -46,5 +46,38 @@ class ProductViewControllerTests: XCTestCase {
         XCTAssertNotEqual(sut.title, "humanReadableId")
     }
         
+    func test_addNewEntry_Should_Add_New_Row_In_HistoryEntries_Section() throws {
 
+        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let productViewModel = makeProductViewModel(historyEntries: historyEntries)
+        let sut = ProductViewController(productViewModel: productViewModel)
+
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(sut.tableView.numberOfSections, 2)
+        XCTAssertEqual(sut.tableView.numberOfRows(inSection: 1), 1)
+        
+        productViewModel.addNewEntry(entryText: "Test") { error in
+            XCTAssertEqual(sut.tableView.numberOfRows(inSection: 1), 2)
+        }
+    }
+    
+    
+    func makeProductViewModel(historyEntries : [HistoryEntry]) -> ProductViewModel {
+        let product = Product(documentId:"documentId",
+                              humanReadableId: "humanReadableId",
+                              isPublic: true,
+                              name:"", productDescription: "",
+                              entryDate: Date(),
+                              historyEntries: historyEntries)
+        let mockUserService = MockUserService()
+        mockUserService.currentUserResult = MHUser(userId: "id", email: "email")
+        
+        
+        return ProductViewModel(product: product,
+                                   getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)},
+                                   productService: MockProductService(),
+                                   userService: mockUserService)
+    }
 }

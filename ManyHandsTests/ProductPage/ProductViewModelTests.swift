@@ -16,10 +16,10 @@ class ProductViewModelTests: XCTestCase {
         let test_Product_Description = "Test Product Description"
         let test_Product_Name = "Test Product Name"
 
-        let historyEntryA = HistoryEntry(userId: "ABCD",
+        let historyEntryA = HistoryEntry(userId: "id",
                                          entryDate: Date().addingTimeInterval(-30.0*60.0))
         
-        let historyEntryB = HistoryEntry(userId: "EFGH",
+        let historyEntryB = HistoryEntry(userId: "id",
                                          entryDate: Date().addingTimeInterval(-10.0*60.0))
         
         let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
@@ -49,24 +49,9 @@ class ProductViewModelTests: XCTestCase {
     
     func test_addNewEntry() throws {
 
-        let historyEntryA = HistoryEntry(userId: "ABCD",
-                                         entryDate: Date().addingTimeInterval(-30.0*60.0))
+        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
         let historyEntries : [HistoryEntry] = [historyEntryA]
-        let product = Product(documentId:"documentId",
-                              humanReadableId: "humanReadableId",
-                              isPublic: true,
-                              name:"", productDescription: "",
-                              entryDate: Date().addingTimeInterval(-60.0*60.0),
-                              historyEntries: historyEntries)
-        let mockUserService = MockUserService()
-        mockUserService.currentUserResult = MHUser(userId: "id", email: "email")
-        
-        
-        let sut = ProductViewModel(product: product,
-                                   getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)},
-                                   productService: MockProductService(),
-                                   userService: mockUserService)
-        
+        let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
         
         XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
 
@@ -76,4 +61,55 @@ class ProductViewModelTests: XCTestCase {
             XCTAssertEqual(sut.productHistoryEntriesViewModels.last?.entryText, "test")
         }
     }
+    
+    func test_Sections_Contain_Actions_When_User_Is_Owner() throws {
+        
+        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [HistoryEntry] = [historyEntryA]
+        
+        let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
+        
+        XCTAssertEqual(sut.sections(), [.Description, .HistoryEntries, .Actions])
+    }
+    
+    func test_Sections_Dont_Contain_Actions_When_User_Is_Not_Owner() throws {
+        
+        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [HistoryEntry] = [historyEntryA]
+        
+        let sut = self.makeSUT(userIsProductOwner: false, historyEntries: historyEntries)
+        
+        XCTAssertEqual(sut.sections(), [.Description, .HistoryEntries])
+    }
+    
+    func test_Sections_Dont_Contain_HistoryEntries_When_Product_Has_No_HistoryEntry() throws {
+        let sut_User_Is_Not_Owner = self.makeSUT(userIsProductOwner: false, historyEntries: [])
+        XCTAssertEqual(sut_User_Is_Not_Owner.sections(), [.Description])
+
+        let sut_User_Is_Owner = self.makeSUT(userIsProductOwner: true, historyEntries: [])
+        XCTAssertEqual(sut_User_Is_Owner.sections(), [.Description, .Actions])
+    }
+    
+    
+    func makeSUT(userIsProductOwner:Bool, historyEntries : [HistoryEntry]) -> ProductViewModel {
+        let test_User_Id = "test-user-id"
+        let owner_User_Id = userIsProductOwner ? test_User_Id : "owner-user-id"
+
+        let product = Product(documentId:"documentId",
+                              humanReadableId: "humanReadableId",
+                              isPublic: true,
+                              name:"", productDescription: "",
+                              entryDate: Date().addingTimeInterval(-60.0*60.0),
+                              ownerUserId:owner_User_Id,
+                              historyEntries: historyEntries)
+        
+        let mockUserService = MockUserService()
+        mockUserService.currentUserResult = MHUser(userId: test_User_Id, email: "email")
+        
+        return ProductViewModel(product: product,
+                                   getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)},
+                                   productService: MockProductService(),
+                                   userService: mockUserService)
+    }
+    
 }
