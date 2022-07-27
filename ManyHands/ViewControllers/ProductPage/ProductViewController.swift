@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 import RxSwift
 
+// MARK: Collaborator
+
 protocol ProductViewControllerCollaboratorProtocol {
     func displayNewEntryViewController(with productViewModel:ProductViewModel, from vc:ProductViewController)
 }
@@ -24,6 +26,8 @@ class ProductViewControllerCollaborator:ProductViewControllerCollaboratorProtoco
 
 class ProductViewController: UIViewController {
     
+    // MARK: - Views declaration
+
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect.init(), style: .insetGrouped)
         tableView.contentInsetAdjustmentBehavior = .never
@@ -34,8 +38,13 @@ class ProductViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: - Other properties
+
     private var productViewModel:ProductViewModel!
     private var collaborator:ProductViewControllerCollaboratorProtocol!
+    private let disposeBag = DisposeBag()
+
+    // MARK: - Init
 
     init(productViewModel:ProductViewModel, collaborator:ProductViewControllerCollaboratorProtocol = ProductViewControllerCollaborator()) {
         self.productViewModel = productViewModel
@@ -46,7 +55,9 @@ class ProductViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError()
     }
-        
+    
+    // MARK: - View Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,7 +97,16 @@ class ProductViewController: UIViewController {
     }
     
     private func setRxSwiftBindings(){
-        
+        productViewModel.productHistoryEntriesViewModelsObservable.subscribe { value in
+            self.tableView.reloadData()
+        } onError: { error in
+            print(error.localizedDescription)
+        } onCompleted: {
+            print("productViewModel.productHistoryEntriesViewModelsRx.completed")
+        } onDisposed: {
+            print("productViewModel.productHistoryEntriesViewModelsRx.disposed")
+        }.disposed(by: disposeBag)
+
     }
     
     // MARK: - Actions
@@ -95,6 +115,8 @@ class ProductViewController: UIViewController {
         self.dismiss(animated: true)
     }
 }
+
+// MARK: - TableView
 
 extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
     

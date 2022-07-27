@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-struct ProductViewModel {
+class ProductViewModel {
     
     enum TableViewSection {
         case Description
@@ -21,11 +21,17 @@ struct ProductViewModel {
         case SetNewOwner
     }
     
-    private let product:Product
+    private var product:Product
     private let productService:ProductServiceProtocol
+    private let userService:UserServiceProtocol
 
     var productDescriptionViewModel : ProductDescriptionViewModel
     var productHistoryEntriesViewModels: [ProductHistoryEntryViewModel]
+    
+    private let productHistoryEntriesViewModelsRx = BehaviorRelay<[ProductHistoryEntryViewModel]>(value: [])
+    var productHistoryEntriesViewModelsObservable: Observable<[ProductHistoryEntryViewModel]> {
+        return productHistoryEntriesViewModelsRx.asObservable()
+    }
     
     var title:String? {
         return product.name ?? product.humanReadableId
@@ -34,16 +40,29 @@ struct ProductViewModel {
     var descriptionString:String? {
         return product.productDescription ?? ""
     }
-
+    
+    private var getUsernameService:(() -> FetchUsernameService)
 
     // FetchUsernameService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a FetchUsernameService directly.
     init(product:Product,
-         getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() },
-         productService:ProductServiceProtocol = ProductService()) {
+         getUsernameService:@escaping (() -> FetchUsernameService) = { FetchUsernameService() },
+         productService:ProductServiceProtocol = ProductService(),
+         userService:UserServiceProtocol = UserService()) {
         
         self.product = product
         self.productService = productService
+        self.userService = userService
+        self.getUsernameService = getUsernameService
         
+        productHistoryEntriesViewModels = [ProductHistoryEntryViewModel]()
+        productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
+                                                                  ownerUserId:product.ownerUserId,
+                                                                  getUsernameService: getUsernameService)
+
+        self.computeSubViewModels()
+    }
+    
+    private func computeSubViewModels(){
         productHistoryEntriesViewModels = [ProductHistoryEntryViewModel]()
 
         if let historyEntries = product.historyEntries?.sorted(by: { $0.entryDate.compare($1.entryDate) == .orderedAscending }) {
@@ -55,15 +74,16 @@ struct ProductViewModel {
         productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
                                                                   ownerUserId:product.ownerUserId,
                                                                   getUsernameService: getUsernameService)
+        
+        productHistoryEntriesViewModelsRx.accept(productHistoryEntriesViewModels)
     }
-    
     
     func sections() -> [TableViewSection]{
         var sections = [TableViewSection.Description]
         if product.historyEntries?.count ?? 0 > 0 {
             sections.append(.HistoryEntries)
         }
-        if product.ownerUserId == UserService().currentUser()?.uid {
+        if product.ownerUserId == userService.currentUser()?.userId {
             sections.append(.Actions)
         }
         return sections
@@ -107,7 +127,16 @@ struct ProductViewModel {
     }
     
     func addNewEntry(entryText:String, completion:@escaping(Error?)->Void){
-        let historyEntry = HistoryEntry(userId: UserService().currentUser()?.uid, entryText: entryText, imageUrl: nil, entryDate: Date())
-        productService.addHistoryEntry(historyEntry: historyEntry, to: product, completion: completion)
+        let historyEntry = HistoryEntry(userId: userService.currentUser()?.userId,
+                                        entryText: entryText,
+                                        imageUrl: nil,
+                                        entryDate: Date())
+        
+        productService.addHistoryEntry(historyEntry: historyEntry, to: product, completion: { [weak self] error in
+            guard let self = self else {return}
+            self.product.historyEntries?.append(historyEntry)
+            self.computeSubViewModels()
+            completion(error)
+        })
     }
 }
