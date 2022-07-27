@@ -18,4 +18,11 @@ extension UIViewController {
         alert.addAction(UIAlertAction.init(title: "OK", style: .default))
         showDetailViewController(alert, sender: self)
     }
+    
+    func showNavigationControllerEmbeddedDetailViewController(_ detailViewController:UIViewController){
+        let navController = UINavigationController()
+        navController.viewControllers = [detailViewController]
+        navController.modalPresentationStyle = .formSheet
+        self.showDetailViewController(navController, sender: self)
+    }
 }

@@ -13,6 +13,7 @@ import RxCocoa
 protocol RootViewControllerCollaboratorProtocol {
     func showLoginViewControllerIfNecessary(from vc:RootViewController, rootViewModel:RootViewModel)
     func displayProductViewController(with productViewModel:ProductViewModel, from vc:RootViewController)
+    func displayNewProductViewController(from vc:RootViewController)
 }
 
 class RootViewControllerCollaborator:RootViewControllerCollaboratorProtocol {
@@ -29,13 +30,14 @@ class RootViewControllerCollaborator:RootViewControllerCollaboratorProtocol {
     }
     
     func displayProductViewController(with productViewModel:ProductViewModel, from vc:RootViewController){
-        let navController = UINavigationController()
         let productViewController = ProductViewController(productViewModel: productViewModel)
-        navController.viewControllers = [productViewController]
-        navController.modalPresentationStyle = .formSheet
-        vc.showDetailViewController(navController, sender: self)
+        vc.showNavigationControllerEmbeddedDetailViewController(productViewController)
     }
     
+    func displayNewProductViewController(from vc:RootViewController){
+        let newProductViewController = NewProductViewController()
+        vc.showNavigationControllerEmbeddedDetailViewController(newProductViewController)
+    }
 }
 
 class RootViewController: UIViewController, UITextFieldDelegate {
@@ -263,6 +265,7 @@ class RootViewController: UIViewController, UITextFieldDelegate {
     @objc func addProductAction(){
         print("addProductAction")
         //FirestoreDataHandler.addEntryToFirestore()
+        self.collaborator.displayNewProductViewController(from: self)
     }
     
     @objc func checkProductAction(){

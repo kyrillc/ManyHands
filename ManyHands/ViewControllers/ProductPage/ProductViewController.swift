@@ -16,11 +16,8 @@ protocol ProductViewControllerCollaboratorProtocol {
 class ProductViewControllerCollaborator:ProductViewControllerCollaboratorProtocol {
     
     func displayNewEntryViewController(with productViewModel:ProductViewModel, from vc:ProductViewController){
-        let navController = UINavigationController()
         let newEntryViewController = NewEntryViewController(productViewModel: productViewModel)
-        navController.viewControllers = [newEntryViewController]
-        navController.modalPresentationStyle = .popover
-        vc.showDetailViewController(navController, sender: self)
+        vc.showNavigationControllerEmbeddedDetailViewController(newEntryViewController)
     }
     
 }
