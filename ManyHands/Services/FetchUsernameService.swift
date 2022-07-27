@@ -28,6 +28,10 @@ class FetchUsernameService {
                 observer.onError(NSError.init(domain: "fetchUsername.userId is nil", code: -1))
                 return Disposables.create {}
             }
+            if userId.isEmpty {
+                observer.onError(NSError.init(domain: "fetchUsername.userId is empty", code: -1))
+                return Disposables.create {}
+            }
 
             self.usernameFetcher(userId, observer) { observer, username in
                 guard let username = username else {

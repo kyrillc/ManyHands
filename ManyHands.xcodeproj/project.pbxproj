@@ -19,6 +19,7 @@
 		D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CEA2890804400BE072F /* ProductDescriptionViewModel.swift */; };
 		D6279CED2890806E00BE072F /* ProductHistoryEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CEC2890806E00BE072F /* ProductHistoryEntryViewModel.swift */; };
 		D6279CF228915CBF00BE072F /* MHUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CF128915CBF00BE072F /* MHUser.swift */; };
+		D6279CF42891695E00BE072F /* FetchUsernameServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CF32891695E00BE072F /* FetchUsernameServiceTests.swift */; };
 		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
 		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
 		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
@@ -92,6 +93,7 @@
 		D6279CEA2890804400BE072F /* ProductDescriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDescriptionViewModel.swift; sourceTree = "<group>"; };
 		D6279CEC2890806E00BE072F /* ProductHistoryEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHistoryEntryViewModel.swift; sourceTree = "<group>"; };
 		D6279CF128915CBF00BE072F /* MHUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MHUser.swift; sourceTree = "<group>"; };
+		D6279CF32891695E00BE072F /* FetchUsernameServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUsernameServiceTests.swift; sourceTree = "<group>"; };
 		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 			isa = PBXGroup;
 			children = (
 				D6E9A7EF288474C50097E71C /* ManyHandsTests.swift */,
+				D6279CF32891695E00BE072F /* FetchUsernameServiceTests.swift */,
 				D6A028B1288A9B6A00E49499 /* Helpers */,
 				D6A028B0288A9B5A00E49499 /* LoginPage */,
 				D6A028B3288A9B9600E49499 /* RootPage */,
@@ -710,6 +713,7 @@
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
 				D64F2534288AFABA00D6F94B /* ProductViewModelTests.swift in Sources */,
+				D6279CF42891695E00BE072F /* FetchUsernameServiceTests.swift in Sources */,
 				D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */,
 				D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */,
 				D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */,
