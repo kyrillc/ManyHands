@@ -46,5 +46,34 @@ class ProductViewModelTests: XCTestCase {
         XCTAssertEqual(sut.productDescriptionViewModel.productDescription, test_Product_Description)
         XCTAssertEqual(sut.title, test_Product_Name)
     }
+    
+    func test_addNewEntry() throws {
 
+        let historyEntryA = HistoryEntry(userId: "ABCD",
+                                         entryDate: Date().addingTimeInterval(-30.0*60.0))
+        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let product = Product(documentId:"documentId",
+                              humanReadableId: "humanReadableId",
+                              isPublic: true,
+                              name:"", productDescription: "",
+                              entryDate: Date().addingTimeInterval(-60.0*60.0),
+                              historyEntries: historyEntries)
+        let mockUserService = MockUserService()
+        mockUserService.currentUserResult = MHUser(userId: "id", email: "email")
+        
+        
+        let sut = ProductViewModel(product: product,
+                                   getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)},
+                                   productService: MockProductService(),
+                                   userService: mockUserService)
+        
+        
+        XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
+
+        sut.addNewEntry(entryText: "test") { error in
+            XCTAssertNil(error)
+            XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 2)
+            XCTAssertEqual(sut.productHistoryEntriesViewModels.last?.entryText, "test")
+        }
+    }
 }
