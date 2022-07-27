@@ -62,6 +62,17 @@ class ProductViewModelTests: XCTestCase {
         }
     }
     
+    func test_Description_Section_Contains_1_Row() throws {
+        
+        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [HistoryEntry] = [historyEntryA]
+        
+        let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
+        
+        XCTAssertEqual(sut.sections()[0], .Description)
+        XCTAssertEqual(sut.rowCount(in: 0), 1)
+    }
+    
     func test_Sections_Contain_Actions_When_User_Is_Owner() throws {
         
         let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())

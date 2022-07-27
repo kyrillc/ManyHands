@@ -37,10 +37,6 @@ class ProductViewModel {
         return product.name ?? product.humanReadableId
     }
     
-    var descriptionString:String? {
-        return product.productDescription ?? ""
-    }
-    
     private var getUsernameService:(() -> FetchUsernameService)
 
     // FetchUsernameService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a FetchUsernameService directly.
