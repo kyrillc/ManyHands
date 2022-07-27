@@ -21,6 +21,16 @@ class RootViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isLoggedIn())
     }
     
+    func test_IsLoggedIn_True_If_UserService_Has_User() throws {
+
+        let mockUserService = MockUserService()
+        mockUserService.currentUserResult = MHUser(userId: "id", email: "email")
+
+        let sut = RootViewModel(productService: ProductService(), userService: mockUserService)
+        
+        XCTAssertTrue(sut.isLoggedIn())
+    }
+    
     func test_CurrentUser_Nil_If_UserService_Has_No_User() throws {
 
         let mockUserService = MockUserService()
@@ -29,6 +39,18 @@ class RootViewModelTests: XCTestCase {
         let sut = RootViewModel(productService: ProductService(), userService: mockUserService)
         
         XCTAssertNil(sut.currentUser())
+    }
+    
+    func test_CurrentUser_NotNil_If_UserService_Has_User() throws {
+
+        let mockUserService = MockUserService()
+        let mockUser = MHUser(userId: "id", email: "email")
+        mockUserService.currentUserResult = mockUser
+
+        let sut = RootViewModel(productService: ProductService(), userService: mockUserService)
+        
+        XCTAssertNotNil(sut.currentUser())
+        XCTAssertEqual(sut.currentUser(), mockUser)
     }
     
     func test_ProductCode_Text_Is_Cleared_When_User_Signs_Out() throws {

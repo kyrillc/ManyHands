@@ -64,7 +64,7 @@ final class RootViewModel {
         userService.removeStateDidChangeListener(authStateListener)
     }
     
-    func currentUser() -> User? {
+    func currentUser() -> MHUser? {
         return userService.currentUser()
     }
     

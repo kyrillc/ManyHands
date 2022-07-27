@@ -21,7 +21,7 @@ class FirestoreUserFetchingService{
                 observer.onError(error)
             }
             else {
-                print("get user succeedeed")
+                //print("get user succeedeed")
                 guard let document = document else {
                     observer.onError(NSError.init(domain: "fetchUsername.document is nil", code: -1))
                     return

@@ -9,6 +9,11 @@ import XCTest
 @testable import ManyHands
 
 final class RootViewControllerCollaboratorMock: RootViewControllerCollaboratorProtocol {
+
+    private(set) var didCall_displayNewProductViewController = 0
+    func displayNewProductViewController(from vc: RootViewController) {
+        didCall_displayNewProductViewController += 1
+    }
     
     private(set) var didCall_showLoginViewControllerIfNecessary = 0
     func showLoginViewControllerIfNecessary(from vc: RootViewController, rootViewModel: RootViewModel) {

@@ -29,4 +29,8 @@ final class MockProductService : ProductServiceProtocol {
         }
     }
     
+    func addHistoryEntry(historyEntry: HistoryEntry, to product: Product, completion: @escaping (Error?) -> Void) {
+        //
+    }
+    
 }

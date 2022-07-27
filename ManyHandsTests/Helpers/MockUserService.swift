@@ -16,12 +16,13 @@ final class MockUserService : UserServiceProtocol {
     var registerResult:Result<Void, Error> = .success(())
     
     var usernameResult:String? = "Username"
-    var currentUserResult:User? = nil
+    var authStateListenerCurrentUserResult:User? = nil
+    var currentUserResult:MHUser? = nil
     var authStateListener:AuthStateDidChangeListenerHandle?
 
 
     func authStateListener(completion: @escaping (User?) -> Void) -> AuthStateDidChangeListenerHandle {
-        completion(currentUserResult)
+        completion(authStateListenerCurrentUserResult)
         return NSObject() as AuthStateDidChangeListenerHandle
     }
     
@@ -29,7 +30,7 @@ final class MockUserService : UserServiceProtocol {
         //
     }
     
-    func currentUser() -> User? {
+    func currentUser() -> MHUser? {
         return currentUserResult
     }
     

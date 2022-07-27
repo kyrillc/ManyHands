@@ -16,7 +16,7 @@ protocol UserServiceProtocol {
     func signIn(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
     func signOut() throws
     func register(with username:String, password:String, completion: @escaping(Result<Void, Error>) -> Void)
-    func currentUser() -> User?
+    func currentUser() -> MHUser?
 }
 
 final class UserService:UserServiceProtocol {
@@ -102,13 +102,16 @@ final class UserService:UserServiceProtocol {
         }
     }
     
-    func currentUser() -> User? {
-        return Auth.auth().currentUser
+    func currentUser() -> MHUser? {
+        if let user = Auth.auth().currentUser {
+            return MHUser(userId: user.uid, email: user.email ?? "")
+        }
+        return nil
     }
     
     func userExistsOnFirestore(completion:@escaping(Bool) -> Void) {
         guard let user = currentUser() else { return }
-        let userId = user.uid
+        let userId = user.userId
 
         let db = Firestore.firestore()
         let docRef = db.collection(DatabaseCollections.users).document(userId)
