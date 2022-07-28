@@ -13,6 +13,7 @@ target 'ManyHands' do
   pod 'SnapKit', '~> 5.6'
   pod 'RxSwift', '6.5.0'
   pod 'RxCocoa', '6.5.0'
+  pod 'RxDataSources', '~> 5.0'
 
 
   target 'ManyHandsTests' do

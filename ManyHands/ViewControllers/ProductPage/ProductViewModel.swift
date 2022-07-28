@@ -11,6 +11,11 @@ import RxRelay
 
 class ProductViewModel {
     
+    enum CellModel {
+        case Description(ProductDescriptionViewModel)
+        case HistoryEntries(ProductHistoryEntryViewModel)
+        case Actions(String)
+    }
     enum TableViewSection {
         case Description
         case HistoryEntries
@@ -106,10 +111,13 @@ class ProductViewModel {
     }
     
     func actionRows() -> [ProductAction] {
-        return [.AddNewEntry, .SetNewOwner]
+        if sections().contains(.Actions){
+            return [.AddNewEntry, .SetNewOwner]
+        }
+        return []
     }
     
-    private func actionTitle(for action:ProductAction) -> String {
+    func actionTitle(for action:ProductAction) -> String {
         switch action {
         case .AddNewEntry:
             return "Add a comment"

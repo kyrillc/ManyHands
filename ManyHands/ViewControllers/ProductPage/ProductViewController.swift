@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxDataSources
 
 // MARK: Collaborator
 
@@ -33,8 +34,6 @@ class ProductViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(ProductDescriptionCell.self, forCellReuseIdentifier: ProductDescriptionCell.identifier)
         tableView.register(HistoryEntryCell.self, forCellReuseIdentifier: HistoryEntryCell.identifier)
-        tableView.delegate = self
-        tableView.dataSource = self
         return tableView
     }()
     
@@ -71,9 +70,7 @@ class ProductViewController: UIViewController {
         setInitialUIProperties()
         setConstraints()
         setupTableView()
-        setRxSwiftBindings()
     }
-    
     
     // MARK: Initial Set-up
 
@@ -82,7 +79,63 @@ class ProductViewController: UIViewController {
     }
     
     private func setupTableView(){
-        tableView.reloadData()
+        let descriptionCellModel = [ProductViewModel.CellModel.Description(productViewModel.productDescriptionViewModel)]
+        let descriptionSectionModel = SectionModel(model: "Description Items", items: descriptionCellModel)
+
+        let actionCellModels = productViewModel.actionRows().map { ProductViewModel.CellModel.Actions(productViewModel.actionTitle(for: $0)) }
+
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, ProductViewModel.CellModel>>(configureCell: {
+            dataSource, table, indexPath, item in
+            switch item {
+            case .Description(let productDescriptionViewModel):
+                return self.makeProductDescriptionCell(productDescriptionViewModel: productDescriptionViewModel, forRowAt: indexPath) ?? UITableViewCell()
+            case .HistoryEntries(let productHistoryEntryViewModel):
+                return self.makeHistoryEntryCell(productHistoryEntryViewModel: productHistoryEntryViewModel, forRowAt: indexPath) ?? UITableViewCell()
+            case .Actions(let actionTitle):
+                return self.makeActionCell(cellTitle: actionTitle, forRowAt: indexPath)
+            }
+        })
+        
+        // Only productHistoryEntries section can change, so we observe its changes and bind to tableView datasource:
+        productViewModel.productHistoryEntriesViewModelsObservable.map { [descriptionSectionModel, actionCellModels] productHistoryEntriesViewModels in
+            
+            // Compute all sections:
+            
+            var sectionArray = [descriptionSectionModel]
+
+            let productHistoryCellModels = productHistoryEntriesViewModels.map { ProductViewModel.CellModel.HistoryEntries($0) }
+            if productHistoryCellModels.count > 0 {
+                let productHistorySectionModel = SectionModel(model: "HistoryEntry Items", items: productHistoryCellModels)
+                sectionArray.append(productHistorySectionModel)
+            }
+            if actionCellModels.count > 0 {
+                let actionSectionModel = SectionModel(model: "Action Items", items: actionCellModels)
+                sectionArray.append(actionSectionModel)
+            }
+            return sectionArray
+        }.bind(to: self.tableView.rx.items(dataSource: dataSource)).disposed(by: self.disposeBag)
+
+        self.tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    }
+    
+    private func makeProductDescriptionCell(productDescriptionViewModel:ProductDescriptionViewModel, forRowAt indexPath: IndexPath) -> ProductDescriptionCell? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProductDescriptionCell.identifier, for: indexPath) as? ProductDescriptionCell
+        cell?.configureCell(cellViewModel: productDescriptionViewModel)
+        return cell
+    }
+    private func makeHistoryEntryCell(productHistoryEntryViewModel:ProductHistoryEntryViewModel, forRowAt indexPath: IndexPath) -> HistoryEntryCell? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HistoryEntryCell.identifier, for: indexPath) as? HistoryEntryCell
+        cell?.configureCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row])
+        return cell
+    }
+    private func makeActionCell(cellTitle:String, forRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "ActionCell")
+        cell.textLabel?.text = productViewModel.actionTitleForAction(at: indexPath.row)
+        cell.selectionStyle = .default
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.textColor = .link
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        return cell
     }
     
     private func setInitialUIProperties(){
@@ -96,19 +149,6 @@ class ProductViewController: UIViewController {
         }
     }
     
-    private func setRxSwiftBindings(){
-        productViewModel.productHistoryEntriesViewModelsObservable.subscribe { value in
-            self.tableView.reloadData()
-        } onError: { error in
-            print(error.localizedDescription)
-        } onCompleted: {
-            print("productViewModel.productHistoryEntriesViewModelsRx.completed")
-        } onDisposed: {
-            print("productViewModel.productHistoryEntriesViewModelsRx.disposed")
-        }.disposed(by: disposeBag)
-
-    }
-    
     // MARK: - Actions
     
     @objc func dismissView(){
@@ -116,42 +156,9 @@ class ProductViewController: UIViewController {
     }
 }
 
-// MARK: - TableView
+// MARK: - TableView Delegate
 
-extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return productViewModel.sections().count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productViewModel.rowCount(in: section)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch productViewModel.sections()[indexPath.section] {
-        case .Description:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductDescriptionCell.identifier, for: indexPath) as? ProductDescriptionCell else {
-                return UITableViewCell()
-            }
-            cell.configureCell(cellViewModel: productViewModel.productDescriptionViewModel)
-            return cell
-        case .HistoryEntries:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: HistoryEntryCell.identifier, for: indexPath) as? HistoryEntryCell else {
-                return UITableViewCell()
-            }
-            cell.configureCell(cellViewModel: productViewModel.productHistoryEntriesViewModels[indexPath.row])
-            return cell
-        case .Actions:
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "ActionCell")
-            cell.textLabel?.text = productViewModel.actionTitleForAction(at: indexPath.row)
-            cell.selectionStyle = .default
-            cell.textLabel?.textAlignment = .center
-            cell.textLabel?.textColor = .link
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-            return cell
-        }
-    }
+extension ProductViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return productViewModel.heightForRow(in: indexPath.section)
@@ -163,7 +170,6 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
         case .Actions:
             switch productViewModel.actionRows()[indexPath.row] {
             case .AddNewEntry:
-                print("AddNewEntry")
                 collaborator.displayNewEntryViewController(with: productViewModel, from: self)
             case .SetNewOwner:
                 print("SetNewOwner")
@@ -172,5 +178,4 @@ extension ProductViewController : UITableViewDelegate, UITableViewDataSource {
             print("default")
         }
     }
-    
 }
