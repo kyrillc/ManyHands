@@ -171,7 +171,7 @@ class ProductService: ProductServiceProtocol {
                 }
             }
             
-            product.historyEntries = historyEntries
+            product.historyEntries = historyEntries.sorted(by: { $0.entryDate.compare($1.entryDate) == .orderedAscending })
             print("Product with historyEntries: \(product)")
             observer.onNext(product)
             observer.onCompleted()

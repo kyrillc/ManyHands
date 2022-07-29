@@ -66,9 +66,11 @@ class ProductViewModel {
     private func computeSubViewModels(){
         productHistoryEntriesViewModels = [ProductHistoryEntryViewModel]()
 
-        if let historyEntries = product.historyEntries?.sorted(by: { $0.entryDate.compare($1.entryDate) == .orderedAscending }) {
+        if let historyEntries = product.historyEntries {
             productHistoryEntriesViewModels = historyEntries.map({ entry in
-                ProductHistoryEntryViewModel(historyEntry:entry, getUsernameService: getUsernameService)
+                ProductHistoryEntryViewModel(historyEntry:entry,
+                                             getUsernameService: getUsernameService,
+                                             userService: self.userService)
             })
         }
         
@@ -79,15 +81,27 @@ class ProductViewModel {
         productHistoryEntriesViewModelsRx.accept(productHistoryEntriesViewModels)
     }
     
+    private func userIsOwner() -> Bool {
+        return (product.ownerUserId == userService.currentUser()?.userId)
+    }
+    
     func sections() -> [TableViewSection]{
         var sections = [TableViewSection.Description]
         if product.historyEntries?.count ?? 0 > 0 {
             sections.append(.HistoryEntries)
         }
-        if product.ownerUserId == userService.currentUser()?.userId {
+        if userIsOwner() {
             sections.append(.Actions)
         }
         return sections
+    }
+    
+    func userCanEditRow(at indexPath:IndexPath) -> Bool {
+        if sections()[indexPath.section] == .HistoryEntries {
+            let historyEntryModel = productHistoryEntriesViewModels[indexPath.row]
+            return historyEntryModel.userIsAuthor()
+        }
+        return false
     }
     
     func heightForRow(in section:Int) -> CGFloat {

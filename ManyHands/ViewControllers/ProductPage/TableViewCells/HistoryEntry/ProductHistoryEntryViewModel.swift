@@ -19,6 +19,7 @@ struct ProductHistoryEntryViewModel:Equatable {
     
     private let historyEntry:HistoryEntry
     private let usernameService:FetchUsernameService
+    private let userService:UserServiceProtocol
 
     private var disposeBag = DisposeBag()
     let entryAuthorPublishedSubject = BehaviorRelay<String>(value: "")
@@ -36,16 +37,28 @@ struct ProductHistoryEntryViewModel:Equatable {
         }
     }
     
-    init(historyEntry:HistoryEntry, getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() }) {
+    init(historyEntry:HistoryEntry,
+         getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() },
+         userService:UserServiceProtocol = UserService()) {
+
         self.historyEntry = historyEntry
         self.usernameService = getUsernameService()
-        
+        self.userService = userService
+
         fetchEntryAuthor().subscribe { [self] value in
             self.entryAuthorPublishedSubject.accept(value)
         } onError: { [self] error in
             print("fetchEntryAuthor error:\(error.localizedDescription)")
             self.entryAuthorPublishedSubject.accept("")
         }.disposed(by: disposeBag)
+    }
+    
+    func userIsAuthor() -> Bool {
+        return (historyEntry.userId == userService.currentUser()?.userId)
+    }
+    
+    func userCanEditEntry() -> Bool {
+        return userIsAuthor()
     }
     
     func fetchEntryAuthor() -> Observable<String> {
