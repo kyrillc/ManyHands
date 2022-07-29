@@ -37,6 +37,11 @@ struct ProductHistoryEntryViewModel:Equatable {
         }
     }
     
+    /// Used to identify a ProductPageCellModel
+    var identity: String {
+        return "ProductHistoryEntryViewModel:" + entryText + "\(Int64(historyEntry.entryDate.timeIntervalSince1970 * 1000))"
+    }
+    
     init(historyEntry:HistoryEntry,
          getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() },
          userService:UserServiceProtocol = UserService()) {

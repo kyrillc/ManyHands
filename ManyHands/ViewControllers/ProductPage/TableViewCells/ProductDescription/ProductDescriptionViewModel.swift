@@ -19,9 +19,21 @@ struct ProductDescriptionViewModel:Equatable {
     private let usernameService:FetchUsernameService
     private var disposeBag = DisposeBag()
     private var ownerUserId:String?
+    private var productId:String?
+    
     let productOwnerPublishedSubject = BehaviorRelay<String>(value: "")
     
-    init(productDescription:String, ownerUserId:String?, getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() }) {
+    /// Used to identify a ProductPageCellModel
+    var identity: String {
+        return "ProductDescriptionViewModel:\(productId ?? "")"
+    }
+    
+    init(productId:String?,
+         productDescription:String,
+         ownerUserId:String?,
+         getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() }) {
+        
+        self.productId = productId
         self.productDescription = productDescription
         self.ownerUserId = ownerUserId
         self.usernameService = getUsernameService()

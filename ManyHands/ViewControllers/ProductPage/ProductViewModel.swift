@@ -11,11 +11,6 @@ import RxRelay
 
 class ProductViewModel {
     
-    enum CellModel {
-        case Description(ProductDescriptionViewModel)
-        case HistoryEntries(ProductHistoryEntryViewModel)
-        case Actions(String)
-    }
     enum TableViewSection {
         case Description
         case HistoryEntries
@@ -56,7 +51,8 @@ class ProductViewModel {
         self.getUsernameService = getUsernameService
         
         productHistoryEntriesViewModels = [ProductHistoryEntryViewModel]()
-        productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
+        productDescriptionViewModel = ProductDescriptionViewModel(productId: product.documentId,
+                                                                  productDescription: product.productDescription ?? "",
                                                                   ownerUserId:product.ownerUserId,
                                                                   getUsernameService: getUsernameService)
 
@@ -74,7 +70,8 @@ class ProductViewModel {
             })
         }
         
-        productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
+        productDescriptionViewModel = ProductDescriptionViewModel(productId: product.documentId,
+                                                                  productDescription: product.productDescription ?? "",
                                                                   ownerUserId:product.ownerUserId,
                                                                   getUsernameService: getUsernameService)
         
@@ -157,4 +154,11 @@ class ProductViewModel {
             completion(error)
         })
     }
+    
+    func deleteHistoryEntry(at index:Int, completion:@escaping(Error?)->Void) {
+        self.product.historyEntries?.remove(at: index)
+        self.computeSubViewModels()
+        completion(NSError(domain: "Not implemented", code: -1))
+    }
+
 }

@@ -79,22 +79,33 @@ class ProductViewController: UIViewController {
     }
     
     private func setupTableView(){
-        let descriptionCellModel = [ProductViewModel.CellModel.Description(productViewModel.productDescriptionViewModel)]
-        let descriptionSectionModel = SectionModel(model: "Description Items", items: descriptionCellModel)
+        let descriptionCellModel = [ProductPageCellModel.Description(productViewModel.productDescriptionViewModel)]
+        let descriptionSectionModel = ProductPageSectionModel(items: descriptionCellModel)
 
-        let actionCellModels = productViewModel.actionRows().map { ProductViewModel.CellModel.Actions(productViewModel.actionTitle(for: $0)) }
-
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, ProductViewModel.CellModel>>(configureCell: {
-            dataSource, table, indexPath, item in
-            switch item {
-            case .Description(let productDescriptionViewModel):
-                return self.makeProductDescriptionCell(productDescriptionViewModel: productDescriptionViewModel, forRowAt: indexPath) ?? UITableViewCell()
-            case .HistoryEntries(let productHistoryEntryViewModel):
-                return self.makeHistoryEntryCell(productHistoryEntryViewModel: productHistoryEntryViewModel, forRowAt: indexPath) ?? UITableViewCell()
-            case .Actions(let actionTitle):
-                return self.makeActionCell(cellTitle: actionTitle, forRowAt: indexPath)
-            }
-        })
+        let actionCellModels = productViewModel.actionRows().map { ProductPageCellModel.Actions(productViewModel.actionTitle(for: $0)) }
+        
+        let dataSource = RxTableViewSectionedAnimatedDataSource<ProductPageSectionModel>(
+            animationConfiguration: AnimationConfiguration(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .fade),
+            decideViewTransition: { _, _, changeset in
+                print(changeset)
+                return .animated
+            },
+            configureCell: {
+                dataSource, table, indexPath, item in
+                switch item {
+                case .Description(let productDescriptionViewModel):
+                    return self.makeProductDescriptionCell(productDescriptionViewModel: productDescriptionViewModel, forRowAt: indexPath) ?? UITableViewCell()
+                case .HistoryEntries(let productHistoryEntryViewModel):
+                    return self.makeHistoryEntryCell(productHistoryEntryViewModel: productHistoryEntryViewModel, forRowAt: indexPath) ?? UITableViewCell()
+                case .Actions(let actionTitle):
+                    return self.makeActionCell(cellTitle: actionTitle, forRowAt: indexPath)
+                }
+            })
+        
+        dataSource.canEditRowAtIndexPath = { [weak self] dataSource, indexPath in
+            guard let self = self else { return false }
+            return self.productViewModel.userCanEditRow(at: indexPath)
+        }
         
         // Only productHistoryEntries section can change, so we observe its changes and bind to tableView datasource:
         productViewModel.productHistoryEntriesViewModelsObservable.map { [descriptionSectionModel, actionCellModels] productHistoryEntriesViewModels in
@@ -103,13 +114,13 @@ class ProductViewController: UIViewController {
             
             var sectionArray = [descriptionSectionModel]
 
-            let productHistoryCellModels = productHistoryEntriesViewModels.map { ProductViewModel.CellModel.HistoryEntries($0) }
+            let productHistoryCellModels = productHistoryEntriesViewModels.map { ProductPageCellModel.HistoryEntries($0) }
             if productHistoryCellModels.count > 0 {
-                let productHistorySectionModel = SectionModel(model: "HistoryEntry Items", items: productHistoryCellModels)
+                let productHistorySectionModel = ProductPageSectionModel(items: productHistoryCellModels)
                 sectionArray.append(productHistorySectionModel)
             }
             if actionCellModels.count > 0 {
-                let actionSectionModel = SectionModel(model: "Action Items", items: actionCellModels)
+                let actionSectionModel = ProductPageSectionModel(items: actionCellModels)
                 sectionArray.append(actionSectionModel)
             }
             return sectionArray
@@ -178,4 +189,23 @@ extension ProductViewController : UITableViewDelegate {
             print("default")
         }
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal,
+                                        title: nil,
+                                        handler: { (action, view, completionHandler) in
+            self.productViewModel.deleteHistoryEntry(at:indexPath.row) { error in
+                if let error = error {
+                    print("error:\(error)")
+                }
+            }
+            completionHandler(true)
+        })
+        action.backgroundColor = .red
+        action.image = UIImage(systemName: "trash")
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+
 }

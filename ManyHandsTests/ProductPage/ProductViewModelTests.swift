@@ -34,7 +34,8 @@ class ProductViewModelTests: XCTestCase {
                                                                   getUsernameService:{FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
         let historyEntryViewModelB = ProductHistoryEntryViewModel(historyEntry:historyEntryB,
                                                                   getUsernameService:{FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
-        let productDescriptionViewModel = ProductDescriptionViewModel(productDescription: product.productDescription ?? "",
+        let productDescriptionViewModel = ProductDescriptionViewModel(productId: product.documentId,
+                                                                      productDescription: product.productDescription ?? "",
                                                                       ownerUserId: product.ownerUserId ?? "",
                                                                       getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)})
 
@@ -60,6 +61,22 @@ class ProductViewModelTests: XCTestCase {
             XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 2)
             XCTAssertEqual(sut.productHistoryEntriesViewModels.last?.entryText, "test")
         }
+    }
+    
+    
+    func test_deleteHistoryEntry() throws {
+        
+        let historyEntryA = HistoryEntry(userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
+        let historyEntryB = HistoryEntry(userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
+        let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
+        let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
+        
+        XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 2)
+        
+        sut.deleteHistoryEntry(at: 1) { error in
+            XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
+            XCTAssertEqual(sut.productHistoryEntriesViewModels.first?.entryText, "entry 1")
+        }        
     }
     
     func test_Description_Section_Contains_1_Row() throws {
