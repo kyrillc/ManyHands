@@ -33,15 +33,15 @@
 		D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65024922888814B001AC13F /* LoginViewModelTests.swift */; };
 		D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6502496288887A1001AC13F /* LoginViewControllerTests.swift */; };
 		D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65024982888922F001AC13F /* ProductViewControllerTests.swift */; };
-		D685C86A2886E74400398567 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685C8692886E74400398567 /* ProductService.swift */; };
+		D6591A6228968CCD008E51CD /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6591A6128968CCD008E51CD /* ProductService.swift */; };
+		D6591A6428969F92008E51CD /* FirestoreProductDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6591A6328969F92008E51CD /* FirestoreProductDatabaseService.swift */; };
+		D6591A662896A1AF008E51CD /* MockProductDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6591A652896A1AF008E51CD /* MockProductDatabaseService.swift */; };
 		D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A028AE2889F52B00E49499 /* MockUserService.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
 		D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */; };
-		D6CF1BA8288AB63000EE6683 /* MockProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF1BA7288AB63000EE6683 /* MockProductService.swift */; };
 		D6E369D02885A69500296589 /* ShortCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369CF2885A69500296589 /* ShortCode.swift */; };
-		D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */; };
 		D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7D8288474C30097E71C /* AppDelegate.swift */; };
 		D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7DA288474C30097E71C /* SceneDelegate.swift */; };
 		D6E9A7DD288474C30097E71C /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7DC288474C30097E71C /* RootViewController.swift */; };
@@ -108,16 +108,16 @@
 		D65024922888814B001AC13F /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 		D6502496288887A1001AC13F /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
 		D65024982888922F001AC13F /* ProductViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewControllerTests.swift; sourceTree = "<group>"; };
-		D685C8692886E74400398567 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		D6591A6128968CCD008E51CD /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		D6591A6328969F92008E51CD /* FirestoreProductDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreProductDatabaseService.swift; sourceTree = "<group>"; };
+		D6591A652896A1AF008E51CD /* MockProductDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductDatabaseService.swift; sourceTree = "<group>"; };
 		D6A028AE2889F52B00E49499 /* MockUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidationExtensions.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
 		D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConstants.swift; sourceTree = "<group>"; };
 		D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerTests.swift; sourceTree = "<group>"; };
-		D6CF1BA7288AB63000EE6683 /* MockProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductService.swift; sourceTree = "<group>"; };
 		D6E369CF2885A69500296589 /* ShortCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCode.swift; sourceTree = "<group>"; };
-		D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreDataHandler.swift; sourceTree = "<group>"; };
 		D6E9A7D5288474C30097E71C /* ManyHands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManyHands.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E9A7D8288474C30097E71C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6E9A7DA288474C30097E71C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -247,18 +247,10 @@
 				D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */,
 				D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */,
 				D641658C2886C73300E8943D /* Constants.swift */,
+				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
+				D6E369CF2885A69500296589 /* ShortCode.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		D64165802886990F00E8943D /* FirestoreDataStorage */ = {
-			isa = PBXGroup;
-			children = (
-				D6E369CF2885A69500296589 /* ShortCode.swift */,
-				D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */,
-				D6E369D12885EB0900296589 /* FirestoreDataHandler.swift */,
-			);
-			path = FirestoreDataStorage;
 			sourceTree = "<group>";
 		};
 		D641658728869D7100E8943D /* LoginPage */ = {
@@ -305,7 +297,7 @@
 				D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */,
 				D6F7BEFA2889A678000026D2 /* ValueSpy.swift */,
 				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
-				D6CF1BA7288AB63000EE6683 /* MockProductService.swift */,
+				D6591A652896A1AF008E51CD /* MockProductDatabaseService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -331,7 +323,8 @@
 		D6A028B4288A9BFC00E49499 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D685C8692886E74400398567 /* ProductService.swift */,
+				D6591A6328969F92008E51CD /* FirestoreProductDatabaseService.swift */,
+				D6591A6128968CCD008E51CD /* ProductService.swift */,
 				D6502490288873FB001AC13F /* UserService.swift */,
 				D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */,
 				D6279CD6288D7C5400BE072F /* FirestoreUserFetchingService.swift */,
@@ -368,7 +361,6 @@
 				D6E9A7D8288474C30097E71C /* AppDelegate.swift */,
 				D6E9A7DA288474C30097E71C /* SceneDelegate.swift */,
 				D641657F288698F700E8943D /* Utilities */,
-				D64165802886990F00E8943D /* FirestoreDataStorage */,
 				D641657E288698E100E8943D /* Model */,
 				D6A028B4288A9BFC00E49499 /* Services */,
 				D6279CE928907C9F00BE072F /* ViewControllers */,
@@ -675,18 +667,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6279CED2890806E00BE072F /* ProductHistoryEntryViewModel.swift in Sources */,
-				D6E369D22885EB0900296589 /* FirestoreDataHandler.swift in Sources */,
 				D6E369D02885A69500296589 /* ShortCode.swift in Sources */,
 				D6502491288873FB001AC13F /* UserService.swift in Sources */,
 				D6279CE728907C8200BE072F /* NewProductViewController.swift in Sources */,
 				D6279CE5289068C400BE072F /* NewEntryViewController.swift in Sources */,
+				D6591A6228968CCD008E51CD /* ProductService.swift in Sources */,
 				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
 				D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */,
 				D6279CDE288FF79600BE072F /* ProductDescriptionCell.swift in Sources */,
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
 				D641658428869D5900E8943D /* ProductViewModel.swift in Sources */,
 				D6F205D72894635100DCD358 /* ProductTableViewModels.swift in Sources */,
-				D685C86A2886E74400398567 /* ProductService.swift in Sources */,
 				D6279CE02890128000BE072F /* HistoryEntryCell.swift in Sources */,
 				D641658628869D6700E8943D /* LoginViewModel.swift in Sources */,
 				D641658D2886C73300E8943D /* Constants.swift in Sources */,
@@ -699,6 +690,7 @@
 				D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */,
 				D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */,
 				D641657B288698D200E8943D /* Product.swift in Sources */,
+				D6591A6428969F92008E51CD /* FirestoreProductDatabaseService.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
 				D6279CF228915CBF00BE072F /* MHUser.swift in Sources */,
@@ -710,7 +702,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6F7BEF92889A596000026D2 /* RootViewModelTests.swift in Sources */,
-				D6CF1BA8288AB63000EE6683 /* MockProductService.swift in Sources */,
 				D6F7BEFB2889A678000026D2 /* ValueSpy.swift in Sources */,
 				D6502497288887A1001AC13F /* LoginViewControllerTests.swift in Sources */,
 				D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */,
@@ -720,6 +711,7 @@
 				D6279CF42891695E00BE072F /* FetchUsernameServiceTests.swift in Sources */,
 				D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */,
 				D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */,
+				D6591A662896A1AF008E51CD /* MockProductDatabaseService.swift in Sources */,
 				D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

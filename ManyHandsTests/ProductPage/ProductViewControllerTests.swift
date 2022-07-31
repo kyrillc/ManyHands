@@ -77,7 +77,7 @@ class ProductViewControllerTests: XCTestCase {
         
         return ProductViewModel(product: product,
                                    getUsernameService: {FetchUsernameService(usernameFetcher: MockUserFetchingService().mockFetchUsername)},
-                                   productService: MockProductService(),
+                                   productService: ProductService(productDatabaseService: MockProductDatabaseService()),
                                    userService: mockUserService)
     }
 }

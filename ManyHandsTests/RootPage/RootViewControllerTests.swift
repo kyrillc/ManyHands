@@ -51,10 +51,10 @@ class RootViewControllerTests: XCTestCase {
     }
     
     func test_Show_ProductPage_If_Product_Fetched_Successfully() throws{
-        let mockProductService = MockProductService()
-        mockProductService.returnedProduct = Product(humanReadableId: "", isPublic: false, entryDate: Date())
+        let mockProductDatabaseService = MockProductDatabaseService()
+        mockProductDatabaseService.returnedProduct = Product(humanReadableId: "", isPublic: false, entryDate: Date())
         
-        let rootViewModel = RootViewModel(productService: mockProductService)
+        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
         let sut = RootViewController()
         sut.rootViewModel = rootViewModel
         let mockCollaborator  = RootViewControllerCollaboratorMock()
@@ -68,11 +68,11 @@ class RootViewControllerTests: XCTestCase {
     }
     
     func test_Do_Not_Show_ProductPage_If_Product_Fetch_Failed() throws{
-        let mockProductService = MockProductService()
-        mockProductService.returnedProduct = nil
-        mockProductService.returnedFetchProductError = nil
+        let mockProductDatabaseService = MockProductDatabaseService()
+        mockProductDatabaseService.returnedProduct = nil
+        mockProductDatabaseService.returnedFetchProductError = nil
 
-        let rootViewModel = RootViewModel(productService: mockProductService)
+        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
         let sut = RootViewController()
         sut.rootViewModel = rootViewModel
         let mockCollaborator  = RootViewControllerCollaboratorMock()
@@ -86,12 +86,12 @@ class RootViewControllerTests: XCTestCase {
     }
     
     
-    func test_Do_Not_Show_ProductPage_If_Product_Fetch_Returns_Error() throws{
-        let mockProductService = MockProductService()
-        mockProductService.returnedProduct = Product(humanReadableId: "", isPublic: false, entryDate: Date())
-        mockProductService.returnedFetchProductError = NSError(domain: "", code: -1)
+    func test_Do_Not_Show_ProductPage_If_Product_Fetch_Failed_With_Error() throws{
+        let mockProductDatabaseService = MockProductDatabaseService()
+        mockProductDatabaseService.returnedProduct = nil
+        mockProductDatabaseService.returnedFetchProductError = NSError(domain: "", code: -1)
 
-        let rootViewModel = RootViewModel(productService: mockProductService)
+        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
         let sut = RootViewController()
         sut.rootViewModel = rootViewModel
         let mockCollaborator  = RootViewControllerCollaboratorMock()

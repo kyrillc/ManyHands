@@ -22,7 +22,7 @@ class ProductViewModel {
     }
     
     private var product:Product
-    private let productService:ProductServiceProtocol
+    private let productService:ProductService
     private let userService:UserServiceProtocol
 
     var productDescriptionViewModel : ProductDescriptionViewModel
@@ -42,7 +42,7 @@ class ProductViewModel {
     // FetchUsernameService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a FetchUsernameService directly.
     init(product:Product,
          getUsernameService:@escaping (() -> FetchUsernameService) = { FetchUsernameService() },
-         productService:ProductServiceProtocol = ProductService(),
+         productService:ProductService = ProductService(),
          userService:UserServiceProtocol = UserService()) {
         
         self.product = product

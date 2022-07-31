@@ -21,13 +21,13 @@ final class RootViewModel {
     let productCodeEnterButtonString = "Check Product!"
     let addProductButtonString = "Add a new product"
 
-    private let productService:ProductServiceProtocol
+    private let productService:ProductService
     private let userService:UserServiceProtocol
     private var authStateListener:AuthStateDidChangeListenerHandle?
 
     let productCodeTextPublishedSubject = PublishSubject<String>()
     
-    init(productService:ProductServiceProtocol = ProductService(), userService:UserServiceProtocol = UserService()) {
+    init(productService:ProductService = ProductService(), userService:UserServiceProtocol = UserService()) {
         self.productService = productService
         self.userService = userService
     }
