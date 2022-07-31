@@ -66,17 +66,31 @@ class ProductViewModelTests: XCTestCase {
     
     func test_deleteHistoryEntry() throws {
         
-        let historyEntryA = HistoryEntry(userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
-        let historyEntryB = HistoryEntry(userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
+        let historyEntryA = HistoryEntry(documentId:"doc-id", userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
+        let historyEntryB = HistoryEntry(documentId:"doc-id", userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
         let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
         let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
         
         XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 2)
         
         sut.deleteHistoryEntry(at: 1) { error in
+            XCTAssertNil(error)
             XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
             XCTAssertEqual(sut.productHistoryEntriesViewModels.first?.entryText, "entry 1")
-        }        
+        }
+    }
+    
+    func test_deleteHistoryEntry_Fails_If_No_DocumentId() throws {
+        
+        let historyEntry = HistoryEntry(userId: "id-1", entryText:"entry 1", entryDate: Date())
+        let sut = self.makeSUT(userIsProductOwner: true, historyEntries: [historyEntry])
+        
+        XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
+        
+        sut.deleteHistoryEntry(at: 0) { error in
+            XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
+            XCTAssertNotNil(error)
+        }
     }
     
     func test_Description_Section_Contains_1_Row() throws {

@@ -19,6 +19,8 @@ protocol ProductDatabaseServiceProtocol {
     
     func addHistoryEntry(historyEntry:HistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void)
 
+    func deleteHistoryEntry(with historyEntryDocumentId:String, fromProductWith productDocumentId:String, completion:@escaping(Error?)->Void)
+    
 }
 
 class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
@@ -102,7 +104,8 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
                         var historyEntries = [HistoryEntry]()
                         for documentData in snapshot.documents {
                             do {
-                                let historyEntry = try documentData.data(as: HistoryEntry.self)
+                                var historyEntry = try documentData.data(as: HistoryEntry.self)
+                                historyEntry.documentId = documentData.documentID
                                 // A 'HistoryEntry' value was successfully initialized from the DocumentSnapshot.
                                 // print("HistoryEntry: \(historyEntry)")
                                 historyEntries.append(historyEntry)
@@ -127,6 +130,21 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
         } catch let error {
             completion(error)
         }
+    }
+    
+    func deleteHistoryEntry(with historyEntryDocumentId:String, fromProductWith productDocumentId:String, completion:@escaping(Error?)->Void){
+        let db = Firestore.firestore()
+        let _ = db.collection(DatabaseCollections.products).document(productDocumentId)
+            .collection(DatabaseCollections.historyEntries)
+            .document(historyEntryDocumentId).delete { error in
+                if let error = error {
+                    print("delete historyEntry failed with error:\(error.localizedDescription)")
+                }
+                else {
+                    print("delete historyEntry succeedeed")
+                }
+                completion(error)
+            }
     }
     
 }

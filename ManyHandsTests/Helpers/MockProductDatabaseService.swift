@@ -16,6 +16,8 @@ class MockProductDatabaseService:ProductDatabaseServiceProtocol {
 
     var returnedAddHistoryEntryError:NSError?
     
+    var deleteAddHistoryEntryError:NSError?
+
     func fetchProduct(with humanReadableId:String, withHistoryEntries: Bool,
                       completionHandler:@escaping (_ product:Product?, _ error:Error?) -> (Void)) {
 
@@ -29,8 +31,12 @@ class MockProductDatabaseService:ProductDatabaseServiceProtocol {
         completionHandler(testHistoryEntries, testError)
     }
     func addHistoryEntry(historyEntry:HistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void){
-
-        let testError:Error? = nil
-        completion(testError)
+        completion(returnedAddHistoryEntryError)
     }
+    
+    func deleteHistoryEntry(with historyEntryDocumentId: String, fromProductWith productDocumentId: String, completion: @escaping (Error?) -> Void) {
+        completion(deleteAddHistoryEntryError)
+    }
+    
+
 }

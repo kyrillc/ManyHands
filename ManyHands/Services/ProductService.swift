@@ -48,7 +48,26 @@ class ProductService {
                 completion(nil)
             }
         }
-        
+    }
+    
+    func deleteHistoryEntry(_ historyEntry:HistoryEntry, from product:Product, completion:@escaping(Error?)->Void){
+        guard let productDocumentId = product.documentId else {
+            completion(NSError(domain: "ProductService.deleteHistoryEntry.error: Product has no documentId", code: -1))
+            return
+        }
+        guard let historyEntryDocumentId = historyEntry.documentId else {
+            completion(NSError(domain: "ProductService.deleteHistoryEntry.error: HistoryEntry has no documentId", code: -1))
+            return
+        }
+        self.productDatabaseService.deleteHistoryEntry(with: historyEntryDocumentId, fromProductWith: productDocumentId) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(error)
+            }
+            else {
+                completion(nil)
+            }
+        }
     }
 
 }

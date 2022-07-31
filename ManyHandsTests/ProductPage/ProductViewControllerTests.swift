@@ -59,10 +59,29 @@ class ProductViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.tableView.numberOfRows(inSection: 1), 1)
         
         productViewModel.addNewEntry(entryText: "Test") { error in
+            XCTAssertNil(error)
             XCTAssertEqual(sut.tableView.numberOfRows(inSection: 1), 2)
         }
     }
     
+    func test_deleteEntry_Should_Delete_Row_In_HistoryEntries_Section() throws {
+
+        let historyEntryA = HistoryEntry(documentId:"doc-id", userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
+        let historyEntryB = HistoryEntry(documentId:"doc-id", userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
+        let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
+        let productViewModel = makeProductViewModel(historyEntries: historyEntries)
+        let sut = ProductViewController(productViewModel: productViewModel)
+
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(sut.tableView.numberOfSections, 2)
+        XCTAssertEqual(sut.tableView.numberOfRows(inSection: 1), 2)
+        
+        productViewModel.deleteHistoryEntry(at: 1) { error in
+            XCTAssertNil(error)
+            XCTAssertEqual(sut.tableView.numberOfRows(inSection: 1), 1)
+        }
+    }
     
     func makeProductViewModel(historyEntries : [HistoryEntry]) -> ProductViewModel {
         let product = Product(documentId:"documentId",

@@ -156,9 +156,20 @@ class ProductViewModel {
     }
     
     func deleteHistoryEntry(at index:Int, completion:@escaping(Error?)->Void) {
-        self.product.historyEntries?.remove(at: index)
-        self.computeSubViewModels()
-        completion(NSError(domain: "Not implemented", code: -1))
+        guard let historyEntry = self.product.historyEntries?[index] else {
+            completion(NSError(domain: "deleteHistoryEntry:No historyEntry at index \(index)", code: -1))
+            return
+        }
+        productService.deleteHistoryEntry(historyEntry, from: self.product) { error in
+            if let error = error {
+                completion(error)
+            }
+            else {
+                self.product.historyEntries?.remove(at: index)
+                self.computeSubViewModels()
+                completion(nil)
+            }
+        }
     }
 
 }

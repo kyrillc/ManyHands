@@ -194,9 +194,11 @@ extension ProductViewController : UITableViewDelegate {
         let action = UIContextualAction(style: .normal,
                                         title: nil,
                                         handler: { (action, view, completionHandler) in
-            self.productViewModel.deleteHistoryEntry(at:indexPath.row) { error in
+            self.productViewModel.deleteHistoryEntry(at:indexPath.row) { [weak self] error in
                 if let error = error {
                     print("error:\(error)")
+                    guard let self = self else { return }
+                    self.showErrorAlert(with: error.localizedDescription)
                 }
             }
             completionHandler(true)
