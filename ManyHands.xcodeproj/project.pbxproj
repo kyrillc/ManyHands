@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		53B6C43E33B4BD6F52F9F3FA /* Pods_ManyHands.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */; };
 		B089D77BCFE808F09C58B190 /* Pods_ManyHands_ManyHandsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7293E659027872DD1DB156FB /* Pods_ManyHands_ManyHandsUITests.framework */; };
+		D61B4A102897035000BED0B1 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61B4A0F2897035000BED0B1 /* TestingAppDelegate.swift */; };
+		D61B4A122897040B00BED0B1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61B4A112897040B00BED0B1 /* main.swift */; };
+		D61B4A14289708B200BED0B1 /* TestingRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61B4A13289708B200BED0B1 /* TestingRootViewController.swift */; };
+		D61B4A1628970C9C00BED0B1 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61B4A1528970C9C00BED0B1 /* TestingSceneDelegate.swift */; };
 		D6279CD7288D7C5400BE072F /* FirestoreUserFetchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CD6288D7C5400BE072F /* FirestoreUserFetchingService.swift */; };
 		D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */; };
 		D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */; };
@@ -48,7 +52,6 @@
 		D6E9A7E0288474C30097E71C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6E9A7DE288474C30097E71C /* Main.storyboard */; };
 		D6E9A7E2288474C40097E71C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6E9A7E1288474C40097E71C /* Assets.xcassets */; };
 		D6E9A7E5288474C40097E71C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6E9A7E3288474C40097E71C /* LaunchScreen.storyboard */; };
-		D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7EF288474C50097E71C /* ManyHandsTests.swift */; };
 		D6E9A7FA288474C50097E71C /* ManyHandsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7F9288474C50097E71C /* ManyHandsUITests.swift */; };
 		D6E9A7FC288474C50097E71C /* ManyHandsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7FB288474C50097E71C /* ManyHandsUITestsLaunchTests.swift */; };
 		D6E9A8092884B85E0097E71C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E9A8082884B85E0097E71C /* GoogleService-Info.plist */; };
@@ -84,6 +87,10 @@
 		7E9BE6748D92D16731BC5841 /* Pods-ManyHands.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands.release.xcconfig"; path = "Target Support Files/Pods-ManyHands/Pods-ManyHands.release.xcconfig"; sourceTree = "<group>"; };
 		871463FD613931B07422618C /* Pods-ManyHands-ManyHandsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManyHands-ManyHandsUITests.release.xcconfig"; path = "Target Support Files/Pods-ManyHands-ManyHandsUITests/Pods-ManyHands-ManyHandsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8DCC67366BB11EDD4C16873A /* Pods_ManyHands.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ManyHands.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D61B4A0F2897035000BED0B1 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
+		D61B4A112897040B00BED0B1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D61B4A13289708B200BED0B1 /* TestingRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingRootViewController.swift; sourceTree = "<group>"; };
+		D61B4A1528970C9C00BED0B1 /* TestingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSceneDelegate.swift; sourceTree = "<group>"; };
 		D6279CD6288D7C5400BE072F /* FirestoreUserFetchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUserFetchingService.swift; sourceTree = "<group>"; };
 		D6279CD8288DDD2100BE072F /* FetchUsernameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUsernameService.swift; sourceTree = "<group>"; };
 		D6279CDA288E9E0700BE072F /* MockUserFetchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserFetchingService.swift; sourceTree = "<group>"; };
@@ -127,7 +134,6 @@
 		D6E9A7E4288474C40097E71C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6E9A7E6288474C40097E71C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D6E9A7EB288474C50097E71C /* ManyHandsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManyHandsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D6E9A7EF288474C50097E71C /* ManyHandsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyHandsTests.swift; sourceTree = "<group>"; };
 		D6E9A7F5288474C50097E71C /* ManyHandsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManyHandsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E9A7F9288474C50097E71C /* ManyHandsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyHandsUITests.swift; sourceTree = "<group>"; };
 		D6E9A7FB288474C50097E71C /* ManyHandsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyHandsUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -358,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */,
+				D61B4A112897040B00BED0B1 /* main.swift */,
 				D6E9A7D8288474C30097E71C /* AppDelegate.swift */,
 				D6E9A7DA288474C30097E71C /* SceneDelegate.swift */,
 				D641657F288698F700E8943D /* Utilities */,
@@ -376,7 +383,9 @@
 		D6E9A7EE288474C50097E71C /* ManyHandsTests */ = {
 			isa = PBXGroup;
 			children = (
-				D6E9A7EF288474C50097E71C /* ManyHandsTests.swift */,
+				D61B4A0F2897035000BED0B1 /* TestingAppDelegate.swift */,
+				D61B4A1528970C9C00BED0B1 /* TestingSceneDelegate.swift */,
+				D61B4A13289708B200BED0B1 /* TestingRootViewController.swift */,
 				D6279CF32891695E00BE072F /* FetchUsernameServiceTests.swift */,
 				D6A028B1288A9B6A00E49499 /* Helpers */,
 				D6A028B0288A9B5A00E49499 /* LoginPage */,
@@ -674,6 +683,7 @@
 				D6591A6228968CCD008E51CD /* ProductService.swift in Sources */,
 				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
 				D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */,
+				D61B4A122897040B00BED0B1 /* main.swift in Sources */,
 				D6279CDE288FF79600BE072F /* ProductDescriptionCell.swift in Sources */,
 				D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */,
 				D641658428869D5900E8943D /* ProductViewModel.swift in Sources */,
@@ -707,12 +717,14 @@
 				D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
+				D61B4A1628970C9C00BED0B1 /* TestingSceneDelegate.swift in Sources */,
 				D64F2534288AFABA00D6F94B /* ProductViewModelTests.swift in Sources */,
 				D6279CF42891695E00BE072F /* FetchUsernameServiceTests.swift in Sources */,
-				D6E9A7F0288474C50097E71C /* ManyHandsTests.swift in Sources */,
 				D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */,
 				D6591A662896A1AF008E51CD /* MockProductDatabaseService.swift in Sources */,
 				D65024992888922F001AC13F /* ProductViewControllerTests.swift in Sources */,
+				D61B4A102897035000BED0B1 /* TestingAppDelegate.swift in Sources */,
+				D61B4A14289708B200BED0B1 /* TestingRootViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

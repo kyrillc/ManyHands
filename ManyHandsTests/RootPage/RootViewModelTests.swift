@@ -55,7 +55,7 @@ class RootViewModelTests: XCTestCase {
     
     func test_ProductCode_Text_Is_Cleared_When_User_Signs_Out() throws {
 
-        let sut = RootViewModel()
+        let sut = RootViewModel(userService: MockUserService())
         let productCodeTextSpy = ValueSpy<String>(sut.productCodeTextPublishedSubject.asObservable())
         
         XCTAssertEqual(productCodeTextSpy.values, [])

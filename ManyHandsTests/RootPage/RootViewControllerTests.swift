@@ -54,7 +54,7 @@ class RootViewControllerTests: XCTestCase {
         let mockProductDatabaseService = MockProductDatabaseService()
         mockProductDatabaseService.returnedProduct = Product(humanReadableId: "", isPublic: false, entryDate: Date())
         
-        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
+        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService), userService: MockUserService())
         let sut = RootViewController()
         sut.rootViewModel = rootViewModel
         let mockCollaborator  = RootViewControllerCollaboratorMock()
@@ -72,7 +72,7 @@ class RootViewControllerTests: XCTestCase {
         mockProductDatabaseService.returnedProduct = nil
         mockProductDatabaseService.returnedFetchProductError = nil
 
-        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
+        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService), userService: MockUserService())
         let sut = RootViewController()
         sut.rootViewModel = rootViewModel
         let mockCollaborator  = RootViewControllerCollaboratorMock()
@@ -91,7 +91,7 @@ class RootViewControllerTests: XCTestCase {
         mockProductDatabaseService.returnedProduct = nil
         mockProductDatabaseService.returnedFetchProductError = NSError(domain: "MockProductDatabaseService.fetchProductError", code: -1)
 
-        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
+        let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService), userService: MockUserService())
         let sut = RootViewController()
         sut.rootViewModel = rootViewModel
         let mockCollaborator  = RootViewControllerCollaboratorMock()
