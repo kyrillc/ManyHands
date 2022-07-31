@@ -4,6 +4,7 @@
 //
 //  Created by Kyrill Cousson on 31/07/2022.
 //
+// Code taken from https://github.com/hacknicity/TestingSceneDelegate
 
 import UIKit
 

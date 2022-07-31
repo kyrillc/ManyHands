@@ -4,6 +4,7 @@
 //
 //  Created by Kyrill Cousson on 17/07/2022.
 //
+// See https://github.com/hacknicity/TestingSceneDelegate for modifications used for Unit Testing.
 
 import UIKit
 import FirebaseCore
