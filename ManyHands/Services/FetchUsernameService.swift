@@ -8,6 +8,27 @@
 import Foundation
 import RxSwift
 
+enum FetchUsernameServiceError: Error {
+    case failedToGetUserId
+    case failedToGetUserName
+}
+extension FetchUsernameServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .failedToGetUserId:
+            return NSLocalizedString(
+                "Failed to get user id.",
+                comment: ""
+            )
+        case .failedToGetUserName:
+            return NSLocalizedString(
+                "Failed to get user name.",
+                comment: ""
+            )
+        }
+    }
+}
+
 class FetchUsernameService {
     
     typealias UsernameFetcher = (String, AnyObserver<String>, @escaping(AnyObserver<String>, String?)->Void) -> Void
@@ -25,17 +46,17 @@ class FetchUsernameService {
                 return Disposables.create {}
             }
             guard let userId = userId else {
-                observer.onError(NSError.init(domain: "fetchUsername.userId is nil", code: -1))
+                observer.onError(FetchUsernameServiceError.failedToGetUserId)
                 return Disposables.create {}
             }
             if userId.isEmpty {
-                observer.onError(NSError.init(domain: "fetchUsername.userId is empty", code: -1))
+                observer.onError(FetchUsernameServiceError.failedToGetUserId)
                 return Disposables.create {}
             }
 
             self.usernameFetcher(userId, observer) { observer, username in
                 guard let username = username else {
-                    observer.onError(NSError.init(domain: "fetchUsername.document.data().name is nil", code: -1))
+                    observer.onError(FetchUsernameServiceError.failedToGetUserName)
                     return
                 }
                 observer.onNext(username)

@@ -9,6 +9,21 @@ import Foundation
 import RxSwift
 import RxRelay
 
+enum ProductViewModelError: Error {
+    case failedToGetHistoryEntryAtSpecifiedIndex
+}
+extension ProductViewModelError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .failedToGetHistoryEntryAtSpecifiedIndex:
+            return NSLocalizedString(
+                "Failed to get HistoryEntry at specified index.",
+                comment: ""
+            )
+        }
+    }
+}
+
 class ProductViewModel {
     
     enum TableViewSection {
@@ -157,7 +172,7 @@ class ProductViewModel {
     
     func deleteHistoryEntry(at index:Int, completion:@escaping(Error?)->Void) {
         guard let historyEntry = self.product.historyEntries?[index] else {
-            completion(NSError(domain: "deleteHistoryEntry:No historyEntry at index \(index)", code: -1))
+            completion(ProductViewModelError.failedToGetHistoryEntryAtSpecifiedIndex)
             return
         }
         productService.deleteHistoryEntry(historyEntry, from: self.product) { error in

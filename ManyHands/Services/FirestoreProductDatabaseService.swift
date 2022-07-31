@@ -9,6 +9,33 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+enum FirestoreProductDatabaseServiceError: Error {
+    case failedToGetSnapshot
+    case failedToGetDocumentData
+    case documentDoesNotExist
+}
+extension FirestoreProductDatabaseServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .failedToGetSnapshot:
+            return NSLocalizedString(
+                "Failed to get snapshot.",
+                comment: ""
+            )
+        case .failedToGetDocumentData:
+            return NSLocalizedString(
+                "Failed to get document data.",
+                comment: ""
+            )
+        case .documentDoesNotExist:
+            return NSLocalizedString(
+                "Document does not exist.",
+                comment: ""
+            )
+        }
+    }
+}
+
 protocol ProductDatabaseServiceProtocol {
     
     func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool,
@@ -41,15 +68,15 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
                 else {
                     print("get products succeedeed")
                     guard let snapshot = snapshot else {
-                        completionHandler(nil, NSError.init(domain: "handleFetchProductResponse.snapshot is nil", code: -1))
+                        completionHandler(nil, FirestoreProductDatabaseServiceError.failedToGetSnapshot)
                         return
                     }
                     guard let productDocumentData = snapshot.documents.first else {
-                        completionHandler(nil, NSError.init(domain: "handleFetchProductResponse.productDocumentData is nil", code: -1))
+                        completionHandler(nil, FirestoreProductDatabaseServiceError.failedToGetDocumentData)
                         return
                     }
                     if productDocumentData.exists == false {
-                        completionHandler(nil, NSError.init(domain: "handleFetchProductResponse.productDocumentData.exists is false", code: -1))
+                        completionHandler(nil, FirestoreProductDatabaseServiceError.documentDoesNotExist)
                         return
                     }
                     do {
@@ -93,7 +120,7 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
                 else {
                     print("get HistoryEntries succeedeed")
                     guard let snapshot = snapshot else {
-                        completionHandler(nil, error)
+                        completionHandler(nil, FirestoreProductDatabaseServiceError.failedToGetSnapshot)
                         return
                     }
                     if snapshot.isEmpty {

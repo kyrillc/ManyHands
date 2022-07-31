@@ -138,7 +138,7 @@ final class UserService:UserServiceProtocol {
         db.collection(DatabaseCollections.users).document(userId).setData(userData, merge: true) { error in
             if let error = error {
                 print("add user failed with error:\(error.localizedDescription)")
-                completion(.failure(NSError(domain: "", code: -1)))
+                completion(.failure(error))
             }
             else {
                 print("add user succeedeed")

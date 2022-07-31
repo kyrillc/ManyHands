@@ -89,7 +89,7 @@ class RootViewControllerTests: XCTestCase {
     func test_Do_Not_Show_ProductPage_If_Product_Fetch_Failed_With_Error() throws{
         let mockProductDatabaseService = MockProductDatabaseService()
         mockProductDatabaseService.returnedProduct = nil
-        mockProductDatabaseService.returnedFetchProductError = NSError(domain: "", code: -1)
+        mockProductDatabaseService.returnedFetchProductError = NSError(domain: "MockProductDatabaseService.fetchProductError", code: -1)
 
         let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService))
         let sut = RootViewController()

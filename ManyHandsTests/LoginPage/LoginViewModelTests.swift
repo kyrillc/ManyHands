@@ -77,7 +77,7 @@ class LoginViewModelTests: XCTestCase {
     func test_SignIn_Success() throws{
         let mockUserService = MockUserService()
         mockUserService.signInResult = .success(())
-        mockUserService.registerResult = .failure(NSError(domain: "", code: -1))
+        mockUserService.registerResult = .failure(NSError(domain: "MockUserService.registerResult.error", code: -1))
         let sut = LoginViewModel(userService: mockUserService)
         
         let exp = expectation(description: "expect success")
@@ -100,7 +100,7 @@ class LoginViewModelTests: XCTestCase {
     
     func test_SignIn_Failure() throws{
         let mockUserService = MockUserService()
-        mockUserService.signInResult = .failure(NSError(domain: "", code: -1))
+        mockUserService.signInResult = .failure(NSError(domain: "MockUserService.signInResult.error", code: -1))
         mockUserService.registerResult = .success(())
         let sut = LoginViewModel(userService: mockUserService)
         

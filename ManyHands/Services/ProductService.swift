@@ -8,6 +8,21 @@
 import Foundation
 import RxSwift
 
+enum ProductServiceError: Error {
+    case failedToGetDocumentId
+}
+extension ProductServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .failedToGetDocumentId:
+            return NSLocalizedString(
+                "Failed to get document id.",
+                comment: ""
+            )
+        }
+    }
+}
+
 class ProductService {
     
     private let productDatabaseService:ProductDatabaseServiceProtocol
@@ -36,7 +51,7 @@ class ProductService {
     
     func addHistoryEntry(historyEntry:HistoryEntry, to product:Product, completion:@escaping(Error?)->Void){
         guard let documentId = product.documentId else {
-            completion(NSError(domain: "ProductService.addHistoryEntry.error: Product has no documentId", code: -1))
+            completion(ProductServiceError.failedToGetDocumentId)
             return
         }
         self.productDatabaseService.addHistoryEntry(historyEntry: historyEntry, with: documentId) { error in
@@ -52,11 +67,11 @@ class ProductService {
     
     func deleteHistoryEntry(_ historyEntry:HistoryEntry, from product:Product, completion:@escaping(Error?)->Void){
         guard let productDocumentId = product.documentId else {
-            completion(NSError(domain: "ProductService.deleteHistoryEntry.error: Product has no documentId", code: -1))
+            completion(ProductServiceError.failedToGetDocumentId)
             return
         }
         guard let historyEntryDocumentId = historyEntry.documentId else {
-            completion(NSError(domain: "ProductService.deleteHistoryEntry.error: HistoryEntry has no documentId", code: -1))
+            completion(ProductServiceError.failedToGetDocumentId)
             return
         }
         self.productDatabaseService.deleteHistoryEntry(with: historyEntryDocumentId, fromProductWith: productDocumentId) { error in

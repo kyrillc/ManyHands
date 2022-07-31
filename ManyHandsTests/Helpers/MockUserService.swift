@@ -56,7 +56,7 @@ final class MockUserService : UserServiceProtocol {
                 observer.onNext(usernameResult)
             }
             else {
-                observer.onError(NSError(domain: "", code: -1))
+                observer.onError(NSError(domain: "MockUserService.fetchUsername.error", code: -1))
             }
             return Disposables.create {}
         }
