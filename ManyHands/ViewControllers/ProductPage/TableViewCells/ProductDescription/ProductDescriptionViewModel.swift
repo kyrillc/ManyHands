@@ -37,14 +37,12 @@ struct ProductDescriptionViewModel:Equatable {
         self.productDescription = productDescription
         self.ownerUserId = ownerUserId
         self.usernameService = getUsernameService()
-        fetchProductOwner().subscribe { [self] value in
+        
+        fetchProductOwner().catchAndReturn("").subscribe { [self] value in
             self.productOwnerPublishedSubject.accept(value)
-        } onError: { [self] error in
-            print("fetchProductOwner error:\(error.localizedDescription)")
-            self.productOwnerPublishedSubject.accept("")
         }.disposed(by: disposeBag)
-
     }
+    
     private func fetchProductOwner() -> Observable<String> {
         usernameService.fetchUsername(for: ownerUserId)
             .map { owner in
