@@ -109,7 +109,7 @@ final class UserService:UserServiceProtocol {
         return nil
     }
     
-    func userExistsOnFirestore(completion:@escaping(Bool) -> Void) {
+    private func userExistsOnFirestore(completion:@escaping(Bool) -> Void) {
         guard let user = currentUser() else { return }
         let userId = user.userId
 
@@ -128,7 +128,7 @@ final class UserService:UserServiceProtocol {
         }
     }
     
-    func addUserToFirestore(_ user:User?, completion: @escaping(Result<String, Error>) -> Void) {
+    private func addUserToFirestore(_ user:User?, completion: @escaping(Result<String, Error>) -> Void) {
         guard let user = user else { return }
         guard let userEmail = user.email else { return }
         let userData = ["name":userEmail] as [String : Any]
