@@ -1,5 +1,5 @@
 //
-//  Product.swift
+//  MHProduct.swift
 //  ManyHands
 //
 //  Created by Kyrill Cousson on 19/07/2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Product:Codable {
+struct MHProduct:Codable {
     
     var documentId:String?
     let humanReadableId:String?
@@ -19,7 +19,7 @@ struct Product:Codable {
     var year:Int?
     var ownerUserId:String? // Could be unused if we refer to product.owners.where(owningFromDate < Date() && owningUntilDate == nil)
     
-    var historyEntries : [HistoryEntry]?
+    var historyEntries : [MHHistoryEntry]?
     
     enum CodingKeys: String, CodingKey {
         case humanReadableId

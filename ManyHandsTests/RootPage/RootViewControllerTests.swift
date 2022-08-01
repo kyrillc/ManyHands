@@ -52,7 +52,7 @@ class RootViewControllerTests: XCTestCase {
     
     func test_Show_ProductPage_If_Product_Fetched_Successfully() throws{
         let mockProductDatabaseService = MockProductDatabaseService()
-        mockProductDatabaseService.returnedProduct = Product(humanReadableId: "", isPublic: false, entryDate: Date())
+        mockProductDatabaseService.returnedProduct = MHProduct(humanReadableId: "", isPublic: false, entryDate: Date())
         
         let rootViewModel = RootViewModel(productService: ProductService(productDatabaseService: mockProductDatabaseService), userService: MockUserService())
         let sut = RootViewController()

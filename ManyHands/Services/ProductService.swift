@@ -31,7 +31,7 @@ class ProductService {
         self.productDatabaseService = productDatabaseService
     }
     
-    func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<Product>{
+    func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool) -> Observable<MHProduct>{
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self else { return Disposables.create {} }
             
@@ -49,7 +49,7 @@ class ProductService {
         }
     }
     
-    func addHistoryEntry(historyEntry:HistoryEntry, to product:Product, completion:@escaping(Error?)->Void){
+    func addHistoryEntry(historyEntry:MHHistoryEntry, to product:MHProduct, completion:@escaping(Error?)->Void){
         guard let documentId = product.documentId else {
             completion(ProductServiceError.failedToGetDocumentId)
             return
@@ -65,7 +65,7 @@ class ProductService {
         }
     }
     
-    func deleteHistoryEntry(_ historyEntry:HistoryEntry, from product:Product, completion:@escaping(Error?)->Void){
+    func deleteHistoryEntry(_ historyEntry:MHHistoryEntry, from product:MHProduct, completion:@escaping(Error?)->Void){
         guard let productDocumentId = product.documentId else {
             completion(ProductServiceError.failedToGetDocumentId)
             return

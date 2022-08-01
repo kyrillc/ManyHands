@@ -16,15 +16,15 @@ class ProductViewModelTests: XCTestCase {
         let test_Product_Description = "Test Product Description"
         let test_Product_Name = "Test Product Name"
 
-        let historyEntryA = HistoryEntry(userId: "id",
+        let historyEntryA = MHHistoryEntry(userId: "id",
                                          entryDate: Date().addingTimeInterval(-30.0*60.0))
         
-        let historyEntryB = HistoryEntry(userId: "id",
+        let historyEntryB = MHHistoryEntry(userId: "id",
                                          entryDate: Date().addingTimeInterval(-10.0*60.0))
         
-        let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
+        let historyEntries : [MHHistoryEntry] = [historyEntryA, historyEntryB]
         
-        let product = Product(humanReadableId: humanReadableProductId,
+        let product = MHProduct(humanReadableId: humanReadableProductId,
                               isPublic: true,
                               name:test_Product_Name, productDescription: test_Product_Description,
                               entryDate: Date().addingTimeInterval(-60.0*60.0),
@@ -50,8 +50,8 @@ class ProductViewModelTests: XCTestCase {
     
     func test_addNewEntry() throws {
 
-        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
-        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let historyEntryA = MHHistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [MHHistoryEntry] = [historyEntryA]
         let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
         
         XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
@@ -66,9 +66,9 @@ class ProductViewModelTests: XCTestCase {
     
     func test_deleteHistoryEntry() throws {
         
-        let historyEntryA = HistoryEntry(documentId:"doc-id", userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
-        let historyEntryB = HistoryEntry(documentId:"doc-id", userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
-        let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
+        let historyEntryA = MHHistoryEntry(documentId:"doc-id", userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
+        let historyEntryB = MHHistoryEntry(documentId:"doc-id", userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
+        let historyEntries : [MHHistoryEntry] = [historyEntryA, historyEntryB]
         let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
         
         XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 2)
@@ -82,7 +82,7 @@ class ProductViewModelTests: XCTestCase {
     
     func test_deleteHistoryEntry_Fails_If_No_DocumentId() throws {
         
-        let historyEntry = HistoryEntry(userId: "id-1", entryText:"entry 1", entryDate: Date())
+        let historyEntry = MHHistoryEntry(userId: "id-1", entryText:"entry 1", entryDate: Date())
         let sut = self.makeSUT(userIsProductOwner: true, historyEntries: [historyEntry])
         
         XCTAssertEqual(sut.productHistoryEntriesViewModels.count, 1)
@@ -95,8 +95,8 @@ class ProductViewModelTests: XCTestCase {
     
     func test_Description_Section_Contains_1_Row() throws {
         
-        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
-        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let historyEntryA = MHHistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [MHHistoryEntry] = [historyEntryA]
         
         let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
         
@@ -106,8 +106,8 @@ class ProductViewModelTests: XCTestCase {
     
     func test_Sections_Contain_Actions_When_User_Is_Owner() throws {
         
-        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
-        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let historyEntryA = MHHistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [MHHistoryEntry] = [historyEntryA]
         
         let sut = self.makeSUT(userIsProductOwner: true, historyEntries: historyEntries)
         
@@ -116,8 +116,8 @@ class ProductViewModelTests: XCTestCase {
     
     func test_Sections_Dont_Contain_Actions_When_User_Is_Not_Owner() throws {
         
-        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
-        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let historyEntryA = MHHistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [MHHistoryEntry] = [historyEntryA]
         
         let sut = self.makeSUT(userIsProductOwner: false, historyEntries: historyEntries)
         
@@ -133,11 +133,11 @@ class ProductViewModelTests: XCTestCase {
     }
     
     
-    func makeSUT(userIsProductOwner:Bool, historyEntries : [HistoryEntry]) -> ProductViewModel {
+    func makeSUT(userIsProductOwner:Bool, historyEntries : [MHHistoryEntry]) -> ProductViewModel {
         let test_User_Id = "test-user-id"
         let owner_User_Id = userIsProductOwner ? test_User_Id : "owner-user-id"
 
-        let product = Product(documentId:"documentId",
+        let product = MHProduct(documentId:"documentId",
                               humanReadableId: "humanReadableId",
                               isPublic: true,
                               name:"", productDescription: "",

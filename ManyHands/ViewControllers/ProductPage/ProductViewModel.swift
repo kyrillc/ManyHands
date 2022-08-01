@@ -36,7 +36,7 @@ class ProductViewModel {
         case SetNewOwner
     }
     
-    private var product:Product
+    private var product:MHProduct
     private let productService:ProductService
     private let userService:UserServiceProtocol
 
@@ -55,7 +55,7 @@ class ProductViewModel {
     private var getUsernameService:(() -> FetchUsernameService)
 
     // FetchUsernameService for each ProductHistoryEntryViewModel should be different, which is why I pass a closure and not a reference to a FetchUsernameService directly.
-    init(product:Product,
+    init(product:MHProduct,
          getUsernameService:@escaping (() -> FetchUsernameService) = { FetchUsernameService() },
          productService:ProductService = ProductService(),
          userService:UserServiceProtocol = UserService()) {
@@ -157,7 +157,7 @@ class ProductViewModel {
     }
     
     func addNewEntry(entryText:String, completion:@escaping(Error?)->Void){
-        let historyEntry = HistoryEntry(userId: userService.currentUser()?.userId,
+        let historyEntry = MHHistoryEntry(userId: userService.currentUser()?.userId,
                                         entryText: entryText,
                                         imageUrl: nil,
                                         entryDate: Date())

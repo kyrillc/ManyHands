@@ -39,12 +39,12 @@ extension FirestoreProductDatabaseServiceError: LocalizedError {
 protocol ProductDatabaseServiceProtocol {
     
     func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool,
-                                                   completionHandler:@escaping (_ product:Product?, _ error:Error?) -> (Void))
+                                                   completionHandler:@escaping (_ product:MHProduct?, _ error:Error?) -> (Void))
     
     func fetchHistoryEntries(with documentID:String,
-                             completionHandler:@escaping (_ historyEntries:[HistoryEntry]?, _ error:Error?) -> (Void))
+                             completionHandler:@escaping (_ historyEntries:[MHHistoryEntry]?, _ error:Error?) -> (Void))
     
-    func addHistoryEntry(historyEntry:HistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void)
+    func addHistoryEntry(historyEntry:MHHistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void)
 
     func deleteHistoryEntry(with historyEntryDocumentId:String, fromProductWith productDocumentId:String, completion:@escaping(Error?)->Void)
     
@@ -53,7 +53,7 @@ protocol ProductDatabaseServiceProtocol {
 class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
     
     func fetchProduct(with humanReadableId:String, withHistoryEntries:Bool,
-                      completionHandler:@escaping (_ product:Product?, _ error:Error?) -> (Void)) {
+                      completionHandler:@escaping (_ product:MHProduct?, _ error:Error?) -> (Void)) {
         
         let db = Firestore.firestore()
         db.collection(DatabaseCollections.products)
@@ -80,7 +80,7 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
                         return
                     }
                     do {
-                        var product = try productDocumentData.data(as: Product.self)
+                        var product = try productDocumentData.data(as: MHProduct.self)
                         // A 'Product' value was successfully initialized from the DocumentSnapshot.
                         print("Product: \(product)")
                         product.documentId = productDocumentData.documentID
@@ -106,7 +106,7 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
     }
     
     func fetchHistoryEntries(with documentID:String,
-                             completionHandler:@escaping (_ historyEntries:[HistoryEntry]?, _ error:Error?) -> (Void)) {
+                             completionHandler:@escaping (_ historyEntries:[MHHistoryEntry]?, _ error:Error?) -> (Void)) {
         
         let db = Firestore.firestore()
         db.collection(DatabaseCollections.products).document(documentID)
@@ -128,10 +128,10 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
                         completionHandler([], nil)
                     }
                     else {
-                        var historyEntries = [HistoryEntry]()
+                        var historyEntries = [MHHistoryEntry]()
                         for documentData in snapshot.documents {
                             do {
-                                var historyEntry = try documentData.data(as: HistoryEntry.self)
+                                var historyEntry = try documentData.data(as: MHHistoryEntry.self)
                                 historyEntry.documentId = documentData.documentID
                                 // A 'HistoryEntry' value was successfully initialized from the DocumentSnapshot.
                                 // print("HistoryEntry: \(historyEntry)")
@@ -146,7 +146,7 @@ class FirestoreProductDatabaseService:ProductDatabaseServiceProtocol {
             }
     }
     
-    func addHistoryEntry(historyEntry:HistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void){
+    func addHistoryEntry(historyEntry:MHHistoryEntry, with productDocumentId:String, completion:@escaping(Error?)->Void){
         let db = Firestore.firestore()
         do {
             let _ = try db.collection(DatabaseCollections.products).document(productDocumentId)

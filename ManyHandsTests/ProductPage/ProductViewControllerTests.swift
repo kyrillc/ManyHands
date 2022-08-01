@@ -12,7 +12,7 @@ class ProductViewControllerTests: XCTestCase {
 
     func test_ViewController_Does_Not_Render_Title_When_Product_Is_Incomplete() throws {
         
-        let product = Product(humanReadableId: nil, isPublic: true, name:nil, entryDate: Date())
+        let product = MHProduct(humanReadableId: nil, isPublic: true, name:nil, entryDate: Date())
         let productViewModel = ProductViewModel(product:product, userService: MockUserService())
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -23,7 +23,7 @@ class ProductViewControllerTests: XCTestCase {
     
     func test_ViewController_Renders_Title_As_HumanReadableId_When_Product_Has_No_Name() throws {
         
-        let product = Product(humanReadableId: "expectedTitleFromHumanReadableId", isPublic: true, name:nil, entryDate: Date())
+        let product = MHProduct(humanReadableId: "expectedTitleFromHumanReadableId", isPublic: true, name:nil, entryDate: Date())
         let productViewModel = ProductViewModel(product:product, userService: MockUserService())
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -35,7 +35,7 @@ class ProductViewControllerTests: XCTestCase {
     
     func test_ViewController_Renders_Title_As_Product_Name_When_Product_Has_A_Name() throws {
         
-        let product = Product(humanReadableId: "humanReadableId", isPublic: true, name: "expectedTitleFromName", entryDate: Date())
+        let product = MHProduct(humanReadableId: "humanReadableId", isPublic: true, name: "expectedTitleFromName", entryDate: Date())
         let productViewModel = ProductViewModel(product:product, userService: MockUserService())
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -48,8 +48,8 @@ class ProductViewControllerTests: XCTestCase {
         
     func test_addNewEntry_Should_Add_New_Row_In_HistoryEntries_Section() throws {
 
-        let historyEntryA = HistoryEntry(userId: "id", entryDate: Date())
-        let historyEntries : [HistoryEntry] = [historyEntryA]
+        let historyEntryA = MHHistoryEntry(userId: "id", entryDate: Date())
+        let historyEntries : [MHHistoryEntry] = [historyEntryA]
         let productViewModel = makeProductViewModel(historyEntries: historyEntries)
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -66,9 +66,9 @@ class ProductViewControllerTests: XCTestCase {
     
     func test_deleteEntry_Should_Delete_Row_In_HistoryEntries_Section() throws {
 
-        let historyEntryA = HistoryEntry(documentId:"doc-id", userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
-        let historyEntryB = HistoryEntry(documentId:"doc-id", userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
-        let historyEntries : [HistoryEntry] = [historyEntryA, historyEntryB]
+        let historyEntryA = MHHistoryEntry(documentId:"doc-id", userId: "id-1", entryText:"entry 1", entryDate: Date().addingTimeInterval(TimeInterval(60)))
+        let historyEntryB = MHHistoryEntry(documentId:"doc-id", userId: "id-2", entryText:"entry 2", entryDate: Date().addingTimeInterval(TimeInterval(-60)))
+        let historyEntries : [MHHistoryEntry] = [historyEntryA, historyEntryB]
         let productViewModel = makeProductViewModel(historyEntries: historyEntries)
         let sut = ProductViewController(productViewModel: productViewModel)
 
@@ -83,8 +83,8 @@ class ProductViewControllerTests: XCTestCase {
         }
     }
     
-    func makeProductViewModel(historyEntries : [HistoryEntry]) -> ProductViewModel {
-        let product = Product(documentId:"documentId",
+    func makeProductViewModel(historyEntries : [MHHistoryEntry]) -> ProductViewModel {
+        let product = MHProduct(documentId:"documentId",
                               humanReadableId: "humanReadableId",
                               isPublic: true,
                               name:"", productDescription: "",

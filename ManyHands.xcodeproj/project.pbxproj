@@ -25,8 +25,8 @@
 		D6279CF228915CBF00BE072F /* MHUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CF128915CBF00BE072F /* MHUser.swift */; };
 		D6279CF42891695E00BE072F /* FetchUsernameServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6279CF32891695E00BE072F /* FetchUsernameServiceTests.swift */; };
 		D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */; };
-		D641657B288698D200E8943D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* Product.swift */; };
-		D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* HistoryEntry.swift */; };
+		D641657B288698D200E8943D /* MHProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657A288698D200E8943D /* MHProduct.swift */; };
+		D641657D288698DC00E8943D /* MHHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641657C288698DC00E8943D /* MHHistoryEntry.swift */; };
 		D641658228869D4F00E8943D /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658128869D4F00E8943D /* ProductViewController.swift */; };
 		D641658428869D5900E8943D /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658328869D5900E8943D /* ProductViewModel.swift */; };
 		D641658628869D6700E8943D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641658528869D6700E8943D /* LoginViewModel.swift */; };
@@ -103,8 +103,8 @@
 		D6279CF128915CBF00BE072F /* MHUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MHUser.swift; sourceTree = "<group>"; };
 		D6279CF32891695E00BE072F /* FetchUsernameServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUsernameServiceTests.swift; sourceTree = "<group>"; };
 		D641657828860A5A00E8943D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
-		D641657A288698D200E8943D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
-		D641657C288698DC00E8943D /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
+		D641657A288698D200E8943D /* MHProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MHProduct.swift; sourceTree = "<group>"; };
+		D641657C288698DC00E8943D /* MHHistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MHHistoryEntry.swift; sourceTree = "<group>"; };
 		D641658128869D4F00E8943D /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		D641658328869D5900E8943D /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		D641658528869D6700E8943D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -240,8 +240,8 @@
 		D641657E288698E100E8943D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D641657A288698D200E8943D /* Product.swift */,
-				D641657C288698DC00E8943D /* HistoryEntry.swift */,
+				D641657A288698D200E8943D /* MHProduct.swift */,
+				D641657C288698DC00E8943D /* MHHistoryEntry.swift */,
 				D6279CF128915CBF00BE072F /* MHUser.swift */,
 			);
 			path = Model;
@@ -681,7 +681,7 @@
 				D6279CE728907C8200BE072F /* NewProductViewController.swift in Sources */,
 				D6279CE5289068C400BE072F /* NewEntryViewController.swift in Sources */,
 				D6591A6228968CCD008E51CD /* ProductService.swift in Sources */,
-				D641657D288698DC00E8943D /* HistoryEntry.swift in Sources */,
+				D641657D288698DC00E8943D /* MHHistoryEntry.swift in Sources */,
 				D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */,
 				D61B4A122897040B00BED0B1 /* main.swift in Sources */,
 				D6279CDE288FF79600BE072F /* ProductDescriptionCell.swift in Sources */,
@@ -699,7 +699,7 @@
 				D641657928860A5A00E8943D /* UIViewControllerExtensions.swift in Sources */,
 				D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */,
 				D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */,
-				D641657B288698D200E8943D /* Product.swift in Sources */,
+				D641657B288698D200E8943D /* MHProduct.swift in Sources */,
 				D6591A6428969F92008E51CD /* FirestoreProductDatabaseService.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,

@@ -17,7 +17,7 @@ struct ProductHistoryEntryViewModel:Equatable {
     }
     
     
-    private let historyEntry:HistoryEntry
+    private let historyEntry:MHHistoryEntry
     private let usernameService:FetchUsernameService
     private let userService:UserServiceProtocol
 
@@ -42,7 +42,7 @@ struct ProductHistoryEntryViewModel:Equatable {
         return "ProductHistoryEntryViewModel:" + entryText + "\(Int64(historyEntry.entryDate.timeIntervalSince1970 * 1000))"
     }
     
-    init(historyEntry:HistoryEntry,
+    init(historyEntry:MHHistoryEntry,
          getUsernameService:(() -> FetchUsernameService) = { FetchUsernameService() },
          userService:UserServiceProtocol = UserService()) {
 
