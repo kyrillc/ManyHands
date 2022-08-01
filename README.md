@@ -1,6 +1,6 @@
-# Many Hands
+# Many Hands *(work in progress)*
 
-This is an iOS app that aims to tell the story of second-hand items through the owners that shared them.
+This is an iOS app that aims to tell the story of second-hand items through the owners that used them.
 
 Here is the concept idea:
 
@@ -19,6 +19,7 @@ This project uses the following technologies:
 
 - Swift with UIKit
 - MVVM design pattern
+- Unit testing / Dependency injection
 - RxSwift
 - SnapKit
 - Firebase Authentication
@@ -67,3 +68,28 @@ Each `product` can have a `historyEntries` sub-collection, with the following fo
 	- userId (String)
 	- entryText (String)
 	- entryDate (Timestamp)
+
+## Current state
+
+- Basic login and registration feature works.
+- Fetching a product and its history entries works.
+- Adding a new entry if user is owner of the product works.
+- Deleting any entry that the user inserted works.
+
+![Login Page](/images/LoginPage.png)
+
+![Root Page](/images/RootPage.png)
+
+![Product Page](/images/ProductPage.png)
+
+
+## Features to add:
+
+- Adding a product.
+- Adding a username from the app.
+- Transfering ownership of a product to another user.
+- Indicating on the Product Page when a product has changed owner.
+- Adding a photo to a product.
+- Adding a photo to a history entry.
+
+
