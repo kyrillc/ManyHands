@@ -11,7 +11,7 @@ import RxSwift
 
 struct NewProductViewModel {
     let title = "New Product"
-    let confirmButtonTitle = "Add Product"
+    let confirmButtonTitle = "Add"
     
     var productTitle = BehaviorSubject<String>(value: "")
     var productDescription = BehaviorSubject<String>(value: "")
@@ -24,6 +24,7 @@ class NewProductViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.identifier)
         return tableView
     }()
     
@@ -99,15 +100,21 @@ extension NewProductViewController : UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = makeTextFieldCell(cellViewModel: TextFieldCellViewModel(title: "Product Name:", textFieldText: "", textFieldPlaceholder: "ex: Red dress"), forRowAt: indexPath)
+        return cell!
     }
-    
+    private func makeTextFieldCell(cellViewModel:TextFieldCellViewModel, forRowAt indexPath: IndexPath) -> TextFieldCell? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldCell.identifier, for: indexPath) as? TextFieldCell
+        cell?.configureCell(cellViewModel: cellViewModel)
+        return cell
+    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 62
     }
 }
 
