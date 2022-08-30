@@ -20,7 +20,7 @@ class RootViewControllerCollaborator:RootViewControllerCollaboratorProtocol {
     
     func showLoginViewControllerIfNecessary(from vc:RootViewController, rootViewModel:RootViewModel){
         if rootViewModel.isLoggedIn() == false {
-            let loginVC = LoginViewController()
+            let loginVC = LoginViewController(loginViewModel: LoginViewModel())
             
             // Prevents user from dismissing the view by swiping down:
             loginVC.isModalInPresentation = true

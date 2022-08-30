@@ -27,6 +27,7 @@ class NewEntryViewController:UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .secondaryLabel
+        label.numberOfLines = 0
         return label
     }()
     
@@ -87,8 +88,9 @@ class NewEntryViewController:UIViewController {
             make.bottom.leading.trailing.equalTo(self.view)
         }
         placeholderLabel.snp.makeConstraints { make in
-            make.top.equalTo(entryTextView.snp.top).offset(10)
+            make.top.equalTo(entryTextView.snp.top).offset(8)
             make.leading.equalTo(entryTextView.snp.leading).offset(5)
+            make.trailing.equalTo(entryTextView.snp.trailing).offset(-5)
         }
     }
     

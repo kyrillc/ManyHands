@@ -15,7 +15,7 @@ struct TextFieldCellViewModel {
     var textFieldPlaceholder = ""
 }
 
-class TextFieldCell : UITableViewCell, UITextFieldDelegate {
+class TextFieldCell : UITableViewCell {
     
     static let identifier = "TextFieldCellIdentifier"
     
@@ -43,9 +43,7 @@ class TextFieldCell : UITableViewCell, UITextFieldDelegate {
         self.selectionStyle = .default
 
         addSubviews()
-        setConstraints()
-        
-        textField.delegate = self
+        setConstraints()        
     }
     
     private func addSubviews(){

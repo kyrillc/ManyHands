@@ -22,9 +22,14 @@ class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.alternateButton.title(for: .normal), "Create an account")
     }
     
+    func test_confirmButtonTap (){
+        let sut = makeSUT()
+        tap(sut.confirmButton)
+    }
+    
     
     func makeSUT() -> LoginViewController {
-        let sut = LoginViewController()
+        let sut = LoginViewController(loginViewModel: LoginViewModel(userService: MockUserService()))
         sut.loadViewIfNeeded()
         return sut
     }

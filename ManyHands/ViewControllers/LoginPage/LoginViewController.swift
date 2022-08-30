@@ -78,8 +78,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }()
     
     private let disposeBag = DisposeBag()
-    private let loginViewModel = LoginViewModel()
+    private var loginViewModel = LoginViewModel()
     
+    // MARK: - Init
+
+    init(loginViewModel:LoginViewModel) {
+        self.loginViewModel = loginViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     // MARK: - View Lifecycle
 

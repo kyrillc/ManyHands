@@ -43,6 +43,8 @@
 		D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A028AE2889F52B00E49499 /* MockUserService.swift */; };
 		D6AFEF6628855A2600C65063 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AFEF6528855A2600C65063 /* LoginViewController.swift */; };
 		D6B22D0228BCEB4300FCFFBA /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0128BCEB4300FCFFBA /* TextFieldCell.swift */; };
+		D6B22D0428BE2CA100FCFFBA /* InteractionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0328BE2CA100FCFFBA /* InteractionsHelper.swift */; };
+		D6B22D0628BE335E00FCFFBA /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0528BE335E00FCFFBA /* TextViewCell.swift */; };
 		D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
 		D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */; };
@@ -122,6 +124,8 @@
 		D6A028AE2889F52B00E49499 /* MockUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		D6AFEF6528855A2600C65063 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D6B22D0128BCEB4300FCFFBA /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		D6B22D0328BE2CA100FCFFBA /* InteractionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionsHelper.swift; sourceTree = "<group>"; };
+		D6B22D0528BE335E00FCFFBA /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidationExtensions.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
 		D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConstants.swift; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 			children = (
 				D6279CE628907C8200BE072F /* NewProductViewController.swift */,
 				D6B22D0128BCEB4300FCFFBA /* TextFieldCell.swift */,
+				D6B22D0528BE335E00FCFFBA /* TextViewCell.swift */,
 			);
 			path = NewProductPage;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				D6F7BEFA2889A678000026D2 /* ValueSpy.swift */,
 				D6A028AE2889F52B00E49499 /* MockUserService.swift */,
 				D6591A652896A1AF008E51CD /* MockProductDatabaseService.swift */,
+				D6B22D0328BE2CA100FCFFBA /* InteractionsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -704,6 +710,7 @@
 				D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */,
 				D641657B288698D200E8943D /* MHProduct.swift in Sources */,
 				D6591A6428969F92008E51CD /* FirestoreProductDatabaseService.swift in Sources */,
+				D6B22D0628BE335E00FCFFBA /* TextViewCell.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
 				D6279CF228915CBF00BE072F /* MHUser.swift in Sources */,
@@ -721,6 +728,7 @@
 				D6279CDB288E9E0700BE072F /* MockUserFetchingService.swift in Sources */,
 				D65024932888814B001AC13F /* LoginViewModelTests.swift in Sources */,
 				D6A028AF2889F52B00E49499 /* MockUserService.swift in Sources */,
+				D6B22D0428BE2CA100FCFFBA /* InteractionsHelper.swift in Sources */,
 				D61B4A1628970C9C00BED0B1 /* TestingSceneDelegate.swift in Sources */,
 				D64F2534288AFABA00D6F94B /* ProductViewModelTests.swift in Sources */,
 				D6279CF42891695E00BE072F /* FetchUsernameServiceTests.swift in Sources */,

@@ -25,6 +25,7 @@ class NewProductViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.identifier)
+        tableView.register(TextViewCell.self, forCellReuseIdentifier: TextViewCell.identifier)
         return tableView
     }()
     
@@ -100,21 +101,37 @@ extension NewProductViewController : UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = makeTextFieldCell(cellViewModel: TextFieldCellViewModel(title: "Product Name:", textFieldText: "", textFieldPlaceholder: "ex: Red dress"), forRowAt: indexPath)
-        return cell!
+        if (indexPath.row == 0) {
+            let cell = makeTextFieldCell(cellViewModel: TextFieldCellViewModel(title: "Product Name:", textFieldText: "", textFieldPlaceholder: "ex: Red dress"), forRowAt: indexPath)
+            return cell!
+        }
+        else {
+            let cell = makeTextViewCell(cellViewModel: TextViewCellViewModel(title: "Product Description:", textViewText: "", textViewPlaceholder: "ex: This dress was made by my mother for my birthday!"), forRowAt: indexPath)
+            return cell!
+        }
     }
     private func makeTextFieldCell(cellViewModel:TextFieldCellViewModel, forRowAt indexPath: IndexPath) -> TextFieldCell? {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldCell.identifier, for: indexPath) as? TextFieldCell
         cell?.configureCell(cellViewModel: cellViewModel)
         return cell
     }
+    private func makeTextViewCell(cellViewModel:TextViewCellViewModel, forRowAt indexPath: IndexPath) -> TextViewCell? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextViewCell.identifier, for: indexPath) as? TextViewCell
+        cell?.configureCell(cellViewModel: cellViewModel)
+        return cell
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 62
+        if (indexPath.row == 0) {
+            return 62
+        }
+        else {
+            return 140
+        }
     }
 }
 
