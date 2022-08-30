@@ -16,6 +16,7 @@ class HistoryEntryCell : UITableViewCell {
     lazy var entryTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16)
+        textView.isUserInteractionEnabled = false
         return textView
     }()
     
@@ -47,9 +48,9 @@ class HistoryEntryCell : UITableViewCell {
     }
     
     private func addSubviews(){
-        addSubview(entryTextView)
-        addSubview(entryDateLabel)
-        addSubview(entryAuthorLabel)
+        contentView.addSubview(entryTextView)
+        contentView.addSubview(entryDateLabel)
+        contentView.addSubview(entryAuthorLabel)
     }
     
     private func setConstraints(){

@@ -23,6 +23,7 @@ class ProductDescriptionCell : UITableViewCell {
     lazy var productDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16)
+        textView.isUserInteractionEnabled = false
         return textView
     }()
     
@@ -46,9 +47,9 @@ class ProductDescriptionCell : UITableViewCell {
     }
     
     private func addSubviews(){
-        addSubview(productImageView)
-        addSubview(productDescriptionTextView)
-        addSubview(productOwnerLabel)
+        contentView.addSubview(productImageView)
+        contentView.addSubview(productDescriptionTextView)
+        contentView.addSubview(productOwnerLabel)
     }
     
     private func setConstraints(){

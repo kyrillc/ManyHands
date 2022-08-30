@@ -47,7 +47,7 @@ class TextFieldCell : UITableViewCell, UITextFieldDelegate {
         
         textField.delegate = self
     }
-        
+    
     private func addSubviews(){
         contentView.addSubview(titleLabel)
         contentView.addSubview(textField)
