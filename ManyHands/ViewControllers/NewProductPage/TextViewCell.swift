@@ -13,6 +13,7 @@ struct TextViewCellViewModel {
     var title = ""
     var textViewText = ""
     var textViewPlaceholder = ""
+    var height:CGFloat = 140
 }
 
 class TextViewCell : UITableViewCell {
@@ -22,14 +23,14 @@ class TextViewCell : UITableViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .secondaryLabel
         return label
     }()
     
     lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .placeholderText
         label.numberOfLines = 0
         return label
@@ -37,7 +38,7 @@ class TextViewCell : UITableViewCell {
     
     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.font = UIFont.systemFont(ofSize: 14)
         textView.overrideUserInterfaceStyle = .light
         return textView
     }()

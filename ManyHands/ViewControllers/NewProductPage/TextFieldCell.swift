@@ -13,6 +13,7 @@ struct TextFieldCellViewModel {
     var title = ""
     var textFieldText = ""
     var textFieldPlaceholder = ""
+    var height:CGFloat = 62
 }
 
 class TextFieldCell : UITableViewCell {
@@ -22,14 +23,14 @@ class TextFieldCell : UITableViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .secondaryLabel
         return label
     }()
     
     lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont.systemFont(ofSize: 14)
         textField.overrideUserInterfaceStyle = .light
         return textField
     }()
