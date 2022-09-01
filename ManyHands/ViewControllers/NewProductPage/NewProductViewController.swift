@@ -9,14 +9,6 @@ import UIKit
 import SnapKit
 import RxSwift
 
-struct NewProductViewModel {
-    let title = "New Product"
-    let confirmButtonTitle = "Add"
-    
-    var productTitle = BehaviorSubject<String>(value: "")
-    var productDescription = BehaviorSubject<String>(value: "")
-    var isProductPublic = BehaviorSubject<Bool>(value: false)
-}
 
 class NewProductViewController: UIViewController {
     lazy var tableView: UITableView = {
@@ -26,11 +18,13 @@ class NewProductViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.identifier)
         tableView.register(TextViewCell.self, forCellReuseIdentifier: TextViewCell.identifier)
+        tableView.register(SwitchCell.self, forCellReuseIdentifier: SwitchCell.identifier)
         return tableView
     }()
     
     var newProductViewModel = NewProductViewModel()
-    
+    private var disposeBag = DisposeBag()
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,7 +44,7 @@ class NewProductViewController: UIViewController {
                                                                  style: .done,
                                                                  target: self,
                                                                  action: #selector(addProduct))
-        
+                
         addViews()
         setInitialUIProperties()
         setConstraints()
@@ -81,7 +75,10 @@ class NewProductViewController: UIViewController {
     }
     
     private func setRxSwiftBindings(){
-        
+        // Enable confirm button only when input is valid:
+        if let rightBarButtonItem = self.navigationItem.rightBarButtonItem {
+            newProductViewModel.isUserInputValid().bind(to: rightBarButtonItem.rx.isEnabled).disposed(by: disposeBag)
+        }
     }
     
     // MARK: - Actions
@@ -94,23 +91,29 @@ class NewProductViewController: UIViewController {
     }
 }
 
+
 extension NewProductViewController : UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return newProductViewModel.formSections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return newProductViewModel.formSections[section].cellModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.row == 0) {
-            let cell = makeTextFieldCell(cellViewModel: TextFieldCellViewModel(title: "Product Name:", textFieldText: "", textFieldPlaceholder: "ex: Red dress"), forRowAt: indexPath)
+        let cellViewModel = newProductViewModel.formSections[indexPath.section].cellModels[indexPath.row]
+        switch cellViewModel {
+        case .TextFieldCell(let textFieldCellViewModel):
+            let cell = makeTextFieldCell(cellViewModel: textFieldCellViewModel, forRowAt: indexPath)
+            cell?.textField.rx.text.map { $0 ?? "" }.bind(to: newProductViewModel.productTitle).disposed(by: disposeBag)
             return cell!
-        }
-        else {
-            let cell = makeTextViewCell(cellViewModel: TextViewCellViewModel(title: "Product Description:", textViewText: "", textViewPlaceholder: "ex: This dress was made by my mother for my birthday!"), forRowAt: indexPath)
+        case .TextViewCell(let textViewCellViewModel):
+            let cell = makeTextViewCell(cellViewModel: textViewCellViewModel, forRowAt: indexPath)
+            return cell!
+        case .SwitchCell(let switchCellViewModel):
+            let cell = makeSwitchCell(cellViewModel: switchCellViewModel, forRowAt: indexPath)
             return cell!
         }
     }
@@ -124,14 +127,22 @@ extension NewProductViewController : UITableViewDelegate, UITableViewDataSource 
         cell?.configureCell(cellViewModel: cellViewModel)
         return cell
     }
-
+    private func makeSwitchCell(cellViewModel:SwitchCellViewModel, forRowAt indexPath: IndexPath) -> SwitchCell? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SwitchCell.identifier, for: indexPath) as? SwitchCell
+        cell?.configureCell(cellViewModel: cellViewModel)
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row == 0) {
-            return 62
-        }
-        else {
-            return 140
-        }
+        let cellViewModel = newProductViewModel.formSections[indexPath.section].cellModels[indexPath.row]
+        return cellViewModel.height
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return newProductViewModel.formSections[section].headerText
+    }
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return newProductViewModel.formSections[section].footerText
     }
 }
 

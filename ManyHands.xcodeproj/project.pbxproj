@@ -45,9 +45,11 @@
 		D6B22D0228BCEB4300FCFFBA /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0128BCEB4300FCFFBA /* TextFieldCell.swift */; };
 		D6B22D0428BE2CA100FCFFBA /* InteractionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0328BE2CA100FCFFBA /* InteractionsHelper.swift */; };
 		D6B22D0628BE335E00FCFFBA /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0528BE335E00FCFFBA /* TextViewCell.swift */; };
+		D6B22D0828BE3B7700FCFFBA /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B22D0728BE3B7700FCFFBA /* SwitchCell.swift */; };
 		D6BDE474288566A000DED4C2 /* StringValidationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */; };
 		D6BDE49728859C7C00DED4C2 /* DatabaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */; };
 		D6CF1BA6288AACBA00EE6683 /* RootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */; };
+		D6DA68BA28C0EB430047D777 /* NewProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DA68B928C0EB430047D777 /* NewProductViewModel.swift */; };
 		D6E369D02885A69500296589 /* ShortCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E369CF2885A69500296589 /* ShortCode.swift */; };
 		D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7D8288474C30097E71C /* AppDelegate.swift */; };
 		D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E9A7DA288474C30097E71C /* SceneDelegate.swift */; };
@@ -126,10 +128,12 @@
 		D6B22D0128BCEB4300FCFFBA /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		D6B22D0328BE2CA100FCFFBA /* InteractionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionsHelper.swift; sourceTree = "<group>"; };
 		D6B22D0528BE335E00FCFFBA /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
+		D6B22D0728BE3B7700FCFFBA /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		D6BDE473288566A000DED4C2 /* StringValidationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidationExtensions.swift; sourceTree = "<group>"; };
 		D6BDE495288599CE00DED4C2 /* ManyHands.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManyHands.entitlements; sourceTree = "<group>"; };
 		D6BDE49628859C7C00DED4C2 /* DatabaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConstants.swift; sourceTree = "<group>"; };
 		D6CF1BA5288AACBA00EE6683 /* RootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerTests.swift; sourceTree = "<group>"; };
+		D6DA68B928C0EB430047D777 /* NewProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductViewModel.swift; sourceTree = "<group>"; };
 		D6E369CF2885A69500296589 /* ShortCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCode.swift; sourceTree = "<group>"; };
 		D6E9A7D5288474C30097E71C /* ManyHands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManyHands.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E9A7D8288474C30097E71C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -209,8 +213,10 @@
 			isa = PBXGroup;
 			children = (
 				D6279CE628907C8200BE072F /* NewProductViewController.swift */,
+				D6DA68B928C0EB430047D777 /* NewProductViewModel.swift */,
 				D6B22D0128BCEB4300FCFFBA /* TextFieldCell.swift */,
 				D6B22D0528BE335E00FCFFBA /* TextViewCell.swift */,
+				D6B22D0728BE3B7700FCFFBA /* SwitchCell.swift */,
 			);
 			path = NewProductPage;
 			sourceTree = "<group>";
@@ -709,10 +715,12 @@
 				D6279CD9288DDD2100BE072F /* FetchUsernameService.swift in Sources */,
 				D6279CEB2890804400BE072F /* ProductDescriptionViewModel.swift in Sources */,
 				D641657B288698D200E8943D /* MHProduct.swift in Sources */,
+				D6DA68BA28C0EB430047D777 /* NewProductViewModel.swift in Sources */,
 				D6591A6428969F92008E51CD /* FirestoreProductDatabaseService.swift in Sources */,
 				D6B22D0628BE335E00FCFFBA /* TextViewCell.swift in Sources */,
 				D6E9A7D9288474C30097E71C /* AppDelegate.swift in Sources */,
 				D6E9A7DB288474C30097E71C /* SceneDelegate.swift in Sources */,
+				D6B22D0828BE3B7700FCFFBA /* SwitchCell.swift in Sources */,
 				D6279CF228915CBF00BE072F /* MHUser.swift in Sources */,
 				D6B22D0228BCEB4300FCFFBA /* TextFieldCell.swift in Sources */,
 			);
