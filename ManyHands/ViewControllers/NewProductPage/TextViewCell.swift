@@ -39,7 +39,7 @@ class TextViewCell : UITableViewCell {
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 14)
-        textView.overrideUserInterfaceStyle = .light
+        textView.backgroundColor = .clear
         return textView
     }()
     
@@ -49,7 +49,7 @@ class TextViewCell : UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.selectionStyle = .default
+        self.selectionStyle = .none
 
         addSubviews()
         setConstraints()

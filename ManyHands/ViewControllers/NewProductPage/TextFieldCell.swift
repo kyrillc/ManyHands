@@ -31,7 +31,6 @@ class TextFieldCell : UITableViewCell {
     lazy var textField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 14)
-        textField.overrideUserInterfaceStyle = .light
         return textField
     }()
     
@@ -41,7 +40,7 @@ class TextFieldCell : UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.selectionStyle = .default
+        self.selectionStyle = .none
 
         addSubviews()
         setConstraints()        
